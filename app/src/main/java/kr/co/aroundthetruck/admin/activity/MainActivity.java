@@ -1,17 +1,30 @@
-package att.aroundthetruckadmin;
+package kr.co.aroundthetruck.admin.activity;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import kr.co.aroundthetruck.admin.R;
+import kr.co.aroundthetruck.admin.ui.ATTActivity;
 
-public class MainActivity extends Activity {
+public class MainActivity extends ATTActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setLayout();
+        initialize();
+    }
+
+    @Override
+    public void setLayout() {
+
+    }
+
+    @Override
+    public void initialize() {
+
     }
 
     @Override

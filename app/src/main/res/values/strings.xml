@@ -4,5 +4,7 @@
     <string name="app_name">Around The Truck Admin</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_splash">SplashActivity</string>
+    <string name="title_activity_main">MainActivity</string>
 
 </resources>
