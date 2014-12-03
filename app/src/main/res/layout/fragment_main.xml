@@ -1,0 +1,23 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    tools:context="kr.co.aroundthetruck.admin.fragment.MainFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:id="@+id/fragment_main_tv_city"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        style="?android:attr/textAppearanceLarge"
+        tools:text="서울" />
+
+    <TextView
+        android:id="@+id/fragment_main_tv_country"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/fragment_main_tv_city"
+        style="?android:attr/textAppearanceLarge"
+        tools:text="종로구" />
+</RelativeLayout>

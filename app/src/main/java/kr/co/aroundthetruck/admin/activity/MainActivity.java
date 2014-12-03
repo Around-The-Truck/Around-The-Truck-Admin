@@ -5,9 +5,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import kr.co.aroundthetruck.admin.R;
+import kr.co.aroundthetruck.admin.fragment.MainFragment;
 import kr.co.aroundthetruck.admin.ui.ATTActivity;
 
 public class MainActivity extends ATTActivity {
+    private static final String TAG = MainActivity.class.getSimpleName();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +27,9 @@ public class MainActivity extends ATTActivity {
 
     @Override
     public void initialize() {
-
+        getFragmentManager()
+                .beginTransaction()
+                .add(R.id.activity_main_container, MainFragment.newInstance()).commit();
     }
 
     @Override
