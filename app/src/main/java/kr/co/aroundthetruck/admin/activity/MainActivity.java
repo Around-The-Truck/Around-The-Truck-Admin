@@ -5,7 +5,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import kr.co.aroundthetruck.admin.R;
-import kr.co.aroundthetruck.admin.fragment.MainFragment;
+import kr.co.aroundthetruck.admin.fragment.TodayResultFragment;
 import kr.co.aroundthetruck.admin.ui.ATTActivity;
 
 public class MainActivity extends ATTActivity {
@@ -29,7 +29,7 @@ public class MainActivity extends ATTActivity {
     public void initialize() {
         getFragmentManager()
                 .beginTransaction()
-                .add(R.id.activity_main_container, MainFragment.newInstance()).commit();
+                .add(R.id.activity_main_container, TodayResultFragment.newInstance()).commit();
     }
 
     @Override

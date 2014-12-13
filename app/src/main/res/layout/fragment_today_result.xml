@@ -1,0 +1,187 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="kr.co.aroundthetruck.admin.fragment.TodayResultFragment">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:orientation="vertical">
+            <!--android:id="@+id/fragment_today_result_container_title"-->
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/fragment_today_result_tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="오늘의 판매정보"
+                    style="?android:attr/textAppearanceLarge" />
+
+                <TextView
+                    android:id="@+id/fragment_today_result_tv_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="?android:attr/textAppearanceLarge"
+                    tools:text="2014/01/01 수요일" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/fragment_today_result_tv_working_time_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="영업시간"
+                    style="?android:attr/textAppearanceLarge" />
+
+                <TextView
+                    android:id="@+id/fragment_today_result_tv_working_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="?android:attr/textAppearanceLarge"
+                    android:text="오전 10:30 - 오후 7:30" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/fragment_today_result_tv_total_sales_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="총 매출"
+                        style="?android:attr/textAppearanceLarge" />
+
+                    <TextView
+                        android:id="@+id/fragment_today_result_tv_total_sales"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="?android:attr/textAppearanceLarge"
+                        android:text="400,000원" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/fragment_today_result_tv_total_customer_count_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="총 손님 수"
+                        style="?android:attr/textAppearanceLarge" />
+
+                    <TextView
+                        android:id="@+id/fragment_today_result_tv_total_customer_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="?android:attr/textAppearanceLarge"
+                        android:text="400명" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/fragment_today_result_tv_cost_per_person_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1인당 평균 매출"
+                    style="?android:attr/textAppearanceLarge" />
+
+                <TextView
+                    android:id="@+id/fragment_today_result_tv_cost_per_person"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="4,000원"
+                    style="?android:attr/textAppearanceLarge" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/fragment_today_result_pc_sex"
+                    android:layout_width="250dp"
+                    android:layout_height="250dp" />
+
+                <com.github.mikephil.charting.charts.BarChart
+                    android:id="@+id/fragment_today_result_bc_age"
+                    android:layout_width="250dp"
+                    android:layout_height="250dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <!--<LinearLayout-->
+        <!--android:id="@+id/fragment_today_result_container_time"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/fragment_today_result_container_title">-->
+
+        <!--<TextClock-->
+        <!--android:id="@+id/fragment_today_result_tc_time"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:format12Hour="hh:mm a" />-->
+        <!--</LinearLayout>-->
+
+        <!--<LinearLayout-->
+        <!--android:id="@+id/fragment_today_result_container_region"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/fragment_today_result_container_title">-->
+
+        <!-- TODO: Update blank fragment layout -->
+        <!--<TextView-->
+        <!--android:id="@+id/fragment_today_result_tv_region"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginRight="10dp"-->
+        <!--style="?android:attr/textAppearanceLarge"-->
+        <!--tools:text="서울 동작구" />-->
+        <!--</LinearLayout>-->
+
+        <!--<LinearLayout-->
+        <!--android:id="@+id/fragment_today_result_container_temperature"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/fragment_today_result_container_title">-->
+
+        <!--<TextView-->
+        <!--android:id="@+id/fragment_today_result_tv_temperature"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--tools:text="19" />-->
+        <!--</LinearLayout>-->
+    </FrameLayout>
+</ScrollView>

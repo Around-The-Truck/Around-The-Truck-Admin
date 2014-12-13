@@ -29,8 +29,8 @@ public class GridModel {
     private String city;
 
     // 구
-    @SerializedName("country")
-    private String country;
+    @SerializedName("county")
+    private String county;
 
     public String getLatitude() {
         return latitude;
@@ -56,11 +56,11 @@ public class GridModel {
         this.city = city;
     }
 
-    public String getCountry() {
-        return country;
+    public String getCounty() {
+        return county;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
+    public void setCounty(String county) {
+        this.county = county;
     }
 }
