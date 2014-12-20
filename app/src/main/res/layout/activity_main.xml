@@ -6,7 +6,7 @@
     tools:context="kr.co.aroundthetruck.admin.activity.MainActivity">
 
     <FrameLayout
-        android:layout_width="125dp"
+        android:layout_width="125px"
         android:layout_height="match_parent"
         android:background="@color/main_color">
 
