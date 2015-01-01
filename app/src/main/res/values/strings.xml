@@ -9,9 +9,5 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="weekday">yyyy/MM/dd EEE</string>
-    <string name="title_activity_register__admin">Register_AdminActivity</string>
-    <string name="title_activity_register_food_menu">RegisterFoodMenuActivity</string>
-    <string name="title_activity_ystest">YSTestActivity</string>
-    <string name="title_activity_ystest2_main">YSTest2MainActivity</string>
 
 </resources>
