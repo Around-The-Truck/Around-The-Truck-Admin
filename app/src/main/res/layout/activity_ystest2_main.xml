@@ -1,0 +1,30 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="kr.co.aroundthetruck.admin.YSTest2MainActivity">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <fragment
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:name="kr.co.aroundthetruck.admin.fragment.MenuBarFragment"
+            android:id="@+id/activity_ystest_2_menu_fragment"
+            android:layout_centerVertical="true"
+            android:layout_alignStart="@+id/activity_ystest2_content_fragment"
+            tools:layout="@layout/fragment_menu_bar" />
+
+        <fragment
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:name="kr.co.aroundthetruck.admin.fragment.NewsFeedFragment"
+            android:id="@+id/activity_ystest2_content_fragment"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            tools:layout="@layout/fragment_news_feed" />
+
+    </LinearLayout>
+</RelativeLayout>
