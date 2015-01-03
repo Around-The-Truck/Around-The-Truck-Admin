@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -26,6 +27,7 @@ import android.widget.Toast;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Date;
 
 import kr.co.aroundthetruck.admin.R;
 import kr.co.aroundthetruck.admin.YSUtility;
@@ -53,6 +55,9 @@ public class RegisterAdminActivity extends Activity {
     private GridView gridview;
 
     private EditText brandNameEditText;
+
+    private Uri selectPhotoUri;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,15 +102,7 @@ public class RegisterAdminActivity extends Activity {
         finishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AdminInformationData adminData = new AdminInformationData(brandNameEditText.getText().toString(), "", "" , "", "");
-
-
-                Intent intent = new Intent(getBaseContext(), RegisterFoodMenuActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.putExtra("adminData", adminData);
-
-                startActivityForResult(intent, 1001);
-
+                finishButtonIsClicked();
             }
         });
 
@@ -158,6 +155,24 @@ public class RegisterAdminActivity extends Activity {
 
     }
 
+    private void finishButtonIsClicked(){
+
+        EditText editText1 = (EditText) findViewById(R.id.activity_register_admin_edittext_phone_number);
+        DatePicker datePicker = (DatePicker) findViewById(R.id.activity_register_admin_datePicker);
+
+        String date = datePicker.getYear() +"/" + datePicker.getMonth() +"/"+ datePicker.getDayOfMonth();
+        AdminInformationData adminData = new AdminInformationData(brandNameEditText.getText().toString(), editText1.getText().toString(), date  , (String) spinnerCat.getSelectedItem(), (String) spinnerSub.getSelectedItem());
+
+        adminData.setSelectPhotoUri(selectPhotoUri.toString());
+
+        Intent intent = new Intent(getBaseContext(), RegisterFoodMenuActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("adminData", adminData);
+
+        startActivityForResult(intent, 1001);
+
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 // TODO Auto-generated method stub
@@ -173,6 +188,7 @@ public class RegisterAdminActivity extends Activity {
                 Bitmap selPhoto = MediaStore.Images.Media.getBitmap(getContentResolver(), selPhotoUri);
                 Bitmap roundPhoto = YSUtility.GetBitmapClippedCircle(selPhoto);
                 imageView.setImageBitmap(roundPhoto);
+                selectPhotoUri = selPhotoUri;
             } catch (FileNotFoundException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
