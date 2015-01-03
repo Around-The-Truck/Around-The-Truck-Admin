@@ -40,12 +40,12 @@
                     android:id="@+id/activity_register_admin_textView1" />
 
                 <EditText
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
-                    android:text="Name"
                     android:ems="10"
-                    android:id="@+id/activity_register_admin_edittext_name" />
+                    android:id="@+id/activity_register_admin_edittext_name"
+                    android:hint="트럭 이름을 입력해주세요." />
             </LinearLayout>
 
             <LinearLayout
@@ -60,11 +60,12 @@
                     android:id="@+id/activity_register_admin_textView2" />
 
                 <EditText
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="phone"
                     android:ems="10"
-                    android:id="@+id/activity_register_admin_edittext_phone_number" />
+                    android:id="@+id/activity_register_admin_edittext_phone_number"
+                    android:hint="휴대폰 번호를 입력해주세요" />
             </LinearLayout>
 
             <LinearLayout
@@ -81,7 +82,7 @@
                 <DatePicker
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/datePicker"
+                    android:id="@+id/activity_register_admin_datePicker"
                     android:calendarViewShown="false" />
             </LinearLayout>
 

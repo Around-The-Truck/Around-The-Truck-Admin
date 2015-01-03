@@ -21,11 +21,14 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -43,6 +46,7 @@ public class RegisterFoodMenuActivity extends Activity {
     private ListView mlistView;
     private FoodMenuRegisterAdapter adapter;
 
+    private ImageView truckImageView;
     private TextView brandNameTextView;
 
     private int targetPosition = 0;
@@ -58,6 +62,7 @@ public class RegisterFoodMenuActivity extends Activity {
     }
 
     public void initialize(){
+        truckImageView = (ImageView) findViewById(R.id.activity_register_food_menu_imageView2);
         mlistView = (ListView) findViewById(R.id.activity_register_food_menu_listview);
         adapter = new FoodMenuRegisterAdapter(getLayoutInflater());
         mlistView.setAdapter(adapter);
@@ -91,6 +96,26 @@ public class RegisterFoodMenuActivity extends Activity {
 
         AdminInformationData adminData = (AdminInformationData) intent.getSerializableExtra("adminData");
         brandNameTextView.setText(adminData.getBrandName());
+        TextView textView = (TextView) findViewById(R.id.activity_register_admin_textView8);
+        textView.setText(adminData.getPhoneNumber());
+        textView = (TextView) findViewById(R.id.activity_register_admin_textView9);
+        textView.setText(adminData.getOpenData());
+        textView = (TextView) findViewById(R.id.activity_register_admin_textView10);
+        textView.setText(adminData.getcategoryAll());
+
+        try {
+            Uri selectPhotoUri = Uri.parse((String) adminData.getSelectPhotoUri());
+            Bitmap selPhoto = MediaStore.Images.Media.getBitmap(getContentResolver(), selectPhotoUri);
+            Bitmap roundPhoto = YSUtility.GetBitmapClippedCircle(selPhoto);
+            truckImageView.setImageBitmap(roundPhoto);
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+
+        }
     }
 
     @Override
@@ -163,6 +188,8 @@ public class RegisterFoodMenuActivity extends Activity {
         public FoodMenuRegisterAdapter(LayoutInflater inflater){
             this.inflater = inflater;
             mItems.add(new FoodMenuData());
+            mItems.add(new FoodMenuData());
+
         }
 
         public void setImageSelectListener(View.OnClickListener listener){
@@ -203,12 +230,11 @@ public class RegisterFoodMenuActivity extends Activity {
 
                 holder = new ViewHolder();
                 holder.menuImageView = (ImageView) convertView.findViewById(R.id.activity_register_food_menu_listitem_imageview);
-//                holder.menuNameTextView = (TextView) convertView.findViewById(R.id.fragment_pos_main_list_textview_menuname);
-//                holder.priceTextView = (TextView) convertView.findViewById(R.id.fragment_pos_main_list_textview_price);
-//                holder.removeButton = (Button) convertView.findViewById(R.id.fragment_pos_main_list_button_remove);
+                holder.menuNameTextView = (TextView) convertView.findViewById(R.id.fragment_pos_main_list_textview_menuname);
+                holder.priceTextView = (TextView) convertView.findViewById(R.id.fragment_pos_main_list_textview_price);
+                holder.removeButton = (Button) convertView.findViewById(R.id.fragment_pos_main_list_button_remove);
 
                 holder.menuImageView.setOnClickListener(imageSelectListener);
-
 
                 convertView.setTag(holder);
             } else {
@@ -242,6 +268,7 @@ public class RegisterFoodMenuActivity extends Activity {
         public ImageView menuImageView;
         public TextView menuNameTextView;
         public TextView priceTextView;
-//        public Button removeButton;
+        public Button removeButton;
+
     }
 }

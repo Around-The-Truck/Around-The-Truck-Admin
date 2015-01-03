@@ -11,11 +11,36 @@
         android:weightSum="1">
 
         <GridView
-            android:layout_width="803dp"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="271dp"
             android:id="@+id/fragment_news_feed_gridView"
             android:numColumns="2"
-            android:layout_weight="0.51" />
+            android:layout_weight="0.52" />
+
+        <ScrollView
+            android:layout_width="727dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/fragment_news_feed_scrollview"
+            android:layout_weight="0.48" >
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"></LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"></LinearLayout>
+            </LinearLayout>
+        </ScrollView>
 
         <LinearLayout
             android:orientation="vertical"

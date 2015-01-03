@@ -76,4 +76,20 @@
             android:text="Small Text"
             android:id="@+id/fragment_news_feed_item_reply_textview" />
     </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <EditText
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/fragment_news_feed_item_reply_edittext" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/fragment_news_feed_item_add_reply_imagebutton" />
+    </LinearLayout>
 </LinearLayout>

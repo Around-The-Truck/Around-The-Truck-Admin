@@ -10,8 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -122,6 +124,16 @@ public class NewsFeedFragment extends Fragment {
 
         private View.OnClickListener removeButtonListener;
 
+        final View.OnClickListener addReplyButtonListener = new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                int position = (Integer) v.getTag();
+                // do something here as well!!
+                notifyDataSetChanged();
+            }
+        };
+
         public NewsFeedListAdapter(Context context){
             mContext = context;
             mItems.add(new FoodMenuData());
@@ -129,6 +141,12 @@ public class NewsFeedFragment extends Fragment {
 
         public NewsFeedListAdapter(LayoutInflater inflater){
             this.inflater = inflater;
+            mItems.add(new FoodMenuData());
+            mItems.add(new FoodMenuData());
+            mItems.add(new FoodMenuData());
+            mItems.add(new FoodMenuData());
+            mItems.add(new FoodMenuData());
+
         }
 
         public void setremoveButtonListener(View.OnClickListener listener){
@@ -159,24 +177,47 @@ public class NewsFeedFragment extends Fragment {
             ViewHolderCounter holder;
 
             if (convertView == null){
-                convertView = inflater.inflate(R.layout.fragment_pos_main_list, null);
+                convertView = inflater.inflate(R.layout.fragment_news_feed_item, null);
 
                 holder = new ViewHolderCounter();
-                holder.menuNameTextView = (TextView) convertView.findViewById(R.id.fragment_pos_main_list_textview_menuname);
-                holder.priceTextView = (TextView) convertView.findViewById(R.id.fragment_pos_main_list_textview_price);
-                holder.removeButton = (Button) convertView.findViewById(R.id.fragment_pos_main_list_button_remove);
+
+                holder.profileImageView = (ImageView) convertView.findViewById(R.id.fragment_news_feed_item_profile_imageview);
+                holder.nameTextView = (TextView) convertView.findViewById(R.id.fragment_news_feed_item_name_textview);
+                holder.mainPhotoImageView = (ImageView) convertView.findViewById(R.id.fragment_news_feed_item_photo_imageview);
+                holder.hertTextView = (TextView) convertView.findViewById(R.id.fragment_news_feed_item_hert_textview);
+                holder.replyNumTextView = (TextView) convertView.findViewById(R.id.fragment_news_feed_item_reply_textview);
+                holder.contentTextView = (TextView) convertView.findViewById(R.id.fragment_news_feed_item_content_textview);
+                holder.timeTextView = (TextView) convertView.findViewById(R.id.fragment_news_feed_item_time_textview);
+
+                holder.replyEditTextView = (EditText) convertView.findViewById(R.id.fragment_news_feed_item_reply_edittext);
 
 
-                holder.removeButton.setOnClickListener(removeButtonListener);
+//                holder.addReplyImageButton.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        notifyDataSetChanged();
+//                    }
+//                });
+
+                holder.addReplyImageButton = (ImageButton) convertView.findViewById(R.id.fragment_news_feed_item_add_reply_imagebutton);
+                holder.addReplyImageButton.setOnClickListener(addReplyButtonListener);
 
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolderCounter) convertView.getTag();
             }
 
-            holder.removeButton.setTag(Integer.valueOf(position));
+            holder.nameTextView.setText("position   "+position);
+            String teststring = "";
+            for(int i = 0; i < position; i++){
+                teststring += "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+            }
+            holder.replyEditTextView.setText(teststring);
 
-            holder.menuNameTextView.setText("Position "+position);
+            holder.addReplyImageButton.setTag(Integer.valueOf(position));
+//            holder.removeButton.setTag(Integer.valueOf(position));
+//
+//            holder.menuNameTextView.setText("Position "+position);
 
             return convertView;
         }
@@ -193,5 +234,16 @@ public class NewsFeedFragment extends Fragment {
         public TextView menuNameTextView;
         public TextView priceTextView;
         public Button removeButton;
+
+        public ImageView profileImageView;
+        public TextView nameTextView;
+        public TextView timeTextView;
+        public ImageView mainPhotoImageView;
+        public TextView contentTextView;
+        public TextView hertTextView;
+        public TextView replyNumTextView;
+
+        public EditText replyEditTextView;
+        public ImageButton addReplyImageButton;
     }
 }
