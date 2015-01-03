@@ -1,0 +1,60 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="kr.co.aroundthetruck.admin.fragment.NewsFeedFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:weightSum="1">
+
+        <GridView
+            android:layout_width="50dp"
+            android:layout_height="271dp"
+            android:id="@+id/fragment_news_feed_gridView"
+            android:numColumns="2"
+            android:layout_weight="0.52" />
+
+        <ScrollView
+            android:layout_width="727dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/fragment_news_feed_scrollview"
+            android:layout_weight="0.48" >
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"></LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"></LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/fragment_news_feed_write_imageButton"
+                android:src="@drawable/ic_launcher"
+                android:focusableInTouchMode="false" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>
