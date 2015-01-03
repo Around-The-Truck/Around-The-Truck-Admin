@@ -2,7 +2,6 @@ package kr.co.aroundthetruck.admin.fragment;
 
 
 import android.app.Fragment;
-import android.content.IntentSender;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
@@ -21,9 +19,6 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesClient;
-import com.google.android.gms.location.LocationClient;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -33,28 +28,22 @@ import java.util.TimeZone;
 
 import kr.co.aroundthetruck.admin.AroundTheTruckApplication;
 import kr.co.aroundthetruck.admin.R;
-import kr.co.aroundthetruck.admin.common.URL;
-import kr.co.aroundthetruck.admin.loader.WeatherLoader;
 import kr.co.aroundthetruck.admin.model.CurrentWeatherModel;
 import kr.co.aroundthetruck.admin.model.GridModel;
 import kr.co.aroundthetruck.admin.model.WeatherModel;
 import kr.co.aroundthetruck.admin.ui.ATTFragment;
 import retrofit.Callback;
-import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TodayResultFragment extends ATTFragment implements
-        GooglePlayServicesClient.ConnectionCallbacks,
-        GooglePlayServicesClient.OnConnectionFailedListener {
+public class TodayResultFragment extends ATTFragment {
     private static final String TAG = TodayResultFragment.class.getSimpleName();
     private static final int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
     private double latitude, longitude;
 
-    private LocationClient locationClient;
     private Location currentLocation;
 
     private TextView tvDate, tvWorkingTime, tvTotalSales, tvTotalCustomerCount, tvCostPerPerson;
@@ -69,108 +58,44 @@ public class TodayResultFragment extends ATTFragment implements
     private SimpleDateFormat sdf;
     private Calendar cal;
 
-    @Override
-    public void onConnected(Bundle dataBundle) {
-        // Display the connection status
-        Toast.makeText(getActivity(), "Connected", Toast.LENGTH_SHORT).show();
-        currentLocation = locationClient.getLastLocation();
+    private Callback<CurrentWeatherModel> cbCurrentWeatherModel = new Callback<CurrentWeatherModel>() {
+        @Override
+        public void success(CurrentWeatherModel currentWeatherModel, Response response) {
+            if (null != currentWeatherModel) {
+                if (null != currentWeatherModel.getWeather()) {
+                    if (null != currentWeatherModel.getWeather().getWeatherList()) {
+                        if (null != currentWeatherModel.getWeather().getWeatherList().get(0)) {
+                            WeatherModel weatherModel = currentWeatherModel.getWeather().getWeatherList().get(0);
 
-        if (null != currentLocation) {
-            Log.i(TAG, "Latitude : " + currentLocation.getLatitude() + ", Longitude : " + currentLocation.getLongitude());
-            latitude = currentLocation.getLatitude();
-            longitude = currentLocation.getLongitude();
-        } else {
-            Log.w(TAG, "Location is NULL");
+                            if (null != weatherModel.getGrid()) {
+                                GridModel grid = weatherModel.getGrid();
+                                StringBuilder regionBuilder = new StringBuilder();
 
-            // 사당역
-            latitude = 37.47732;
-            longitude = 126.98167;
-        }
+                                if (null != grid.getCity()) {
+                                    regionBuilder.append(grid.getCity()).append(" ");
+                                }
 
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(URL.WEATHER_SERVER_API)
-                .build();
+                                if (null != grid.getCounty()) {
+                                    regionBuilder.append(grid.getCounty());
+                                }
 
-        WeatherLoader service = restAdapter.create(WeatherLoader.class);
-        service.loadWeather("1", String.valueOf(latitude), String.valueOf(longitude), new Callback<CurrentWeatherModel>() {
-            @Override
-            public void success(CurrentWeatherModel currentWeatherModel, Response response) {
-                if (null != currentWeatherModel) {
-                    if (null != currentWeatherModel.getWeather()) {
-                        if (null != currentWeatherModel.getWeather().getWeatherList()) {
-                            if (null != currentWeatherModel.getWeather().getWeatherList().get(0)) {
-                                WeatherModel weatherModel = currentWeatherModel.getWeather().getWeatherList().get(0);
-
-                                if (null != weatherModel.getGrid()) {
-                                    GridModel grid = weatherModel.getGrid();
-                                    StringBuilder regionBuilder = new StringBuilder();
-
-                                    if (null != grid.getCity()) {
-                                        regionBuilder.append(grid.getCity()).append(" ");
-                                    }
-
-                                    if (null != grid.getCounty()) {
-                                        regionBuilder.append(grid.getCounty());
-                                    }
-
-                                    if (regionBuilder.length() < 1) {
+                                if (regionBuilder.length() < 1) {
 //                                        tvRegion.setText("위치 정보를 가져올 수 없습니다.");
-                                    } else {
+                                } else {
 //                                        tvRegion.setText(regionBuilder.toString());
-                                    }
                                 }
                             }
                         }
                     }
                 }
             }
-
-            @Override
-            public void failure(RetrofitError retrofitError) {
-                Log.w(TAG, "Error : " + retrofitError.getMessage() + ", URL : " + retrofitError.getUrl());
-            }
-        });
-
-    }
-
-    @Override
-    public void onDisconnected() {
-        // Display the connection status
-        Toast.makeText(getActivity(), "Disconnected. Please re-connect.",
-                Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
-        /*
-         * Google Play services can resolve some errors it detects.
-         * If the error has a resolution, try sending an Intent to
-         * start a Google Play services activity that can resolve
-         * error.
-         */
-        if (connectionResult.hasResolution()) {
-            try {
-                // Start an Activity that tries to resolve the error
-                connectionResult.startResolutionForResult(
-                        getActivity(),
-                        CONNECTION_FAILURE_RESOLUTION_REQUEST);
-                /*
-                 * Thrown if Google Play services canceled the original
-                 * PendingIntent
-                 */
-            } catch (IntentSender.SendIntentException e) {
-                // Log the error
-                e.printStackTrace();
-            }
-        } else {
-            /*
-             * If no resolution is available, display a dialog to the
-             * user with the error.
-             */
-            Toast.makeText(getActivity(), "Error Code : " + connectionResult.getErrorCode(), Toast.LENGTH_SHORT).show();
-//            showErrorDialog(connectionResult.getErrorCode());
         }
-    }
+
+        @Override
+        public void failure(RetrofitError retrofitError) {
+            Log.w(TAG, "Error : " + retrofitError.getMessage() + ", URL : " + retrofitError.getUrl());
+        }
+    };
 
 
     public TodayResultFragment() {
@@ -224,26 +149,8 @@ public class TodayResultFragment extends ATTFragment implements
     public void initialize() {
         sdf = new SimpleDateFormat(getResources().getString(R.string.weekday));
         cal = Calendar.getInstance(TimeZone.getDefault(), Locale.getDefault());
-        locationClient = new LocationClient(getActivity(), this, this);
 
         tvDate.setText(sdf.format(cal.getTime()));
-    }
-
-    @Override
-    public void onResume() {
-        super.onStart();
-        // Connect the client.
-        locationClient.connect();
-    }
-
-    /*
-     * Called when the Activity is no longer visible.
-     */
-    @Override
-    public void onPause() {
-        // Disconnecting the client invalidates it.
-        locationClient.disconnect();
-        super.onStop();
     }
 
     private void setTypeface() {

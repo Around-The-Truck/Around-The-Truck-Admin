@@ -20,6 +20,7 @@ public interface WeatherLoader {
             "Accept:application/json",
             "appKey:07f8befa-8de2-3b00-9c3c-fdfd051bec30"
     })
+
     @GET("/current/hourly")
     void loadWeather(@Query("version") String version, @Query("lat") String lat, @Query("lon") String lon, Callback<CurrentWeatherModel> callback);
 

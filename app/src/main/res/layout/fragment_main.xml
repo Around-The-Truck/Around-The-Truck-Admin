@@ -1,0 +1,80 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="30dp"
+    android:paddingTop="30dp"
+    tools:context="kr.co.aroundthetruck.admin.fragment.MainFragment">
+
+    <LinearLayout
+        android:layout_width="0px"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/fragment_main_tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/main_color"
+            android:textStyle="bold"
+            tools:text="2014.12.10" />
+
+        <TextView
+            android:id="@+id/fragment_main_tv_current_time_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="현재시각"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/fragment_main_tv_am_pm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="오후" />
+
+            <TextView
+                android:id="@+id/fragment_main_tv_hour"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="7" />
+
+            <TextView
+                android:id="@+id/fragment_main_tv_colon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=":" />
+
+            <TextView
+                android:id="@+id/fragment_main_tv_minute"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="30" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/fragment_main_tv_current_region_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="현재위치" />
+
+        <TextView
+            android:id="@+id/fragment_main_tv_current_region"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="서울 송파구 링딩동" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0px"
+        android:layout_weight="1"
+        android:layout_height="wrap_content">
+
+    </LinearLayout>
+</LinearLayout>

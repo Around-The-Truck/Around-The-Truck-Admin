@@ -32,6 +32,9 @@ public class GridModel {
     @SerializedName("county")
     private String county;
 
+    @SerializedName("village")
+    private String village;
+
     public String getLatitude() {
         return latitude;
     }
@@ -62,5 +65,13 @@ public class GridModel {
 
     public void setCounty(String county) {
         this.county = county;
+    }
+
+    public String getVillage() {
+        return village;
+    }
+
+    public void setVillage(String village) {
+        this.village = village;
     }
 }
