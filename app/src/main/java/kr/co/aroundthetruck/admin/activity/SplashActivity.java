@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 
 import kr.co.aroundthetruck.admin.R;
+import kr.co.aroundthetruck.admin.activity.register.RegisterAdminActivity;
 import kr.co.aroundthetruck.admin.ui.ATTActivity;
 
 public class SplashActivity extends ATTActivity {
@@ -31,7 +32,7 @@ public class SplashActivity extends ATTActivity {
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(SplashActivity.this, SignUpActivity.class));
+                startActivity(new Intent(SplashActivity.this, MainActivity.class));
             }
         });
     }

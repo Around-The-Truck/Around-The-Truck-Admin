@@ -5,6 +5,21 @@
     android:background="@color/main_white"
     tools:context="kr.co.aroundthetruck.admin.activity.MainActivity">
 
+
+    <fragment
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:name="kr.co.aroundthetruck.admin.fragment.MenuBarFragment"
+        android:id="@+id/fragment"
+        tools:layout="@layout/fragment_menu_bar" />
+
+    <FrameLayout
+        android:id="@+id/activity_main_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </FrameLayout>
+
     <FrameLayout
         android:layout_width="125dp"
         android:layout_height="match_parent"
@@ -15,13 +30,5 @@
             android:layout_height="match_parent">
 
         </LinearLayout>
-    </FrameLayout>
-
-
-    <FrameLayout
-        android:id="@+id/activity_main_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
     </FrameLayout>
 </LinearLayout>

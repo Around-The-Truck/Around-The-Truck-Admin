@@ -52,5 +52,17 @@
             android:label="@string/app_name"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="stateAlwaysHidden" />
+
+        <activity
+            android:name="kr.co.aroundthetruck.admin.activity.register.RegisterAdminActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+
+        <activity
+            android:name="kr.co.aroundthetruck.admin.activity.register.RegisterFoodMenuActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="stateAlwaysHidden" />
     </application>
 </manifest>

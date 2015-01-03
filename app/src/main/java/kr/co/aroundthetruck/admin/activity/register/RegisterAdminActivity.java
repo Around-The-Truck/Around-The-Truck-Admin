@@ -32,8 +32,9 @@ import java.util.Date;
 import kr.co.aroundthetruck.admin.R;
 import kr.co.aroundthetruck.admin.YSUtility;
 import kr.co.aroundthetruck.admin.dto.AdminInformationData;
+import kr.co.aroundthetruck.admin.ui.ATTActivity;
 
-public class RegisterAdminActivity extends Activity {
+public class RegisterAdminActivity extends ATTActivity {
 
     private LinearLayout layout1;
     private LinearLayout layout2;
@@ -68,13 +69,15 @@ public class RegisterAdminActivity extends Activity {
         setLayout();
     }
 
-    private void setLayout() {
+@Override
+    public void setLayout() {
         layout1.setVisibility(View.VISIBLE);
         layout2.setVisibility(View.INVISIBLE);
         layout3.setVisibility(View.INVISIBLE);
     }
 
-    private void initialize(){
+    @Override
+    public void initialize(){
         layout1 = (LinearLayout) findViewById(R.id.activity_register_admin_layout1);
         layout2 = (LinearLayout) findViewById(R.id.activity_register_admin_layout2);
         layout3 = (LinearLayout) findViewById(R.id.activity_register_admin_layout3);
@@ -200,14 +203,6 @@ public class RegisterAdminActivity extends Activity {
 
         }
 
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_register__admin, menu);
-        return true;
     }
 
     @Override
