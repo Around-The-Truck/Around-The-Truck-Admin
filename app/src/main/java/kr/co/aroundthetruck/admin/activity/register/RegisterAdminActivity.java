@@ -1,11 +1,15 @@
 package kr.co.aroundthetruck.admin.activity.register;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.net.http.AndroidHttpClient;
+import android.os.AsyncTask;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,13 +29,34 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.gms.internal.mc;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.util.Date;
 
 import kr.co.aroundthetruck.admin.R;
 import kr.co.aroundthetruck.admin.YSUtility;
 import kr.co.aroundthetruck.admin.dto.AdminInformationData;
+import kr.co.aroundthetruck.admin.dto.FoodMenuData;
 import kr.co.aroundthetruck.admin.ui.ATTActivity;
 
 public class RegisterAdminActivity extends ATTActivity {
@@ -59,11 +84,13 @@ public class RegisterAdminActivity extends ATTActivity {
 
     private Uri selectPhotoUri;
 
+    Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_admin);
+        mContext = this;
 
         initialize();
         setLayout();
@@ -167,6 +194,7 @@ public class RegisterAdminActivity extends ATTActivity {
         AdminInformationData adminData = new AdminInformationData(brandNameEditText.getText().toString(), editText1.getText().toString(), date  , (String) spinnerCat.getSelectedItem(), (String) spinnerSub.getSelectedItem());
 
         adminData.setSelectPhotoUri(selectPhotoUri.toString());
+        request(adminData);
 
         Intent intent = new Intent(getBaseContext(), RegisterFoodMenuActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -176,9 +204,86 @@ public class RegisterAdminActivity extends ATTActivity {
 
     }
 
+    private void request(AdminInformationData data){
+
+        final String urlStr = "http://165.194.35.161:3000/truckJoin";
+        Log.d("YoonTag", "server : " + urlStr);
+//        StringBuilder output = new StringBuilder();
+        try {
+
+            MultipartEntityBuilder builder = MultipartEntityBuilder.create().setCharset(Charset.forName("UTF-8")).setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+
+            builder.addTextBody("truckName", data.getBrandName());
+
+            HttpClient client = AndroidHttpClient.newInstance("Android");
+            HttpPost post = new HttpPost(urlStr);
+
+//            post.setEntity(builder.build());
+
+            HttpResponse httpRes = client.execute(post);
+
+            HttpEntity httpEntity = httpRes.getEntity();
+            if(httpEntity != null) {
+                Log.d("YoonTag", EntityUtils.toString(httpEntity));
+            }
+
+//            HttpClient client = new DefaultHttpClient();
+//            HttpPost httppost = new HttpPost(urlStr);
+//
+//            // 파일 Body 생성
+//            File truckImg = new File(data.getSelectPhotoUri().toString());
+//            FileBody bin0 = new FileBody(truckImg);
+//
+//
+//            // MultipartEntityBuilder
+//            MultipartEntityBuilder meb = MultipartEntityBuilder.create();
+//
+//            //Builder 설정하기
+//            // 선언할때 넣는게 아니라 선언 후 메소드로 설정한다.
+//            meb.setBoundary("==============");
+//            meb.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+//            meb.setCharset(Charset.defaultCharset());
+//
+//            //문자열을 보내려면 addPart와 StringBody가 아닌 addTextBody를 사용한다.
+//            meb.addTextBody("truckName", data.getBrandName());
+//            meb.addTextBody("phone", data.getPhoneNumber());
+//            meb.addTextBody("open_data", data.getOpenData());
+//
+//            meb.addTextBody("category_big", data.getCategory());
+//            meb.addTextBody("category_small", data.getSubCategory());
+//
+////            meb.addPart("file", bin0);
+//
+//            Log.d("YoonTag", "==================0");
+//            //HttpEntity를 빌드하고 HttpPost 객체에 삽입한다.
+//            HttpEntity entity = meb.build();
+//            httppost.setEntity(entity);
+//            Log.d("YoonTag", "==================1");
+////            Log.d("YoonTag", entity.toString());
+//            HttpResponse response = client.execute(httppost);
+//            Log.d("YoonTag", "server : " + urlStr);
+//            HttpEntity resEntity = response.getEntity();
+//
+//            Log.d("YoonTag", resEntity.toString());
+//
+////
+//            InputStream instream =response.getEntity().getContent();
+//            BufferedReader reader = new BufferedReader(new InputStreamReader(instream));
+
+
+        } catch(ClientProtocolException e){
+            e.printStackTrace();
+        } catch (IOException e ){
+            e.printStackTrace();
+        } catch(Exception e){
+            Log.d("YoonTag", "======== Exception 발생 ");
+            e.printStackTrace();
+        }
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-// TODO Auto-generated method stub
+        // TODO Auto-generated method stub
 
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -260,4 +365,60 @@ public class RegisterAdminActivity extends ATTActivity {
         }
 
     }
+
+//    // 서버 송수신
+//    private class UploadTask extends AsyncTask<void, void, String> {
+//
+//        ProgressDialog mDialog;
+//
+//        @Override
+//        protected void onPreExecute(){
+//
+//            super.onPreExecute();;
+//            mDialog = new ProgressDialog(mContext);
+//            mDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+//            mDialog.setMessage("사진 전송중");
+//            mDialog.show();
+//        }
+//
+//        @Override
+//        protected void onPostExecute(String result){
+//
+//            if(mDialog != null){
+//                mDialog.cancel();
+//                mDialog.dismiss();
+//                mDialog = null;
+//
+//                Log.d("YoonTag", "전송 완료");
+////                Intent intent = new Intent(getBaseContext(), Seer)
+//            }
+//        }
+//
+//        @Override
+//        protected String donInBackground(Void... arg0){
+//
+//            try{
+//                HttpClient httpClient = new DefaultHttpClient();
+//
+//                String url = "서버 URL";
+//                HttpPost post = new HttpPost(url);
+//
+//                File img = new File("주소 주소주소");
+//                FileBody body = new FileBody(img);
+//
+//                MultipartEntity multipart = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
+//
+//                multipart.addPart("file", body);
+//
+//                post.setEntity(multipart);
+//                HttpResponse response = httpClient.execute(post);
+//                HttpEntity resEntity = response.getEntity();
+//
+//            }catch (Exception e){
+//                e.printStackTrace();
+//            }
+//
+//            return "";
+//        }
+//    }
 }

@@ -1,1 +1,1 @@
-include ':app', ':MPChartLib'
+include ':app', ':MPChartLib', ':httpclient-4.3.3', ':apache-mime4j-0.6'

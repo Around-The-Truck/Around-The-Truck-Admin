@@ -22,6 +22,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+    }
+
 }
 
 dependencies {
@@ -30,4 +37,5 @@ dependencies {
     compile 'com.android.support:support-v4:20.0.0'
     compile 'com.google.android.gms:play-services:6.5.87'
     compile project(':MPChartLib')
+    compile 'com.loopj.android:android-async-http:1.4.5'
 }

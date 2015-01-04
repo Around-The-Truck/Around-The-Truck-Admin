@@ -33,7 +33,7 @@ public class AdminInformationData implements Serializable {
     }
 
     public String getcategoryAll(){
-        return category + " / " +subCategory;
+        return category + "-" +subCategory;
     }
 
     public String getPhoneNumber(){
@@ -51,6 +51,14 @@ public class AdminInformationData implements Serializable {
     public String getSelectPhotoUri(){
         return selectPhotoUri;
     }
+
+    public int getCategory_big_int(){ return 0;}
+    public int getCategory_small_int(){return 0;}
+
+    public String getCategory() {return category;}
+
+    public String getSubCategory(){ return subCategory; }
+
 
     @Override
     public boolean equals(Object o){
