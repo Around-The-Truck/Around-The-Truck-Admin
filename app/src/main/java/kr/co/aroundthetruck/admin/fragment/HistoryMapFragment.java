@@ -11,6 +11,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -67,6 +68,7 @@ public class HistoryMapFragment extends ATTFragment implements OnMapReadyCallbac
         googleMap.addMarker(new MarkerOptions()
                 .title("2015/01/03")
                 .snippet("300,000")
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.img_map_icon))
                 .position(sydney));
     }
 }

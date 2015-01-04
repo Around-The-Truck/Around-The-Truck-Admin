@@ -5,12 +5,16 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import kr.co.aroundthetruck.admin.R;
@@ -60,12 +64,39 @@ public class TruckMapFragment extends ATTFragment implements OnMapReadyCallback 
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        LatLng sydney = new LatLng(UserSession.getInstance().getLatitude(), UserSession.getInstance().getLongitude());
+        LatLng sydney = new LatLng(UserSession.getInstance().getLatitude() + 0.5, UserSession.getInstance().getLongitude() + 0.5);
+        LatLng seoul = new LatLng(UserSession.getInstance().getLatitude(), UserSession.getInstance().getLongitude());
         googleMap.setMyLocationEnabled(true);
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 13));
         googleMap.addMarker(new MarkerOptions()
-                .title("트럭 이름 : 현재 상태")
-                .snippet("카테고리 : 좋아요 수")
+//                .title("트럭 이름 : 현재 상태")
+//                .snippet("카테고리 : 좋아요 수")
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.img_map_icon))
                 .position(sydney));
+
+        googleMap.addMarker(new MarkerOptions()
+//                .title("트럭 이름 : 현재 상태")
+//                .snippet("카테고리 : 좋아요 수")
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.img_map_icon))
+                .position(seoul));
+
+        googleMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+            @Override
+            public View getInfoWindow(Marker marker) {
+                View view = LayoutInflater.from(getActivity()).inflate(R.layout.info_window, null);
+
+                StringBuilder builder = new StringBuilder();
+
+                TextView tv;
+
+                return view;
+            }
+
+            @Override
+            public View getInfoContents(Marker marker) {
+                return null;
+            }
+        });
+
     }
 }

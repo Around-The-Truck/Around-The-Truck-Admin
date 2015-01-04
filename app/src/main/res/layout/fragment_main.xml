@@ -69,6 +69,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="서울 송파구 링딩동" />
+
+        <Button
+            android:id="@+id/fragment_main_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fragment Transaction" />
     </LinearLayout>
 
     <LinearLayout

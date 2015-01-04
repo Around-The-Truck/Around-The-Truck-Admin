@@ -32,7 +32,7 @@ public class SplashActivity extends ATTActivity {
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(SplashActivity.this, RegisterAdminActivity.class));
+                startActivity(new Intent(SplashActivity.this, MainActivity.class));
             }
         });
     }

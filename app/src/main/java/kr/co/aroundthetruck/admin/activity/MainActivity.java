@@ -15,6 +15,7 @@ import com.google.android.gms.location.LocationServices;
 import kr.co.aroundthetruck.admin.R;
 import kr.co.aroundthetruck.admin.common.UserSession;
 import kr.co.aroundthetruck.admin.constant.BroadcastReceiverConstants;
+import kr.co.aroundthetruck.admin.fragment.MainFragment;
 import kr.co.aroundthetruck.admin.fragment.TruckMapFragment;
 import kr.co.aroundthetruck.admin.ui.ATTActivity;
 
@@ -88,7 +89,7 @@ public class MainActivity extends ATTActivity implements GoogleApiClient.Connect
         buildGoogleApiClient();
         getFragmentManager()
                 .beginTransaction()
-                .add(R.id.activity_main_container, TruckMapFragment.newInstance()).commit();
+                .add(R.id.activity_main_container, MainFragment.newInstance()).commit();
     }
 
 

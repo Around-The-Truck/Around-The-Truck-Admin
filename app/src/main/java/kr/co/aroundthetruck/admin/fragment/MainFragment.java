@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +39,8 @@ public class MainFragment extends ATTFragment {
     private static final String TAG = MainFragment.class.getSimpleName();
     private BroadcastReceiver dataReceiver;
 
+
+    private Button btn;
 
     private BroadcastReceiver broadcastReceiver;
     private SimpleDateFormat sdfDate, sdfAmPm, sdfHour, sdfMinute;
@@ -154,6 +157,7 @@ public class MainFragment extends ATTFragment {
         tvHour = (TextView) view.findViewById(R.id.fragment_main_tv_hour);
         tvMinute = (TextView) view.findViewById(R.id.fragment_main_tv_minute);
         tvCurrentRegion = (TextView) view.findViewById(R.id.fragment_main_tv_current_region);
+        btn = (Button) view.findViewById(R.id.fragment_main_btn);
     }
 
     @Override
@@ -192,6 +196,15 @@ public class MainFragment extends ATTFragment {
         };
 
         getActivity().registerReceiver(dataReceiver, new IntentFilter("kr.co.aroundthetruck.admin.data"));
-    }
 
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.activity_main_container, TruckMapFragment.newInstance())
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+    }
 }

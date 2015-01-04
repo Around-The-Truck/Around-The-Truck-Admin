@@ -36,12 +36,6 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.mime.HttpMultipartMode;
-import org.apache.http.entity.mime.MultipartEntity;
-import org.apache.http.entity.mime.MultipartEntityBuilder;
-import org.apache.http.entity.mime.content.FileBody;
-import org.apache.http.entity.mime.content.StringBody;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
 import java.io.BufferedReader;
@@ -72,8 +66,8 @@ public class RegisterAdminActivity extends ATTActivity {
     private Spinner spinnerCat;
     private Spinner spinnerSub;
 
-    private String [] categoryItems = { "한식 ", "중식", "일식", "양식", "한식 ", "중식", "일식", "양식"};
-    private String [] subCategoryItems = { "한식_서브", "중식_서브", "일식_서브", "양식_서브", "한식_서브", "중식_서브", "일식_서브", "양식_서브"};
+    private String[] categoryItems = {"한식 ", "중식", "일식", "양식", "한식 ", "중식", "일식", "양식"};
+    private String[] subCategoryItems = {"한식_서브", "중식_서브", "일식_서브", "양식_서브", "한식_서브", "중식_서브", "일식_서브", "양식_서브"};
 
     private ImageView imageView;
     private final int REQUEST_IMAGE = 002;
@@ -96,7 +90,7 @@ public class RegisterAdminActivity extends ATTActivity {
         setLayout();
     }
 
-@Override
+    @Override
     public void setLayout() {
         layout1.setVisibility(View.VISIBLE);
         layout2.setVisibility(View.INVISIBLE);
@@ -104,7 +98,7 @@ public class RegisterAdminActivity extends ATTActivity {
     }
 
     @Override
-    public void initialize(){
+    public void initialize() {
         layout1 = (LinearLayout) findViewById(R.id.activity_register_admin_layout1);
         layout2 = (LinearLayout) findViewById(R.id.activity_register_admin_layout2);
         layout3 = (LinearLayout) findViewById(R.id.activity_register_admin_layout3);
@@ -144,16 +138,16 @@ public class RegisterAdminActivity extends ATTActivity {
 
         // spinnerSub
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                this, android.R.layout.simple_spinner_item, categoryItems );
+                this, android.R.layout.simple_spinner_item, categoryItems);
         adapter.setDropDownViewResource(
-                android.R.layout.simple_dropdown_item_1line   );
+                android.R.layout.simple_dropdown_item_1line);
 
         spinnerCat.setAdapter(adapter);
 
         ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(
-                this, android.R.layout.simple_spinner_item, subCategoryItems );
+                this, android.R.layout.simple_spinner_item, subCategoryItems);
         adapter2.setDropDownViewResource(
-                android.R.layout.simple_dropdown_item_1line   );
+                android.R.layout.simple_dropdown_item_1line);
         spinnerSub.setAdapter(adapter2);
 
 
@@ -167,14 +161,14 @@ public class RegisterAdminActivity extends ATTActivity {
                 RegisterAdminActivity.this.startActivityForResult(intent, REQUEST_IMAGE);
 
             }
-         });
+        });
 
         gridview = (GridView) findViewById(R.id.activity_register_admin_gridview);
         gridview.setAdapter(new ImageAdapter(this));
-        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                Toast.makeText(RegisterAdminActivity.this, ""+position, Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterAdminActivity.this, "" + position, Toast.LENGTH_SHORT).show();
             }
 
         });
@@ -185,13 +179,13 @@ public class RegisterAdminActivity extends ATTActivity {
 
     }
 
-    private void finishButtonIsClicked(){
+    private void finishButtonIsClicked() {
 
         EditText editText1 = (EditText) findViewById(R.id.activity_register_admin_edittext_phone_number);
         DatePicker datePicker = (DatePicker) findViewById(R.id.activity_register_admin_datePicker);
 
-        String date = datePicker.getYear() +"/" + datePicker.getMonth() +"/"+ datePicker.getDayOfMonth();
-        AdminInformationData adminData = new AdminInformationData(brandNameEditText.getText().toString(), editText1.getText().toString(), date  , (String) spinnerCat.getSelectedItem(), (String) spinnerSub.getSelectedItem());
+        String date = datePicker.getYear() + "/" + datePicker.getMonth() + "/" + datePicker.getDayOfMonth();
+        AdminInformationData adminData = new AdminInformationData(brandNameEditText.getText().toString(), editText1.getText().toString(), date, (String) spinnerCat.getSelectedItem(), (String) spinnerSub.getSelectedItem());
 
         adminData.setSelectPhotoUri(selectPhotoUri.toString());
         request(adminData);
@@ -204,81 +198,81 @@ public class RegisterAdminActivity extends ATTActivity {
 
     }
 
-    private void request(AdminInformationData data){
-
-        final String urlStr = "http://165.194.35.161:3000/truckJoin";
-        Log.d("YoonTag", "server : " + urlStr);
-//        StringBuilder output = new StringBuilder();
-        try {
-
-            MultipartEntityBuilder builder = MultipartEntityBuilder.create().setCharset(Charset.forName("UTF-8")).setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
-
-            builder.addTextBody("truckName", data.getBrandName());
-
-            HttpClient client = AndroidHttpClient.newInstance("Android");
-            HttpPost post = new HttpPost(urlStr);
-
-//            post.setEntity(builder.build());
-
-            HttpResponse httpRes = client.execute(post);
-
-            HttpEntity httpEntity = httpRes.getEntity();
-            if(httpEntity != null) {
-                Log.d("YoonTag", EntityUtils.toString(httpEntity));
-            }
-
-//            HttpClient client = new DefaultHttpClient();
-//            HttpPost httppost = new HttpPost(urlStr);
+    private void request(AdminInformationData data) {
 //
-//            // 파일 Body 생성
-//            File truckImg = new File(data.getSelectPhotoUri().toString());
-//            FileBody bin0 = new FileBody(truckImg);
+//        final String urlStr = "http://165.194.35.161:3000/truckJoin";
+//        Log.d("YoonTag", "server : " + urlStr);
+////        StringBuilder output = new StringBuilder();
+//        try {
 //
+//            MultipartEntityBuilder builder = MultipartEntityBuilder.create().setCharset(Charset.forName("UTF-8")).setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
 //
-//            // MultipartEntityBuilder
-//            MultipartEntityBuilder meb = MultipartEntityBuilder.create();
+//            builder.addTextBody("truckName", data.getBrandName());
 //
-//            //Builder 설정하기
-//            // 선언할때 넣는게 아니라 선언 후 메소드로 설정한다.
-//            meb.setBoundary("==============");
-//            meb.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
-//            meb.setCharset(Charset.defaultCharset());
+//            HttpClient client = AndroidHttpClient.newInstance("Android");
+//            HttpPost post = new HttpPost(urlStr);
 //
-//            //문자열을 보내려면 addPart와 StringBody가 아닌 addTextBody를 사용한다.
-//            meb.addTextBody("truckName", data.getBrandName());
-//            meb.addTextBody("phone", data.getPhoneNumber());
-//            meb.addTextBody("open_data", data.getOpenData());
+////            post.setEntity(builder.build());
 //
-//            meb.addTextBody("category_big", data.getCategory());
-//            meb.addTextBody("category_small", data.getSubCategory());
+//            HttpResponse httpRes = client.execute(post);
 //
-////            meb.addPart("file", bin0);
+//            HttpEntity httpEntity = httpRes.getEntity();
+//            if(httpEntity != null) {
+//                Log.d("YoonTag", EntityUtils.toString(httpEntity));
+//            }
 //
-//            Log.d("YoonTag", "==================0");
-//            //HttpEntity를 빌드하고 HttpPost 객체에 삽입한다.
-//            HttpEntity entity = meb.build();
-//            httppost.setEntity(entity);
-//            Log.d("YoonTag", "==================1");
-////            Log.d("YoonTag", entity.toString());
-//            HttpResponse response = client.execute(httppost);
-//            Log.d("YoonTag", "server : " + urlStr);
-//            HttpEntity resEntity = response.getEntity();
-//
-//            Log.d("YoonTag", resEntity.toString());
-//
+////            HttpClient client = new DefaultHttpClient();
+////            HttpPost httppost = new HttpPost(urlStr);
 ////
-//            InputStream instream =response.getEntity().getContent();
-//            BufferedReader reader = new BufferedReader(new InputStreamReader(instream));
-
-
-        } catch(ClientProtocolException e){
-            e.printStackTrace();
-        } catch (IOException e ){
-            e.printStackTrace();
-        } catch(Exception e){
-            Log.d("YoonTag", "======== Exception 발생 ");
-            e.printStackTrace();
-        }
+////            // 파일 Body 생성
+////            File truckImg = new File(data.getSelectPhotoUri().toString());
+////            FileBody bin0 = new FileBody(truckImg);
+////
+////
+////            // MultipartEntityBuilder
+////            MultipartEntityBuilder meb = MultipartEntityBuilder.create();
+////
+////            //Builder 설정하기
+////            // 선언할때 넣는게 아니라 선언 후 메소드로 설정한다.
+////            meb.setBoundary("==============");
+////            meb.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+////            meb.setCharset(Charset.defaultCharset());
+////
+////            //문자열을 보내려면 addPart와 StringBody가 아닌 addTextBody를 사용한다.
+////            meb.addTextBody("truckName", data.getBrandName());
+////            meb.addTextBody("phone", data.getPhoneNumber());
+////            meb.addTextBody("open_data", data.getOpenData());
+////
+////            meb.addTextBody("category_big", data.getCategory());
+////            meb.addTextBody("category_small", data.getSubCategory());
+////
+//////            meb.addPart("file", bin0);
+////
+////            Log.d("YoonTag", "==================0");
+////            //HttpEntity를 빌드하고 HttpPost 객체에 삽입한다.
+////            HttpEntity entity = meb.build();
+////            httppost.setEntity(entity);
+////            Log.d("YoonTag", "==================1");
+//////            Log.d("YoonTag", entity.toString());
+////            HttpResponse response = client.execute(httppost);
+////            Log.d("YoonTag", "server : " + urlStr);
+////            HttpEntity resEntity = response.getEntity();
+////
+////            Log.d("YoonTag", resEntity.toString());
+////
+//////
+////            InputStream instream =response.getEntity().getContent();
+////            BufferedReader reader = new BufferedReader(new InputStreamReader(instream));
+//
+//
+//        } catch(ClientProtocolException e){
+//            e.printStackTrace();
+//        } catch (IOException e ){
+//            e.printStackTrace();
+//        } catch(Exception e){
+//            Log.d("YoonTag", "======== Exception 발생 ");
+//            e.printStackTrace();
+//        }
     }
 
     @Override
@@ -287,8 +281,7 @@ public class RegisterAdminActivity extends ATTActivity {
 
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == REQUEST_IMAGE && resultCode == RESULT_OK && data != null)
-        {
+        if (requestCode == REQUEST_IMAGE && resultCode == RESULT_OK && data != null) {
             Log.d("YoonTag", "====== OnActivityResult is start ========= \n");
 
             Uri selPhotoUri = data.getData();
@@ -325,7 +318,7 @@ public class RegisterAdminActivity extends ATTActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    class ImageAdapter extends BaseAdapter{
+    class ImageAdapter extends BaseAdapter {
         private Context mContext;
         private Integer[] mThumbIds = {
                 R.drawable.ic_launcher, R.drawable.ic_launcher,
@@ -336,27 +329,30 @@ public class RegisterAdminActivity extends ATTActivity {
                 R.drawable.ic_launcher, R.drawable.ic_launcher
         };
 
-        public ImageAdapter(Context c){
+        public ImageAdapter(Context c) {
             mContext = c;
         }
-        public int getCount(){
+
+        public int getCount() {
             return mThumbIds.length;
         }
-        public Object getItem(int position){
+
+        public Object getItem(int position) {
             return null;
         }
-        public long getItemId(int position){
+
+        public long getItemId(int position) {
             return 0;
         }
-        public View getView(int position, View convertView, ViewGroup parent){
+
+        public View getView(int position, View convertView, ViewGroup parent) {
             ImageView imageView;
-            if(convertView == null){
+            if (convertView == null) {
                 imageView = new ImageView(mContext);
                 imageView.setLayoutParams(new GridView.LayoutParams(85, 85));
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 imageView.setPadding(8, 8, 8, 8);
-            }
-            else{
+            } else {
                 imageView = (ImageView) convertView;
             }
 

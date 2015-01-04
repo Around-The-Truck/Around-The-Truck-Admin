@@ -1,9 +1,6 @@
 package kr.co.aroundthetruck.admin.dto;
 
-import android.net.Uri;
-
 import java.io.Serializable;
-import java.net.URI;
 
 /**
  * Created by 윤석 on 2014-12-26.
@@ -16,10 +13,11 @@ public class AdminInformationData implements Serializable {
     private String openData;
     private String selectPhotoUri;
 
-    public AdminInformationData(){
+    public AdminInformationData() {
 
     }
-    public AdminInformationData(String brandName, String phoneNumber, String openData, String category, String subCategory){
+
+    public AdminInformationData(String brandName, String phoneNumber, String openData, String category, String subCategory) {
         this.brandName = brandName;
         this.phoneNumber = phoneNumber;
         this.openData = openData;
@@ -28,40 +26,49 @@ public class AdminInformationData implements Serializable {
 
     }
 
-    public String getBrandName(){
+    public String getBrandName() {
         return brandName;
     }
 
-    public String getcategoryAll(){
-        return category + "-" +subCategory;
+    public String getcategoryAll() {
+        return category + "-" + subCategory;
     }
 
-    public String getPhoneNumber(){
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public String getOpenData(){
+    public String getOpenData() {
         return openData;
     }
 
-    public void setSelectPhotoUri(String uri){
+    public void setSelectPhotoUri(String uri) {
         selectPhotoUri = uri;
     }
 
-    public String getSelectPhotoUri(){
+    public String getSelectPhotoUri() {
         return selectPhotoUri;
     }
 
-    public int getCategory_big_int(){ return 0;}
-    public int getCategory_small_int(){return 0;}
+    public int getCategory_big_int() {
+        return 0;
+    }
 
-    public String getCategory() {return category;}
+    public int getCategory_small_int() {
+        return 0;
+    }
 
-    public String getSubCategory(){ return subCategory; }
+    public String getCategory() {
+        return category;
+    }
+
+    public String getSubCategory() {
+        return subCategory;
+    }
 
 
     @Override
-    public boolean equals(Object o){
+    public boolean equals(Object o) {
         return super.equals(o);
     }
 
