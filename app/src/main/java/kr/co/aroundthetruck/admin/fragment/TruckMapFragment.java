@@ -16,17 +16,81 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.reflect.TypeToken;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import kr.co.aroundthetruck.admin.R;
+import kr.co.aroundthetruck.admin.callback.TruckListLoadCallback;
 import kr.co.aroundthetruck.admin.common.UserSession;
+import kr.co.aroundthetruck.admin.loader.TruckLoader;
+import kr.co.aroundthetruck.admin.model.TruckListModel;
+import kr.co.aroundthetruck.admin.model.TruckModel;
 import kr.co.aroundthetruck.admin.ui.ATTFragment;
+import kr.co.aroundthetruck.admin.util.Util;
 
 /**
  * A simple {@link android.app.Fragment} subclass.
  */
-public class TruckMapFragment extends ATTFragment implements OnMapReadyCallback {
+public class TruckMapFragment extends ATTFragment implements OnMapReadyCallback, TruckListLoadCallback {
 
     private MapFragment mapFragment;
+    private GoogleMap map;
+
+    private TruckListModel list;
+    private ArrayList<TruckModel> items;
+    private ArrayList<Marker> markerList;
+
+    @Override
+    public void onTruckListLoadSuccess(int statusCode, byte[] bytes) {
+        String raw = new String(bytes);
+
+        list = Util.getGson().fromJson(raw, TruckListModel.class);
+        items = list.getTruckList();
+
+        if (null != map) {
+
+            for (int count = 0; count < items.size(); count++) {
+                TruckModel truck = items.get(count);
+
+                LatLng latLng = new LatLng(truck.getLatitude(), truck.getLongitude());
+
+                MarkerOptions marker = new MarkerOptions()
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.img_map_icon))
+                        .position(latLng);
+
+                map.addMarker(marker);
+            }
+
+//
+//            map.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+//                @Override
+//                public View getInfoWindow(Marker marker) {
+//                    View view = LayoutInflater.from(getActivity()).inflate(R.layout.info_window, null);
+//
+//                    StringBuilder builder = new StringBuilder();
+//
+//                    TruckModel truck = items.get(marker.get());
+//
+//                    TextView tv;
+//
+//                    return view;
+//                }
+//
+//                @Override
+//                public View getInfoContents(Marker marker) {
+//                    return null;
+//                }
+//            });
+
+        }
+    }
+
+    @Override
+    public void onTruckListLoadFail(int statusCode, byte[] bytes, Throwable throwable) {
+
+    }
 
     public TruckMapFragment() {
     }
@@ -60,43 +124,18 @@ public class TruckMapFragment extends ATTFragment implements OnMapReadyCallback 
     @Override
     public void initialize() {
         mapFragment.getMapAsync(this);
+        markerList = new ArrayList<>();
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        map = googleMap;
+
         LatLng sydney = new LatLng(UserSession.getInstance().getLatitude() + 0.5, UserSession.getInstance().getLongitude() + 0.5);
         LatLng seoul = new LatLng(UserSession.getInstance().getLatitude(), UserSession.getInstance().getLongitude());
         googleMap.setMyLocationEnabled(true);
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 13));
-        googleMap.addMarker(new MarkerOptions()
-//                .title("트럭 이름 : 현재 상태")
-//                .snippet("카테고리 : 좋아요 수")
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.img_map_icon))
-                .position(sydney));
 
-        googleMap.addMarker(new MarkerOptions()
-//                .title("트럭 이름 : 현재 상태")
-//                .snippet("카테고리 : 좋아요 수")
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.img_map_icon))
-                .position(seoul));
-
-        googleMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
-            @Override
-            public View getInfoWindow(Marker marker) {
-                View view = LayoutInflater.from(getActivity()).inflate(R.layout.info_window, null);
-
-                StringBuilder builder = new StringBuilder();
-
-                TextView tv;
-
-                return view;
-            }
-
-            @Override
-            public View getInfoContents(Marker marker) {
-                return null;
-            }
-        });
-
+        TruckLoader.getLoader().getTruckListOnMap(UserSession.getInstance().getLatitude(), UserSession.getInstance().getLongitude(), TruckMapFragment.this);
     }
 }
