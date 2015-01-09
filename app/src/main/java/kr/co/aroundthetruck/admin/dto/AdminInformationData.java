@@ -13,6 +13,7 @@ public class AdminInformationData implements Serializable {
     private String openData;
     private String selectPhotoUri;
 
+
     public AdminInformationData() {
 
     }
@@ -39,6 +40,7 @@ public class AdminInformationData implements Serializable {
     }
 
     public String getOpenData() {
+
         return openData;
     }
 
@@ -65,6 +67,8 @@ public class AdminInformationData implements Serializable {
     public String getSubCategory() {
         return subCategory;
     }
+
+
 
 
     @Override

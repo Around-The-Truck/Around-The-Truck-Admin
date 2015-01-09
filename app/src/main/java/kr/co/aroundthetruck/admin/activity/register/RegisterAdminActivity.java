@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.net.http.AndroidHttpClient;
@@ -30,7 +31,11 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.internal.mc;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
+import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -44,6 +49,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URI;
 import java.nio.charset.Charset;
 import java.util.Date;
 
@@ -184,7 +190,7 @@ public class RegisterAdminActivity extends ATTActivity {
         EditText editText1 = (EditText) findViewById(R.id.activity_register_admin_edittext_phone_number);
         DatePicker datePicker = (DatePicker) findViewById(R.id.activity_register_admin_datePicker);
 
-        String date = datePicker.getYear() + "/" + datePicker.getMonth() + "/" + datePicker.getDayOfMonth();
+        String date = datePicker.getYear() + "-" + datePicker.getMonth() + "-" + datePicker.getDayOfMonth();
         AdminInformationData adminData = new AdminInformationData(brandNameEditText.getText().toString(), editText1.getText().toString(), date, (String) spinnerCat.getSelectedItem(), (String) spinnerSub.getSelectedItem());
 
         adminData.setSelectPhotoUri(selectPhotoUri.toString());
@@ -198,8 +204,80 @@ public class RegisterAdminActivity extends ATTActivity {
 
     }
 
+    public String getRealPathFromURI(Context context, Uri contentUri) {
+        Cursor cursor = null;
+        try {
+            String[] proj = { MediaStore.Images.Media.DATA };
+            cursor = context.getContentResolver().query(contentUri,  proj, null, null, null);
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+    }
+
     private void request(AdminInformationData data) {
+
+        AsyncHttpClient client = new AsyncHttpClient();
+
+        RequestParams param = new RequestParams();
+        // 이렇게 인자를 넘겨야 될 때
+        // 이름을 정해주고 추가하면 됨!
+        //param.put("id", "rlaace423");
+        //param.put("file", new File(fullPath));
+
+        try {
+            param.put("truckName", data.getBrandName());
+            param.put("phone", data.getPhoneNumber());
+            param.put("open_date", data.getOpenData());
+            param.put("category_big", 1);
+            param.put("category_small", 1);
+
+            param.put("takeout_yn", 1);
+            param.put("cansit_yn", 1);
+            param.put("card_yn", 1);
+            param.put("reserve_yn", 1);
+            param.put("group_order_yn", 1);
+            param.put("always_open_yn", 1);
+            param.put("idx", "6");
+
+            Log.d("YoonTag", data.getSelectPhotoUri().toString());
+            Uri selectPhotoUri = Uri.parse((String) data.getSelectPhotoUri());
+            param.put("file", new File(fullPath));
+
+        } catch (Exception e){
+            e.printStackTrace();
+            Log.d("YoonTag", "Errorrorror");
+        }
+
+
+        client.post("http://165.194.35.161:3000/truckJoin", param, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int i, Header[] headers, byte[] bytes) {
+                Log.d("YoonTag", bytes.toString());
+                Log.d("YoonTag", new String(bytes));
+//                try {
+//                    org.json.JSONArray arr = new org.json.JSONArray(new String(bytes));
+//                    for (int i=0; i<arr.length(); i++) {
+//                        MainActivity.items.add(new CustomerItem(arr.getJSONObject(i).getString("image1_id"),arr.getJSONObject(i).getString("name"),arr.getJSONObject(i).getString("category"),arr.getJSONObject(i).getString("price")));
+//                    }
 //
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+            }
+
+            @Override
+            public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+                Log.d("YoonTag", new String(bytes));
+                Log.d("YoonTag", "에러러러러");
+            }
+        });
+
+
 //        final String urlStr = "http://165.194.35.161:3000/truckJoin";
 //        Log.d("YoonTag", "server : " + urlStr);
 ////        StringBuilder output = new StringBuilder();
@@ -275,6 +353,7 @@ public class RegisterAdminActivity extends ATTActivity {
 //        }
     }
 
+    private String fullPath;
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // TODO Auto-generated method stub
@@ -290,6 +369,10 @@ public class RegisterAdminActivity extends ATTActivity {
                 Bitmap roundPhoto = YSUtility.GetBitmapClippedCircle(selPhoto);
                 imageView.setImageBitmap(roundPhoto);
                 selectPhotoUri = selPhotoUri;
+
+
+                // sangho
+                fullPath = getRealPathFromURI(this, selPhotoUri);
             } catch (FileNotFoundException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();

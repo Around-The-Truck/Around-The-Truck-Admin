@@ -11,8 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.RequestParams;
 
 import kr.co.aroundthetruck.admin.R;
 
@@ -38,6 +42,10 @@ public class MenuBarFragment extends Fragment {
     private LinearLayout smallMenuLayout;
     private LinearLayout largeMenuLayout;
     private LinearLayout containerLayout;
+
+    private ImageButton homeImageButton;
+    private ImageButton settingImageButton;
+    private ImageButton exitImageButton;
 
 //    private LinearLayout.LayoutParams mLayoutParams;
 
@@ -76,6 +84,35 @@ public class MenuBarFragment extends Fragment {
 
         Log.v("ystag", "initalize");
 
+        homeImageButton = (ImageButton) view.findViewById(R.id.fragment_menu_bar_home_imagebutton);
+        homeImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.activity_main_container,  PosMainFragment.newInstance())
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
+        settingImageButton = (ImageButton) view.findViewById(R.id.fragment_menu_bar_setting_imagebutton);
+        settingImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.activity_main_container, NewsFeedFragment.newInstance())
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
+        exitImageButton = (ImageButton) view.findViewById(R.id.fragment_menu_bar_exit_imagebutton);
+        exitImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
     }
 
@@ -103,8 +140,18 @@ public class MenuBarFragment extends Fragment {
     private void setLayout(LayoutInflater inflater){
 //        adapter = new FoodMenuListAdapter(inflater);
 //        menuSelectGridView.setAdapter(adapter);
+
+
     }
 
+    private void request(){
+        Log.d("YoonTag", "서버 통신 시작");
+
+        AsyncHttpClient client = new AsyncHttpClient();
+
+        RequestParams param = new RequestParams();
+        
+    }
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {

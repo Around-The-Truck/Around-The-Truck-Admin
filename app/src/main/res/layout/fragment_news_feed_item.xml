@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="vertical" android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/fragment_news_feed_item_layout"
+    android:background="@drawable/newsfeed_newsback">
 
     <LinearLayout
         android:orientation="horizontal"
@@ -12,7 +14,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/fragment_news_feed_item_profile_imageview"
-            android:src="@drawable/ic_launcher" />
+            android:src="@drawable/newsfeed_newsphoto"
+            android:layout_marginTop="25.5dp"
+            android:layout_marginLeft="21dp" />
 
         <LinearLayout
             android:orientation="vertical"
@@ -24,28 +28,28 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Medium Text"
-                android:id="@+id/fragment_news_feed_item_name_textview" />
+                android:id="@+id/fragment_news_feed_item_name_textview"
+                android:layout_marginTop="43dp"
+                android:layout_marginLeft="23dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="Small Text"
-                android:id="@+id/fragment_news_feed_item_time_textview" />
+                android:id="@+id/fragment_news_feed_item_time_textview"
+                android:layout_marginTop="13.5dp"
+                android:layout_marginLeft="23dp" />
         </LinearLayout>
     </LinearLayout>
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/fragment_news_feed_item_photo_imageview" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Small Text"
-        android:id="@+id/fragment_news_feed_item_content_textview" />
+        android:layout_width="493dp"
+        android:layout_height="493dp"
+        android:id="@+id/fragment_news_feed_item_photo_imageview"
+        android:layout_marginLeft="25.5dp"
+        android:background="#ffdddddd"
+        android:layout_marginTop="17.5dp" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -55,27 +59,46 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/fragment_news_feed_item_imageview" />
+            android:id="@+id/fragment_news_feed_item_imageview"
+            android:src="@drawable/newsfeed_heart"
+            android:layout_marginLeft="35dp"
+            android:layout_marginTop="17dp" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="72dp"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Small Text"
-            android:id="@+id/fragment_news_feed_item_hert_textview" />
+            android:text="127명"
+            android:id="@+id/fragment_news_feed_item_hert_textview"
+            android:layout_marginLeft="9dp"
+            android:layout_marginTop="17dp"
+            android:textColor="#ff9b9b9b" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/fragment_news_feed_item_imageview2" />
+            android:id="@+id/fragment_news_feed_item_imageview2"
+            android:src="@drawable/newsfeed_refly"
+            android:layout_marginTop="16.5dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Small Text"
-            android:id="@+id/fragment_news_feed_item_reply_textview" />
+            android:id="@+id/fragment_news_feed_item_reply_textview"
+            android:layout_marginTop="17dp"
+            android:textColor="#ff9b9b9b" />
     </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Small Text"
+        android:id="@+id/fragment_news_feed_item_content_textview"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="26.5dp" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -85,7 +108,8 @@
         <EditText
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:id="@+id/fragment_news_feed_item_reply_edittext" />
+            android:id="@+id/fragment_news_feed_item_reply_edittext"
+            android:layout_marginLeft="32dp" />
 
         <ImageButton
             android:layout_width="wrap_content"

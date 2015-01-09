@@ -99,17 +99,46 @@
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="50dp"
+            android:layout_width="97.5dp"
             android:layout_height="fill_parent"
             android:background="@color/main_color"
             android:id="@+id/fragment_menu_bar_small_layout"
             android:focusableInTouchMode="false">
 
             <Button
+                android:layout_width="35dp"
+                android:layout_height="31dp"
+                android:id="@+id/fragment_menu_bar_small_button"
+                android:background="@drawable/menubar_menubt"
+                android:layout_marginTop="36dp"
+                android:layout_marginLeft="31dp" />
+
+            <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="3"
-                android:id="@+id/fragment_menu_bar_small_button" />
+                android:id="@+id/fragment_menu_bar_home_imagebutton"
+                android:layout_marginTop="502.5dp"
+                android:layout_marginLeft="31dp"
+                android:src="@drawable/menubar_home"
+                android:background="@color/main_color" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/fragment_menu_bar_setting_imagebutton"
+                android:layout_marginTop="37dp"
+                android:src="@drawable/menubar_set"
+                android:background="@color/main_color"
+                android:layout_marginLeft="33dp" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/fragment_menu_bar_exit_imagebutton"
+                android:background="@color/main_color"
+                android:src="@drawable/menubar_out"
+                android:layout_marginTop="40dp"
+                android:layout_marginLeft="33.5dp" />
         </LinearLayout>
     </LinearLayout>
 

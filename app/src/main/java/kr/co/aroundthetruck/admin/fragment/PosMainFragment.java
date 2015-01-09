@@ -26,6 +26,7 @@ import java.util.List;
 
 import kr.co.aroundthetruck.admin.R;
 import kr.co.aroundthetruck.admin.dto.FoodMenuData;
+import kr.co.aroundthetruck.admin.ui.ATTFragment;
 
 
 /**
@@ -36,7 +37,7 @@ import kr.co.aroundthetruck.admin.dto.FoodMenuData;
  * Use the {@link kr.co.aroundthetruck.admin.fragment.PosMainFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class PosMainFragment extends Fragment {
+public class PosMainFragment extends ATTFragment {
 
 
     public PosMainFragment() {
@@ -116,6 +117,21 @@ public class PosMainFragment extends Fragment {
         counterTextView.setText(price + " 원");
     }
 
+    @Override
+    public void setLayout(View v){
+
+    }
+
+    @Override
+    public void initialize(){
+
+    }
+
+    public static PosMainFragment newInstance() {
+        PosMainFragment fragment = new PosMainFragment();
+
+        return fragment;
+    }
 
 
     class FoodMenuListAdapter extends BaseAdapter {

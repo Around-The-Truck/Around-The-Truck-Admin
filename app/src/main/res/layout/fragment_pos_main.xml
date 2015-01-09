@@ -1,19 +1,18 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="wrap_content"
     android:layout_height="match_parent" tools:context="kr.co.aroundthetruck.admin.fragment.PosMainFragment"
     android:id="@+id/fragment_pos_main">
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="fill_parent">
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="2">
+            android:layout_width="747.5dp"
+            android:layout_height="fill_parent">
 
             <TextView
                 android:layout_width="306dp"
@@ -34,46 +33,29 @@
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:background="@color/main_color">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="총 결제 금액"
-                android:id="@+id/fragment_pos_main_textView2"
-                android:layout_margin="20dp" />
+            android:layout_width="446.5dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/pos_posback">
 
             <ListView
                 android:layout_width="wrap_content"
                 android:layout_height="210dp"
-                android:id="@+id/fragment_pos_main_count_Listview" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="총 결제 금액"
-                android:id="@+id/fragment_pos_main_textView3"
-                android:layout_margin="30dp" />
+                android:id="@+id/fragment_pos_main_count_Listview"
+                android:layout_marginTop="70dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="27000 원"
-                android:id="@+id/fragment_pos_main_count_textview" />
+                android:id="@+id/fragment_pos_main_count_textview"
+                android:layout_marginTop="120dp" />
 
             <LinearLayout
                 android:orientation="horizontal"
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp">
+                android:layout_marginTop="100dp">
 
                 <LinearLayout
                     android:orientation="vertical"
@@ -83,21 +65,21 @@
                     <Button
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="포인트 사용"
-                        android:id="@+id/fragment_pos_main_point_button" />
+                        android:id="@+id/fragment_pos_main_point_button"
+                        android:background="@drawable/pos_point" />
 
                     <Button
-                        android:layout_width="fill_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="취소"
-                        android:id="@+id/fragment_pos_main_cancel_button" />
+                        android:id="@+id/fragment_pos_main_cancel_button"
+                        android:background="@drawable/pos_cancel" />
                 </LinearLayout>
 
                 <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="fill_parent"
-                    android:text="결제하기"
-                    android:id="@+id/fragment_pos_main_payment_button" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/fragment_pos_main_payment_button"
+                    android:background="@drawable/pos_pay" />
 
             </LinearLayout>
         </LinearLayout>

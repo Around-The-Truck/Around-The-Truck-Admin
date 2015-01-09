@@ -6,22 +6,15 @@
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="fill_parent"
         android:weightSum="1">
 
-        <GridView
-            android:layout_width="50dp"
-            android:layout_height="271dp"
-            android:id="@+id/fragment_news_feed_gridView"
-            android:numColumns="2"
-            android:layout_weight="0.52" />
-
         <ScrollView
-            android:layout_width="727dp"
+            android:layout_width="1126dp"
             android:layout_height="wrap_content"
             android:id="@+id/fragment_news_feed_scrollview"
-            android:layout_weight="0.48" >
+            android:layout_marginTop="38dp">
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -32,13 +25,17 @@
                     android:orientation="vertical"
                     android:layout_width="0dp"
                     android:layout_height="fill_parent"
-                    android:layout_weight="1"></LinearLayout>
+                    android:layout_weight="1"
+                    android:id="@+id/fragment_news_feed_view1">
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="0dp"
                     android:layout_height="fill_parent"
-                    android:layout_weight="1"></LinearLayout>
+                    android:layout_weight="1"
+                    android:id="@+id/fragment_news_feed_view2"></LinearLayout>
             </LinearLayout>
         </ScrollView>
 

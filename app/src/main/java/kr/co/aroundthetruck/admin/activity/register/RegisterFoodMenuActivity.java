@@ -183,8 +183,6 @@ public class RegisterFoodMenuActivity extends Activity {
         public FoodMenuRegisterAdapter(LayoutInflater inflater){
             this.inflater = inflater;
             mItems.add(new FoodMenuData());
-            mItems.add(new FoodMenuData());
-
         }
 
         public void setImageSelectListener(View.OnClickListener listener){

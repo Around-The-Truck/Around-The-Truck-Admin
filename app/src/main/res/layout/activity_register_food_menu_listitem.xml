@@ -15,7 +15,8 @@
             android:layout_height="100dp"
             android:id="@+id/activity_register_food_menu_listitem_imageview"
             android:focusableInTouchMode="true"
-            android:src="@drawable/ic_launcher" />
+            android:src="@drawable/ic_launcher"
+            android:focusable="false" />
     </LinearLayout>
 
     <LinearLayout
