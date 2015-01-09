@@ -150,7 +150,7 @@ public class MenuBarFragment extends Fragment {
         AsyncHttpClient client = new AsyncHttpClient();
 
         RequestParams param = new RequestParams();
-        
+
     }
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
