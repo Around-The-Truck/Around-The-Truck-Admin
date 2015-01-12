@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Around-The-Truck-Admin.iml" filepath="$PROJECT_DIR$/Around-The-Truck-Admin.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Around-The-Truck-Admin-New.iml" filepath="$PROJECT_DIR$/Around-The-Truck-Admin-New.iml" />
       <module fileurl="file://$PROJECT_DIR$/MPChartLib/MPChartLib.iml" filepath="$PROJECT_DIR$/MPChartLib/MPChartLib.iml" />
       <module fileurl="file://$PROJECT_DIR$/apache-mime4j-0.6/apache-mime4j-0.6.iml" filepath="$PROJECT_DIR$/apache-mime4j-0.6/apache-mime4j-0.6.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />

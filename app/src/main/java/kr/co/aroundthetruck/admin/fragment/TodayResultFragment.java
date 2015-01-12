@@ -2,8 +2,10 @@ package kr.co.aroundthetruck.admin.fragment;
 
 
 import android.app.Fragment;
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
+import android.preference.PreferenceActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,23 +13,36 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.apache.http.Header;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
 import kr.co.aroundthetruck.admin.AroundTheTruckApplication;
 import kr.co.aroundthetruck.admin.R;
+import kr.co.aroundthetruck.admin.dto.CalculatorData;
+import kr.co.aroundthetruck.admin.dto.FoodMenuData;
 import kr.co.aroundthetruck.admin.model.CurrentWeatherModel;
 import kr.co.aroundthetruck.admin.model.GridModel;
 import kr.co.aroundthetruck.admin.model.WeatherModel;
@@ -49,8 +64,14 @@ public class TodayResultFragment extends ATTFragment {
     private TextView tvDate, tvWorkingTime, tvTotalSales, tvTotalCustomerCount, tvCostPerPerson;
     private TextView tvTitle, tvWorkingTimeTitle, tvTotalSalesTitle, tvTotalCustomerCountTitle, tvCostPerPersonTitle;
 
+    // 성별 차트
     private PieChart pcSex;
+
+    // 연령대 차트
     private BarChart bcAge;
+
+    //시간대별 매출
+    private LineChart lcTime;
 
 //    private TextView tvRegion;
 //    private TextClock tcTime;
@@ -141,6 +162,7 @@ public class TodayResultFragment extends ATTFragment {
 
         pcSex = (PieChart) view.findViewById(R.id.fragment_today_result_pc_sex);
         bcAge = (BarChart) view.findViewById(R.id.fragment_today_result_bc_age);
+        lcTime = (LineChart) view.findViewById(R.id.fragment_today_result_lc_time);
 //        tcTime = (TextClock) view.findViewById(R.id.fragment_today_result_tc_time);
 //        tvRegion = (TextView) view.findViewById(R.id.fragment_today_result_tv_region);
     }
@@ -168,7 +190,7 @@ public class TodayResultFragment extends ATTFragment {
 
         pcSex.setValueTypeface(AroundTheTruckApplication.nanumGothic);
         bcAge.setValueTypeface(AroundTheTruckApplication.nanumGothic);
-
+        lcTime.setValueTypeface(AroundTheTruckApplication.nanumGothic);
 //        tvRegion.setTypeface(AroundTheTruckApplication.nanumGothicLight);
     }
 
@@ -185,31 +207,28 @@ public class TodayResultFragment extends ATTFragment {
         PieDataSet set1 = new PieDataSet(yVals, "성별 비율");
         set1.setSliceSpace(3f);
 
+
         ArrayList<Integer> colors = new ArrayList<>();
 
-        for (int c : ColorTemplate.VORDIPLOM_COLORS)
-            colors.add(c);
 
-        for (int c : ColorTemplate.JOYFUL_COLORS)
-            colors.add(c);
+        for (int a : ColorTemplate.JOYFUL_COLORS){
+            colors.add(a);
 
-        for (int c : ColorTemplate.COLORFUL_COLORS)
-            colors.add(c);
+        }
 
-        for (int c : ColorTemplate.LIBERTY_COLORS)
-            colors.add(c);
+        for(int a: ColorTemplate.LIBERTY_COLORS){
 
-        for (int c : ColorTemplate.PASTEL_COLORS)
-            colors.add(c);
+            colors.add(a);
+        }
 
-        colors.add(ColorTemplate.getHoloBlue());
 
         set1.setColors(colors);
 
         PieData data = new PieData(xVals, set1);
         pcSex.setData(data);
 
-        pcSex.setDrawHoleEnabled(false);
+
+        pcSex.setDrawHoleEnabled(true);
         pcSex.setDescription("");
         pcSex.setUsePercentValues(true);
 
@@ -217,6 +236,7 @@ public class TodayResultFragment extends ATTFragment {
         pcSex.highlightValues(null);
         pcSex.invalidate();
         pcSex.animateX(1800);
+
 
         ArrayList<String> xVals1 = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
@@ -255,8 +275,108 @@ public class TodayResultFragment extends ATTFragment {
         bcAge.setDrawHorizontalGrid(false);
         bcAge.setDrawVerticalGrid(false);
         bcAge.setDescription("");
-
         bcAge.setData(bcData);
+
+        ////////////////////////////////////////////////
+        ArrayList<String> xBar1 = new ArrayList<>();
+        xBar1.add("12");
+        xBar1.add("1");
+        xBar1.add("2");
+        xBar1.add("3");
+        xBar1.add("4");
+        xBar1.add("5");
+        xBar1.add("6");
+        xBar1.add("7");
+
+        ArrayList<Entry> yBals1 = new ArrayList<Entry>();
+
+        for(int i  = 0 ; i < 8 ; i++) {
+            val = (float) (Math.random() * 3);
+            yBals1.add(new Entry(val, i));
+
+        }
+
+        LineDataSet lcset1 = new LineDataSet(yBals1, "시간대별 매출");
+
+            lcset1.setLineWidth(1.75f);
+            lcset1.setCircleSize(3f);
+            lcset1.setColor(Color.BLACK);
+            lcset1.setCircleColor(Color.BLACK);
+            lcset1.setHighLightColor(Color.BLACK);
+
+
+        ArrayList<LineDataSet> lcdataSets = new ArrayList<LineDataSet>();
+        lcdataSets.add(lcset1); // add the datasets
+
+        LineData lcdata = new LineData(xBar1, lcdataSets);
+
+
+        lcTime.setDrawGridBackground(false);
+        lcTime.setDrawHorizontalGrid(false);
+        lcTime.setDrawVerticalGrid(false);
+        lcTime.setDescription("");
+
+        lcTime.setData(lcdata);
+
     }
+
+
+    public List<CalculatorData> getServerInfo(){
+        AsyncHttpClient client = new AsyncHttpClient();
+        RequestParams param = new RequestParams();
+        Log.d("YoonTag", "서버 통신");
+
+        try {
+            param.put("truckIdx", "1");
+
+        } catch (Exception e){
+            e.printStackTrace();
+            Log.d("YoonTag", "param Exception" + e);
+        }
+        final List<CalculatorData> info = new ArrayList<>();
+
+        try {
+            client.post("http://165.194.35.161:3000/Ca", param, new AsyncHttpResponseHandler() {
+                @Override
+                public void onSuccess(int i, Header[] headers, byte[] bytes) {
+                    Log.d("YoonTag", bytes.toString());
+                    Log.d("YoonTag", new String(bytes));
+
+                    try {
+                        JSONObject jsonObject = new JSONObject(new String(bytes));
+                        JSONArray arr = new JSONArray(new String(jsonObject.getString("result")));
+                        for (int j=0; j<arr.length(); j++) {
+
+                            ColorTemplate colorTemplate = new ColorTemplate(arr.getJSONObject(j).getString("name"))
+
+
+
+//                            FoodMenuData adata = new FoodMenuData(arr.getJSONObject(j).getString("name"),
+//                                    arr.getJSONObject(j).getInt("price"), arr.getJSONObject(j).getString("photo_filename"),
+////                                    arr.getJSONObject(j).getString("description"));
+////                            menuList.add(adata);
+                        }
+                    } catch (Exception e) {
+                        Log.d("YoonTag", "Json Error : " + e);
+                        e.printStackTrace();
+                    }
+
+                }
+
+                @Override
+                public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+                    Log.d("YoonTag", new String(bytes));
+                    Log.d("YoonTag", "에러러러러");
+                }
+            });
+        }
+        catch (Exception e){
+//            Toast.makeText(MainActivity.this, "서버 접속 에러 ", Toast.LENGTH_SHORT).show();
+            Log.d("YoonTag", "서버 접속 에러");
+        }
+
+        return info;
+    }
+
 
 }

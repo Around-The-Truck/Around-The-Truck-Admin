@@ -305,7 +305,7 @@ public abstract class DataSet<T extends Entry> {
      * Adds an Entry to the DataSet dynamically. This will also recalculate the
      * current minimum and maximum values of the DataSet and the value-sum.
      *
-     * @param d
+     * @param
      */
     public void addEntry(Entry e) {
 
@@ -380,7 +380,7 @@ public abstract class DataSet<T extends Entry> {
      * the size of the colors array. If you are using colors from the resources,
      * make sure that the colors are already prepared (by calling
      * getResources().getColor(...)) before adding them to the DataSet.
-     * 
+     *
      * @param colors
      */
     public void setColors(ArrayList<Integer> colors) {

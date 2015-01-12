@@ -329,7 +329,7 @@ public class PieChart extends PieRadarChartBase<PieData> {
      * draws the hole in the center of the chart and the transparent circle /
      * hole
      */
-    private void drawHole() {
+    public void drawHole() {
 
         if (mDrawHole) {
 

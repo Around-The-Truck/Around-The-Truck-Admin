@@ -19,6 +19,7 @@ public class ColorTemplate {
      * THE COLOR THEMES ARE PREDEFINED (predefined color integer arrays), FEEL
      * FREE TO CREATE YOUR OWN WITH AS MANY DIFFERENT COLORS AS YOU WANT
      */
+
     public static final int[] LIBERTY_COLORS = {
             Color.rgb(207, 248, 246), Color.rgb(148, 212, 212), Color.rgb(136, 180, 187),
             Color.rgb(118, 174, 175), Color.rgb(42, 109, 130)
@@ -39,6 +40,24 @@ public class ColorTemplate {
             Color.rgb(192, 255, 140), Color.rgb(255, 247, 140), Color.rgb(255, 208, 140),
             Color.rgb(140, 234, 255), Color.rgb(255, 140, 157)
     };
+
+    static String red1 = "f27070";
+    static String red2 = "ef453e";
+    static String red3 = "d62b2b";
+    static String red4 = "b72323";
+
+
+
+    public static ArrayList<Integer> getRedColor() {
+
+        ArrayList<Integer> colors = new ArrayList<>();
+        colors.add(Color.parseColor(red1));
+        colors.add(Color.parseColor(red2));
+        colors.add(Color.parseColor(red3));
+        colors.add(Color.parseColor(red4));
+
+     return  colors;
+    }
 
     // public static final int[] FRESH_COLORS = {
     // R.color.fresh_1, R.color.fresh_2, R.color.fresh_3, R.color.fresh_4,

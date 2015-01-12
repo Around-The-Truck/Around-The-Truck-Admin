@@ -21,6 +21,8 @@ import java.util.ArrayList;
  */
 public class LineChart extends BarLineChartBase<LineData> {
 
+
+
     /** the width of the highlighning line */
     protected float mHighlightWidth = 3f;
 
