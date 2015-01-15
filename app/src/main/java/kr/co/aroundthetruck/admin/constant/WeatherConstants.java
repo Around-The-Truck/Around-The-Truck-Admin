@@ -5,5 +5,4 @@ package kr.co.aroundthetruck.admin.constant;
  */
 public class WeatherConstants {
 
-
 }

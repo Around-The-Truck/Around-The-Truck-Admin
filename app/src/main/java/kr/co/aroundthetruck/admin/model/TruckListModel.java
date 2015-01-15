@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 public class TruckListModel {
 
-    @SerializedName("status")
+    @SerializedName("code")
     private int status;
 
     @SerializedName("result")

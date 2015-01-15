@@ -19,6 +19,15 @@ public class TruckModel {
     @SerializedName("gps_longitude")
     private double longitude;
 
+    @SerializedName("start_yn")
+    private int status;
+
+    @SerializedName("follow_count")
+    private int followCount;
+
+    @SerializedName("photo_filename")
+    private String photo;
+
     public int getIdx() {
         return idx;
     }
@@ -49,6 +58,30 @@ public class TruckModel {
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public int getFollowCount() {
+        return followCount;
+    }
+
+    public void setFollowCount(int followCount) {
+        this.followCount = followCount;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 
     /*

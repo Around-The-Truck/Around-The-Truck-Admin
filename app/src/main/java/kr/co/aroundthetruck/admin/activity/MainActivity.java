@@ -3,7 +3,6 @@ package kr.co.aroundthetruck.admin.activity;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -17,7 +16,6 @@ import kr.co.aroundthetruck.admin.R;
 import kr.co.aroundthetruck.admin.common.UserSession;
 import kr.co.aroundthetruck.admin.constant.BroadcastReceiverConstants;
 import kr.co.aroundthetruck.admin.fragment.MainFragment;
-import kr.co.aroundthetruck.admin.fragment.TruckMapFragment;
 import kr.co.aroundthetruck.admin.ui.ATTActivity;
 
 public class MainActivity extends ATTActivity implements GoogleApiClient.ConnectionCallbacks,
@@ -60,8 +58,8 @@ public class MainActivity extends ATTActivity implements GoogleApiClient.Connect
             Log.w(TAG, "Location is NULL");
 
             // 사당역
-            latitude = 37.47732;
-            longitude = 126.98167;
+            latitude = 37.5280361;
+            longitude = 126.9653303;
         }
 
         UserSession.getInstance().setLatitude(latitude);
@@ -89,6 +87,13 @@ public class MainActivity extends ATTActivity implements GoogleApiClient.Connect
 
     @Override
     public void initialize() {
+        // 사당역
+        latitude = 37.5280361;
+        longitude = 126.9653303;
+
+        UserSession.getInstance().setLatitude(latitude);
+        UserSession.getInstance().setLongitude(longitude);
+
         buildGoogleApiClient();
         getFragmentManager()
                 .beginTransaction()
@@ -113,8 +118,7 @@ public class MainActivity extends ATTActivity implements GoogleApiClient.Connect
             if (mGoogleApiClient.isConnected() && mRequestingLocationUpdates) {
                 startLocationUpdates();
             }
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

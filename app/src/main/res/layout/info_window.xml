@@ -1,19 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:gravity="center"
     android:background="@drawable/map_info"
+    android:layout_gravity="center"
+    android:gravity="center"
     android:paddingLeft="5dp"
     android:paddingRight="5dp">
+
+    <!--<ImageView-->
+    <!--tools:src="@drawable/ic_launcher" />-->
+    <!--android:id="@+id/info_window_iv"-->
+    <!--android:layout_width="100dp"-->
+    <!--android:layout_height="100dp"-->
+    <!--android:scaleType="centerCrop"-->
 
     <TextView
         android:id="@+id/info_window_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="트럭 이름 : 현재 상태\r\n카테고리 : 좋아요 수"
+        android:layout_centerInParent="true"
         android:textColor="@android:color/white"
         android:lineSpacingExtra="2dp"
-        android:gravity="center" />
-</LinearLayout>
+        android:gravity="center"
+        tools:text="트럭 이름 : 현재 상태\r\n카테고리 : 좋아요 수" />
+    <!--android:layout_toRightOf="@+id/info_window_iv"-->
+
+</RelativeLayout>
