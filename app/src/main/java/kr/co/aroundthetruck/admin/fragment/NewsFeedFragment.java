@@ -12,27 +12,30 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.loopj.android.image.SmartImageView;
+import com.squareup.picasso.Picasso;
 
 import org.apache.http.Header;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import kr.co.aroundthetruck.admin.R;
-import kr.co.aroundthetruck.admin.activity.MainActivity;
+import kr.co.aroundthetruck.admin.YSUtility;
 import kr.co.aroundthetruck.admin.dto.ArticleData;
-import kr.co.aroundthetruck.admin.dto.FoodMenuData;
+import kr.co.aroundthetruck.admin.dto.ArticleReply;
+import kr.co.aroundthetruck.admin.dto.YSNetwork;
+import kr.co.aroundthetruck.admin.util.RoundedTransformation;
 
 
 /**
@@ -80,7 +83,10 @@ public class NewsFeedFragment extends Fragment {
         writeNewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                request();
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.activity_main_container,  NewsFeedAddArticleFragment.newInstance())
+                        .addToBackStack(null)
+                        .commit();
             }
         });
 
@@ -88,13 +94,11 @@ public class NewsFeedFragment extends Fragment {
         view2 = (LinearLayout) view.findViewById(R.id.fragment_news_feed_view2);
 
         itemView = (LinearLayout) view.findViewById(R.id.fragment_news_feed_item_layout);
+
     }
 
     private void setLayout(LayoutInflater inflater){
-        adapter = new NewsFeedListAdapter(inflater);
-
-
-
+        adapter = new NewsFeedListAdapter(inflater, getActivity());
         request();
     }
 
@@ -122,9 +126,6 @@ public class NewsFeedFragment extends Fragment {
                 view2h += height;
             }
         }
-
-//        view1.notifyAll();
-//        view2.notifyAll();
     }
 
     private void request(){
@@ -133,15 +134,10 @@ public class NewsFeedFragment extends Fragment {
         AsyncHttpClient client = new AsyncHttpClient();
 
         RequestParams param = new RequestParams();
-        // 이렇게 인자를 넘겨야 될 때
-        // 이름을 정해주고 추가하면 됨!
-        //param.put("id", "rlaace423");
-        //param.put("file", new File(fullPath));
-
         Log.d("YoonTag", "서버 통신");
 
         try {
-            param.put("writer", 1);
+            param.put("writer", 2);
             param.put("writer_type", 1);
 
         } catch (Exception e){
@@ -161,7 +157,8 @@ public class NewsFeedFragment extends Fragment {
                     Log.d("YoonTag", new String(bytes));
                     final List<ArticleData> articleList = new ArrayList<>();
                     try {
-                        org.json.JSONArray arr = new org.json.JSONArray(new String(bytes));
+                        JSONObject jsonObject = new JSONObject(new String(bytes));
+                        JSONArray arr = new JSONArray(new String(jsonObject.getString("result")));
                         for (int j=0; j<arr.length(); j++) {
                             ArticleData adata = new ArticleData(arr.getJSONObject(j).getString("filename"),
                                     arr.getJSONObject(j).getInt("writer"), arr.getJSONObject(j).getInt("writer_type"),
@@ -169,15 +166,6 @@ public class NewsFeedFragment extends Fragment {
                                     arr.getJSONObject(j).getString("belong_to"), arr.getJSONObject(j).getString("reg_date"));
                             Log.d("YoonTag", ""+adata.writer);
                             articleList.add(adata);
-//                            articleList.add(new ArticleData(arr.getJSONObject(j).getString("filename"),
-//                                    arr.getJSONObject(j).getInt("writer"), arr.getJSONObject(j).getInt("writer_type"),
-//                                    arr.getJSONObject(j).getString("contents"), arr.getJSONObject(j).getString("like"),
-//                                    arr.getJSONObject(j).getString("belong_to"), arr.getJSONObject(j).getString("reg_date") )
-//                            );
-    //                        "idx":2,"filename":"default_image.jpg","writer":"1",
-    //                                "writer_type":1,"contents":"맛없다..","like":"like","belong_to":"1",
-    //                                "reg_date":"2014-04-09 16:07:02"
-    //                        articleList.add(new ArticleData(arr.getJSONObject(i).getString("image1_id"), arr.getJSONObject(i).getString("name"), arr.getJSONObject(i).getString("category"), arr.getJSONObject(i).getString("price")));
                         }
                         Log.d("YoonTag", "ListView Reset~~~~~~~~~~~~~~~~" + arr.length());
                     } catch (Exception e) {
@@ -187,6 +175,61 @@ public class NewsFeedFragment extends Fragment {
 
                     adapter.setmItems(articleList);
                     setListLayout();
+
+                }
+
+                @Override
+                public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+//                    Log.d("YoonTag", new String(bytes));
+                    Log.d("YoonTag", "에러러러러");
+                }
+            });
+        }
+        catch (Exception e){
+//            Toast.makeText(MainActivity.this, "서버 접속 에러 ", Toast.LENGTH_SHORT).show();
+            Log.d("YoonTag", "서버 접속 에러");
+        }
+
+
+    }
+
+    public List<ArticleReply> replyRequest(String articleIdx){
+        Log.d("YoonTag", "서버 통신 시작");
+
+        AsyncHttpClient client = new AsyncHttpClient();
+        RequestParams param = new RequestParams();
+        Log.d("YoonTag", "서버 통신");
+
+        try {
+            param.put("articleIdx", articleIdx);
+
+        } catch (Exception e){
+            e.printStackTrace();
+            Log.d("YoonTag", "param Exception" + e);
+        }
+        final List<ArticleReply> articleList = new ArrayList<>();
+
+        try {
+            client.post("http://165.194.35.161:3000/getReplyList", param, new AsyncHttpResponseHandler() {
+                @Override
+                public void onSuccess(int i, Header[] headers, byte[] bytes) {
+                    Log.d("YoonTag", bytes.toString());
+                    Log.d("YoonTag", new String(bytes));
+
+                    try {
+                        JSONObject jsonObject = new JSONObject(new String(bytes));
+                        JSONArray arr = new JSONArray(new String(jsonObject.getString("result")));
+                        for (int j=0; j<arr.length(); j++) {
+                            ArticleReply adata = new ArticleReply(arr.getJSONObject(j).getString("idx"),
+                                    arr.getJSONObject(j).getString("contents"), arr.getJSONObject(j).getString("writer"),
+                                    arr.getJSONObject(j).getString("writer_type"), arr.getJSONObject(j).getString("article_idx"),
+                                    arr.getJSONObject(j).getString("reg_date"));
+                            articleList.add(adata);
+                        }
+                    } catch (Exception e) {
+                        Log.d("YoonTag", "Json Error : " + e);
+                        e.printStackTrace();
+                    }
 
                 }
 
@@ -202,7 +245,7 @@ public class NewsFeedFragment extends Fragment {
             Log.d("YoonTag", "서버 접속 에러");
         }
 
-
+        return articleList;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -210,17 +253,6 @@ public class NewsFeedFragment extends Fragment {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-//        try {
-//            mListener = (OnFragmentInteractionListener) activity;
-//        } catch (ClassCastException e) {
-//            throw new ClassCastException(activity.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
     }
 
     @Override
@@ -249,11 +281,6 @@ public class NewsFeedFragment extends Fragment {
 
         private LayoutInflater inflater;
         private List<ArticleData> mItems = new ArrayList<>();
-//        private List<NewsFeedFragment> mItems = new ArrayList<>();
-
-        private int totalPrice = 0;
-
-        private View.OnClickListener removeButtonListener;
 
         final View.OnClickListener addReplyButtonListener = new View.OnClickListener() {
 
@@ -267,26 +294,16 @@ public class NewsFeedFragment extends Fragment {
 
         public NewsFeedListAdapter(Context context){
             mContext = context;
-//            mItems.add(new FoodMenuData());
         }
 
-        public NewsFeedListAdapter(LayoutInflater inflater){
+        public NewsFeedListAdapter(LayoutInflater inflater, Context context){
             this.inflater = inflater;
-//            mItems.add(new FoodMenuData());
-//            mItems.add(new FoodMenuData());
-//            mItems.add(new FoodMenuData());
-//            mItems.add(new FoodMenuData());
-//            mItems.add(new FoodMenuData());
-
+            this.mContext = context;
         }
 
         public void setmItems(List<ArticleData> items){
             mItems = items;
-            this.notifyDataSetChanged();
-        }
-
-        public void setremoveButtonListener(View.OnClickListener listener){
-            removeButtonListener = listener;
+            this.notifyDataSetInvalidated();
         }
 
         public int getCount(){
@@ -311,14 +328,6 @@ public class NewsFeedFragment extends Fragment {
 
                 holder.replyEditTextView = (EditText) convertView.findViewById(R.id.fragment_news_feed_item_reply_edittext);
 
-
-//                holder.addReplyImageButton.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        notifyDataSetChanged();
-//                    }
-//                });
-
                 holder.addReplyImageButton = (ImageButton) convertView.findViewById(R.id.fragment_news_feed_item_add_reply_imagebutton);
                 holder.addReplyImageButton.setOnClickListener(addReplyButtonListener);
 
@@ -342,10 +351,14 @@ public class NewsFeedFragment extends Fragment {
             holder.replyEditTextView.setText(teststring);
 
             holder.addReplyImageButton.setTag(Integer.valueOf(position));
-//            holder.removeButton.setTag(Integer.valueOf(position));
-//
-//            holder.menuNameTextView.setText("Position "+position);
 
+            Picasso.with(mContext).load(YSUtility.addressImageStorage + data.filename).fit().transform(new RoundedTransformation(86)).into(holder.profileImageView);
+
+            YSNetwork network = new YSNetwork();
+            network.replyRequest("1");
+
+            Picasso.with(mContext).load(YSUtility.addressImageStorage + data.filename).fit().into(holder.mainPhotoImageView);
+            holder.timeTextView.setText(data.date);
             return convertView;
         }
 

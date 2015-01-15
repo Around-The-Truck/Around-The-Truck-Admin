@@ -1,10 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="kr.co.aroundthetruck.admin.activity.register.RegisterAdminActivity">
+    android:layout_height="match_parent"
+    tools:context="kr.co.aroundthetruck.admin.activity.register.RegisterAdminActivity"
+    android:padding="0dp">
 
     <LinearLayout
         android:orientation="horizontal"
@@ -15,29 +13,34 @@
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:id="@+id/activity_register_admin_layout1">
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:id="@+id/activity_register_admin_layout1"
+            android:background="@color/main_color">
 
             <ImageView
-                android:layout_width="200dp"
-                android:layout_height="200dp"
+                android:layout_width="210.5dp"
+                android:layout_height="210.5dp"
                 android:id="@+id/activity_register_admin_imageView2"
-                android:src="@drawable/ic_launcher"
-                android:layout_gravity="center_horizontal"
-                android:focusableInTouchMode="true" />
+                android:focusableInTouchMode="true"
+                android:layout_marginTop="70.5dp"
+                android:layout_marginLeft="74dp"
+                android:layout_marginRight="74dp"
+                android:background="@drawable/register_brandimg"
+                android:layout_marginBottom="50dp" />
 
             <LinearLayout
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="123dp">
 
-                <TextView
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="브랜드명"
-                    android:id="@+id/activity_register_admin_textView1" />
+                    android:id="@+id/activity_register_admin_imageview10"
+                    android:src="@drawable/register_name1"
+                    android:layout_marginLeft="28.5dp"
+                    android:layout_marginRight="28.5dp" />
 
                 <EditText
                     android:layout_width="match_parent"
@@ -45,19 +48,26 @@
                     android:inputType="textPersonName"
                     android:ems="10"
                     android:id="@+id/activity_register_admin_edittext_name"
-                    android:hint="트럭 이름을 입력해주세요." />
+                    android:hint="트럭 이름을 입력해주세요."
+                    android:layout_marginLeft="28.5dp"
+                    android:layout_marginRight="28.5dp"
+                    android:layout_marginTop="20dp"
+                    android:textColorHint="@color/main_white"
+                    android:textColor="@color/main_white" />
+
             </LinearLayout>
 
             <LinearLayout
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="123dp">
 
-                <TextView
+                <LinearLayout
+                    android:orientation="horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="번호"
-                    android:id="@+id/activity_register_admin_textView2" />
+                    android:background="@drawable/register_num1"
+                    android:layout_marginLeft="28.5dp"></LinearLayout>
 
                 <EditText
                     android:layout_width="match_parent"
@@ -65,7 +75,13 @@
                     android:inputType="phone"
                     android:ems="10"
                     android:id="@+id/activity_register_admin_edittext_phone_number"
-                    android:hint="휴대폰 번호를 입력해주세요" />
+                    android:hint="휴대폰 번호를 입력해주세요"
+                    android:layout_marginLeft="28.5dp"
+                    android:layout_marginRight="28.5dp"
+                    android:layout_marginTop="20dp"
+                    android:textColor="@color/main_white"
+                    android:textColorHint="@color/main_white" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -73,109 +89,162 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content">
 
-                <TextView
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="오픈 날짜"
-                    android:id="@+id/activity_register_admin_textView3" />
+                    android:id="@+id/activity_register_admin_imageview15"
+                    android:src="@drawable/register_opendate1"
+                    android:layout_marginLeft="28.5dp" />
 
                 <DatePicker
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/activity_register_admin_datePicker"
-                    android:calendarViewShown="false" />
+                    android:calendarViewShown="false"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dp" />
             </LinearLayout>
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Next Button"
-                android:id="@+id/activity_register_admin_button_next1" />
 
         </LinearLayout>
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:id="@+id/activity_register_admin_layout2">
+            android:id="@+id/activity_register_admin_layout2"
+            android:background="@color/main_white">
 
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="카테고리"
-                    android:id="@+id/activity_register_admin_textView4" />
-
-                <Spinner
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/activity_register_admin_category_spinner"
-                    android:spinnerMode="dropdown" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="세부 카테고리"
-                    android:id="@+id/activity_register_admin_textView5" />
-
-                <Spinner
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/activity_register_admin_category_spinner2" />
-            </LinearLayout>
-
-            <Button
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Next Button"
-                android:id="@+id/activity_register_admin_button_next2" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:id="@+id/activity_register_admin_layout3">
+                android:id="@+id/activity_register_admin_imageview12"
+                android:src="@drawable/register_setting_bar" />
 
             <LinearLayout
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="fill_parent">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="478.5dp"
                     android:layout_height="wrap_content"
-                    android:text="옵션"
-                    android:id="@+id/textView6" />
+                    android:layout_marginTop="28dp"
+                    android:layout_marginLeft="33dp">
 
-                <GridView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/activity_register_admin_gridview"
-                    android:numColumns="3"
-                    android:choiceMode="multipleChoice" />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/activity_register_admin_imageview13"
+                        android:src="@drawable/register_category" />
+
+                    <Spinner
+                        android:layout_width="270dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/activity_register_admin_category_spinner"
+                        android:spinnerMode="dropdown"
+                        android:layout_marginTop="29dp" />
+
+                    <Spinner
+                        android:layout_width="270dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/activity_register_admin_category_spinner2"
+                        android:layout_marginTop="29dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginTop="28dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/activity_register_admin_imageview14"
+                        android:src="@drawable/register_option" />
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="29dp">
+
+                            <ImageButton
+                                android:layout_width="91.5dp"
+                                android:layout_height="120.5dp"
+                                android:id="@+id/activity_register_admin_option_imagebutton1"
+                                android:src="@drawable/register_card_g"
+                                android:background="@color/main_white"
+                                android:layout_marginRight="27.5dp" />
+
+                            <ImageButton
+                                android:layout_width="91.5dp"
+                                android:layout_height="120.5dp"
+                                android:id="@+id/activity_register_admin_option_imagebutton2"
+                                android:background="@color/main_white"
+                                android:src="@drawable/register_seat_g"
+                                android:layout_marginRight="27.5dp" />
+
+                            <ImageButton
+                                android:layout_width="91.5dp"
+                                android:layout_height="120.5dp"
+                                android:id="@+id/activity_register_admin_option_imagebutton3"
+                                android:src="@drawable/register_open_g"
+                                android:background="@color/main_white" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:layout_marginTop="21.5dp">
+
+                            <ImageButton
+                                android:layout_width="91.5dp"
+                                android:layout_height="120.5dp"
+                                android:id="@+id/activity_register_admin_option_imagebutton4"
+                                android:background="@color/main_white"
+                                android:src="@drawable/register_takeout_g"
+                                android:layout_marginRight="27.5dp" />
+
+                            <ImageButton
+                                android:layout_width="91.5dp"
+                                android:layout_height="120.5dp"
+                                android:id="@+id/activity_register_admin_option_imagebutton5"
+                                android:src="@drawable/register_group_g"
+                                android:background="@color/main_white"
+                                android:layout_marginRight="27.5dp" />
+
+                            <ImageButton
+                                android:layout_width="91.5dp"
+                                android:layout_height="120.5dp"
+                                android:id="@+id/activity_register_admin_option_imagebutton6"
+                                android:background="@color/main_white"
+                                android:src="@drawable/register_reser_g"
+                                android:layout_marginRight="27.5dp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <ImageButton
+                        android:layout_width="139dp"
+                        android:layout_height="68.5dp"
+                        android:id="@+id/activity_register_admin_button_finsih"
+                        android:src="@drawable/register_next_bt"
+                        android:background="@color/main_white"
+                        android:layout_gravity="right"
+                        android:layout_marginRight="48.5dp"
+                        android:layout_marginBottom="33dp"
+                        android:layout_marginTop="215dp" />
+
+                </LinearLayout>
             </LinearLayout>
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Finish"
-                android:id="@+id/activity_register_admin_button_fisish" />
 
         </LinearLayout>
 

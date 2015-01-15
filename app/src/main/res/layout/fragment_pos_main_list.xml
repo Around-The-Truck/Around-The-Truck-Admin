@@ -1,25 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="horizontal" android:layout_width="375dp"
+    android:layout_height="45dp">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/fragment_pos_main_list_button_remove"
-        android:background="@android:drawable/presence_busy" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_margin="10dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Medium Text"
-        android:id="@+id/fragment_pos_main_list_textview_menuname" />
+        <Button
+            android:layout_width="22.5dp"
+            android:layout_height="22.5dp"
+            android:id="@+id/fragment_pos_main_list_button_remove"
+            android:background="@drawable/pos_remove_button"
+            android:layout_gravity="center_vertical" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Medium Text"
-        android:id="@+id/fragment_pos_main_list_textview_price" />
+        <TextView
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Medium Text"
+            android:id="@+id/fragment_pos_main_list_textview_menuname"
+            android:textColor="@color/main_white"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp" />
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="20000원"
+            android:id="@+id/fragment_pos_main_list_textview_price"
+            android:textColor="@color/main_white"
+            android:layout_gravity="center_vertical"
+            android:gravity="right" />
+    </LinearLayout>
+
 </LinearLayout>

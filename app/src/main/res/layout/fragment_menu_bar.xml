@@ -12,47 +12,73 @@
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="125dp"
+            android:layout_width="225dp"
             android:layout_height="fill_parent"
             android:background="@color/main_color"
             android:id="@+id/fragment_menu_bar_large_layout">
 
-            <Button
-                android:layout_width="fill_parent"
+            <ImageButton
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="state"
-                android:id="@+id/fragment_menu_bar_large_state_button" />
+                android:id="@+id/fragment_menu_bar_large_imagebutton"
+                android:background="@color/main_color"
+                android:src="@drawable/menubar_menubt"
+                android:layout_marginLeft="31dp"
+                android:layout_marginTop="36dp"
+                android:focusableInTouchMode="false" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/fragment_menu_bar_large_state_imagebutton"
+                android:src="@drawable/menubar_large_closed"
+                android:background="#00ffffff"
+                android:layout_gravity="center_horizontal" />
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="170dp"
+                android:layout_height="170dp"
                 android:id="@+id/fragment_menu_bar_large_imageview"
-                android:background="@drawable/ic_launcher" />
+                android:background="@drawable/register_brandimg"
+                android:layout_marginTop="23dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="31dp"
+                android:padding="2dp" />
 
+            <!--<com.loopj.android.image.SmartImageView-->
+                <!--android:id="@+id/my_image" />-->
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Large Text"
-                android:id="@+id/fragment_menu_bar_large_brandname_textview" />
+                android:id="@+id/fragment_menu_bar_large_brandname_textview"
+                android:gravity="center_horizontal"
+                android:layout_marginBottom="17.5dp" />
 
             <LinearLayout
                 android:orientation="horizontal"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="31.5dp"
+                android:layout_marginBottom="98dp"
+                android:layout_gravity="center_horizontal">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/fragment_menu_bar_large_category_imageView"
-                    android:background="@android:drawable/star_big_on" />
+                    android:src="@drawable/menubar_large_heart"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="10dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Medium Text"
-                    android:id="@+id/fragment_menu_bar_large_category_textview" />
+                    android:id="@+id/fragment_menu_bar_large_category_textview"
+                    android:layout_gravity="center_vertical" />
             </LinearLayout>
 
             <LinearLayout
@@ -60,17 +86,19 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content">
 
-                <Button
+                <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="New Button"
-                    android:id="@+id/fragment_menu_bar_large_button1" />
+                    android:id="@+id/fragment_menu_bar_large_imagebutton_newsfeed"
+                    android:background="#00ffffff"
+                    android:src="@drawable/menubar_large_newsp" />
 
-                <Button
+                <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="New Button"
-                    android:id="@+id/fragment_menu_bar_large_button2" />
+                    android:id="@+id/fragment_menu_bar_large_imagebutton_menumodi"
+                    android:src="@drawable/menubar_large_menubt"
+                    android:background="#00ffffff" />
 
             </LinearLayout>
 
@@ -78,21 +106,23 @@
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom">
+                android:layout_marginTop="122.5dp"
+                android:layout_marginLeft="57dp">
 
-                <Button
-                    android:layout_width="0dp"
+                <ImageButton
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="setting"
-                    android:id="@+id/fragment_menu_bar_large_setting_button"
-                    android:layout_weight="1" />
+                    android:id="@+id/fragment_menu_bar_large_setting_imagebutton"
+                    android:src="@drawable/menubar_large_set"
+                    android:background="#00ffffff" />
 
-                <Button
-                    android:layout_width="0dp"
+                <ImageButton
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="end"
-                    android:id="@+id/fragment_menu_bar_large_end_button"
-                    android:layout_weight="1" />
+                    android:id="@+id/fragment_menu_bar_large_end_imagebutton"
+                    android:src="@drawable/menubar_large_out"
+                    android:layout_marginLeft="49dp"
+                    android:background="#00ffffff" />
             </LinearLayout>
 
         </LinearLayout>

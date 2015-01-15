@@ -1,20 +1,24 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:orientation="vertical"
-    tools:context="kr.co.aroundthetruck.admin.activity.SplashActivity">
+    tools:context="kr.co.aroundthetruck.admin.activity.SplashActivity"
+    android:background="@drawable/splash_background"
+    android:gravity="center_horizontal">
 
-    <TextView
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:text="Around The Truck" />
+        android:id="@+id/activity_splash_logo_imageview"
+        android:src="@drawable/splash_logo"
+        android:layout_marginTop="188dp" />
 
     <Button
         android:id="@+id/activity_splash_btn_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="시작하기" />
+        android:background="@drawable/splash_button"
+        android:layout_marginTop="100dp" />
+
 </LinearLayout>

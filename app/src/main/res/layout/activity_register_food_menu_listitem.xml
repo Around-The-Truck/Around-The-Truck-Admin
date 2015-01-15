@@ -1,68 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:orientation="horizontal">
 
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1">
-
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:id="@+id/activity_register_food_menu_listitem_imageview"
-            android:focusableInTouchMode="true"
-            android:src="@drawable/ic_launcher"
-            android:focusable="false" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="0dp"
+        android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_weight="4">
+        android:background="@drawable/register_food_menuback"
+        android:layout_marginBottom="6dp">
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Menu"
-                android:id="@+id/activity_register_food_menu_listitem_title"
-                android:editable="true" />
-
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/activity_register_food_menu_listitem_editText" />
+            <ImageView
+                android:layout_width="206.5dp"
+                android:layout_height="206.5dp"
+                android:id="@+id/activity_register_food_menu_listitem_imageview"
+                android:focusableInTouchMode="true"
+                android:focusable="false"
+                android:background="@drawable/register_food_photo"
+                android:layout_marginTop="15.5dp"
+                android:layout_marginLeft="15.5dp" />
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="59.5dp">
 
-            <TextView
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Medium Text"
-                android:id="@+id/activity_register_food_menu_listitem_textview2" />
+                android:layout_marginTop="49dp"
+                android:layout_marginBottom="30dp">
 
-            <EditText
+                <EditText
+                    android:layout_width="500dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/activity_register_food_menu_listitem_editText"
+                    android:hint="메뉴를 입력해 주세요" />
+            </LinearLayout>
+
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="numberSigned"
-                android:ems="10"
-                android:id="@+id/activity_register_food_menu_listitem_editText2" />
+                android:id="@+id/activity_register_food_menu_listitem_imageview_line"
+                android:src="@drawable/register_food_line"
+                android:layout_marginBottom="30dp" />
 
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:layout_width="500dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberSigned"
+                    android:ems="10"
+                    android:id="@+id/activity_register_food_menu_listitem_editText2"
+                    android:hint="가격을 입력해주세요" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="원"
+                    android:id="@+id/activity_register_food_menu_listitem_textview3" />
+
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 

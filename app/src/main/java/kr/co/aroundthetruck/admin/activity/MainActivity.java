@@ -3,6 +3,7 @@ package kr.co.aroundthetruck.admin.activity;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -27,6 +28,8 @@ public class MainActivity extends ATTActivity implements GoogleApiClient.Connect
     private LocationRequest mLocationRequest;
 
     private Boolean mRequestingLocationUpdates;
+
+    public String testString = "aaaaaaaaannnnnnn";
 
     /**
      * The desired interval for location updates. Inexact. Updates may be more or less frequent.
@@ -106,8 +109,13 @@ public class MainActivity extends ATTActivity implements GoogleApiClient.Connect
         // connection to GoogleApiClient intact.  Here, we resume receiving
         // location updates if the user has requested them.
 
-        if (mGoogleApiClient.isConnected() && mRequestingLocationUpdates) {
-            startLocationUpdates();
+        try {
+            if (mGoogleApiClient.isConnected() && mRequestingLocationUpdates) {
+                startLocationUpdates();
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
         }
     }
 
@@ -193,4 +201,11 @@ public class MainActivity extends ATTActivity implements GoogleApiClient.Connect
         // onConnectionFailed.
         Log.i(TAG, "Connection failed: ConnectionResult.getErrorCode() = " + result.getErrorCode());
     }
+
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+////        Fragment fragment = getFragmentManager().findFragmentById(R.id.fragment_modi)
+////        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.);
+////        fragment.onActivityResult(requestCode, resultCode, data);
+//    }
 }

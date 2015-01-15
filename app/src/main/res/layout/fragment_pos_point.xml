@@ -1,0 +1,182 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="kr.co.aroundthetruck.admin.fragment.PosPointFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="1182.5dp"
+        android:layout_height="fill_parent">
+
+        <ImageView
+            android:layout_width="1182.5dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/fragment_pos_point_imageview"
+            android:src="@drawable/pos_point_bar" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="#ffdddddd">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="614.5dp"
+                android:layout_height="fill_parent">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/pos_point_point"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="60dp">
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="140dp"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="Large Text"
+                        android:id="@+id/fragment_pos_point_pay_cash_textview"
+                        android:gravity="center_horizontal|bottom" />
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="120dp"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="Large Text"
+                        android:id="@+id/fragment_pos_point_charge_point_textview"
+                        android:gravity="center_horizontal|bottom" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/point_bottom"
+                    android:layout_gravity="center_horizontal"
+                    android:weightSum="1"
+                    android:id="@+id/fragment_pos_point_point_box_layout">
+
+                    <TextView
+                        android:layout_width="283dp"
+                        android:layout_height="210dp"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="10000"
+                        android:id="@+id/fragment_pos_point_mypoint_textview"
+                        android:gravity="bottom|right" />
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/fragment_pos_point_ok_imagebutton"
+                        android:layout_gravity="center"
+                        android:src="@drawable/point_ok"
+                        android:background="#00ffffff"
+                        android:layout_marginTop="20dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/pos_point_keyboard1136">
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="220dp"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="인증받을 전화번호를 입력해주세요."
+                    android:id="@+id/fragment_pos_point_point_textview"
+                    android:gravity="center" />
+
+                <GridLayout
+                    android:layout_width="557.5dp"
+                    android:layout_height="match_parent"
+                    android:columnCount="3"
+                    android:rowCount="4"
+                    android:layout_gravity="right">
+
+                    <Button
+                        android:layout_width="190dp"
+                        android:layout_height="126dp"
+                        android:id="@+id/fragment_pos_point_keyboard_button1"
+                        android:background="#00ffffff" />
+
+                    <Button
+                        android:layout_width="184dp"
+                        android:layout_height="126dp"
+                        android:id="@+id/fragment_pos_point_keyboard_button2"
+                        android:background="#00ffffff" />
+
+                    <Button
+                        android:layout_width="190dp"
+                        android:layout_height="126dp"
+                        android:id="@+id/fragment_pos_point_keyboard_button3"
+                        android:background="#00ffffff" />
+
+                    <Button
+                        android:layout_width="190dp"
+                        android:layout_height="126dp"
+                        android:id="@+id/fragment_pos_point_keyboard_button4"
+                        android:background="#00ffffff"/>
+
+                    <Button
+                        android:layout_width="184dp"
+                        android:layout_height="126dp"
+                        android:id="@+id/fragment_pos_point_keyboard_button5"
+                        android:background="#00ffffff"/>
+
+                    <Button
+                        android:layout_width="184dp"
+                        android:layout_height="126dp"
+                        android:id="@+id/fragment_pos_point_keyboard_button6"
+                        android:background="#00ffffff"/>
+
+                    <Button
+                        android:layout_width="193dp"
+                        android:layout_height="126dp"
+                        android:id="@+id/fragment_pos_point_keyboard_button7"
+                        android:background="#00ffffff"/>
+
+                    <Button
+                        android:layout_width="184dp"
+                        android:layout_height="126dp"
+                        android:id="@+id/fragment_pos_point_keyboard_button8"
+                        android:background="#00ffffff"/>
+
+                    <Button
+                        android:layout_width="184dp"
+                        android:layout_height="126dp"
+                        android:id="@+id/fragment_pos_point_keyboard_button9"
+                        android:background="#00ffffff"/>
+
+                    <Button
+                        android:layout_width="191dp"
+                        android:layout_height="126dp"
+                        android:id="@+id/fragment_pos_point_keyboard_button_cancel"
+                        android:background="#00ffffff"/>
+
+                    <Button
+                        android:layout_width="184dp"
+                        android:layout_height="126dp"
+                        android:id="@+id/fragment_pos_point_keyboard_button0"
+                        android:background="#00ffffff"/>
+
+                    <Button
+                        android:layout_width="184dp"
+                        android:layout_height="126dp"
+                        android:id="@+id/fragment_pos_point_keyboard_button_ok"
+                        android:background="#00ffffff"/>
+                </GridLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</FrameLayout>

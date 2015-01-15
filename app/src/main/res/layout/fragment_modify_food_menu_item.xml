@@ -5,34 +5,41 @@
 
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="891dp"
+        android:layout_height="234dp"
         android:background="@drawable/modify_menuback">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="206dp"
+            android:layout_height="206dp"
             android:id="@+id/fragment_modify_food_menu_item_imageview"
-            android:background="@drawable/modify_photo" />
+            android:background="@drawable/modify_photo"
+            android:layout_marginLeft="27dp"
+            android:layout_gravity="center_vertical"
+            android:padding="10dp" />
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="550dp"
+            android:layout_height="234dp">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:layout_height="117dp"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Medium Text"
-                android:id="@+id/fragment_modify_food_menu_item_menuname_textview" />
+                android:id="@+id/fragment_modify_food_menu_item_menuname_textview"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="20dp" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:layout_height="117dp"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Large Text"
-                android:id="@+id/fragment_modify_food_menu_item_price_textview" />
+                android:id="@+id/fragment_modify_food_menu_item_price_textview"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="20dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -44,13 +51,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/fragment_modify_food_menu_item_modify_imagebutton"
-                android:src="@drawable/modify_change" />
+                android:src="@drawable/modify_change"
+                android:background="#00ffffff" />
 
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/fragment_modify_food_menu_item_delete_imagebutton"
-                android:src="@drawable/modify_delete" />
+                android:src="@drawable/modify_delete"
+                android:background="#00ffffff" />
         </LinearLayout>
     </LinearLayout>
 
