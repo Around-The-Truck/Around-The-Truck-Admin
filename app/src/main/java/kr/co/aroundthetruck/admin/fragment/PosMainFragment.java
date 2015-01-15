@@ -1,12 +1,7 @@
 package kr.co.aroundthetruck.admin.fragment;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,28 +10,26 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.apache.http.Header;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import kr.co.aroundthetruck.admin.Dialog.PosPaymentDialog;
 import kr.co.aroundthetruck.admin.R;
+import kr.co.aroundthetruck.admin.activity.MainActivity;
 import kr.co.aroundthetruck.admin.dto.FoodMenuData;
 import kr.co.aroundthetruck.admin.ui.ATTFragment;
 
-
-/**
- * A simple {@link android.app.Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link kr.co.aroundthetruck.admin.fragment.PosMainFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link kr.co.aroundthetruck.admin.fragment.PosMainFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class PosMainFragment extends ATTFragment {
 
 
@@ -83,6 +76,13 @@ public class PosMainFragment extends ATTFragment {
         counterTextView = (TextView) view.findViewById(R.id.fragment_pos_main_count_textview);
         changeCounterPrice(0);
 
+        countCancelButton = (Button) view.findViewById(R.id.fragment_pos_main_cancel_button);
+        countPointButton = (Button) view.findViewById(R.id.fragment_pos_main_point_button);
+        countFinishButton = (Button) view.findViewById(R.id.fragment_pos_main_payment_button);
+
+        MainActivity test = (MainActivity) getActivity();
+        Log.d("YoonTag", ""+test.testString);
+
     }
 
     private void setLayout(LayoutInflater inflater){
@@ -111,10 +111,62 @@ public class PosMainFragment extends ATTFragment {
             }
         };
         adapterCounter.setremoveButtonListener(removeButtonListener);
+
+        request();
+
+        countCancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adapterCounter.removeAllItems();
+                changeCounterPrice(0);
+            }
+        });
+
+        countPointButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle arguments = new Bundle();
+                arguments.putString("totalPay", "" + adapterCounter.getTotalPrice());
+
+                PosPointFragment pointFragment = new PosPointFragment();
+                pointFragment.setArguments(arguments);
+
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.activity_main_container, pointFragment )
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
+        countFinishButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final PosPaymentDialog dialog = new PosPaymentDialog(getActivity());
+                dialog.show();
+                dialog.setOnclickListenr1(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        dialog.dismiss();
+                        Bundle arguments = new Bundle();
+                        arguments.putString("totalPay", "" + adapterCounter.getTotalPrice());
+
+                        PosPointFragment pointFragment = new PosPointFragment();
+
+                        pointFragment.setArguments(arguments);
+                        getFragmentManager().beginTransaction()
+                                .replace(R.id.activity_main_container,  pointFragment)
+                                .addToBackStack(null)
+                                .commit();
+                    }
+                });
+
+            }
+        });
     }
 
     private void changeCounterPrice(int price){
-        counterTextView.setText(price + " 원");
+        counterTextView.setText(""+price);
     }
 
     @Override
@@ -133,6 +185,60 @@ public class PosMainFragment extends ATTFragment {
         return fragment;
     }
 
+    private void request(){
+        AsyncHttpClient client = new AsyncHttpClient();
+        RequestParams param = new RequestParams();
+        Log.d("YoonTag", "서버 통신");
+
+        try {
+            param.put("truckIdx", "1");
+
+        } catch (Exception e){
+            e.printStackTrace();
+            Log.d("YoonTag", "param Exception" + e);
+        }
+        final List<FoodMenuData> menuList = new ArrayList<>();
+
+        try {
+            client.post("http://165.194.35.161:3000/getMenuList", param, new AsyncHttpResponseHandler() {
+                @Override
+                public void onSuccess(int i, Header[] headers, byte[] bytes) {
+                    Log.d("YoonTag", bytes.toString());
+                    Log.d("YoonTag", new String(bytes));
+
+                    try {
+                        JSONObject jsonObject = new JSONObject(new String(bytes));
+                        JSONArray arr = new JSONArray(new String(jsonObject.getString("result")));
+                        for (int j=0; j<arr.length(); j++) {
+
+                            FoodMenuData adata = new FoodMenuData(arr.getJSONObject(j).getString("name"),
+                                    arr.getJSONObject(j).getInt("price"), arr.getJSONObject(j).getString("photo_filename"),
+                                    arr.getJSONObject(j).getString("description"));
+                            menuList.add(adata);
+                        }
+
+                        adapterSelect.setmItems(menuList);
+
+                    } catch (Exception e) {
+                        Log.d("YoonTag", "Json Error : " + e);
+                        e.printStackTrace();
+                    }
+
+                }
+
+                @Override
+                public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+//                    Log.d("YoonTag", new String(bytes));
+                    Log.d("YoonTag", "에러러러러");
+                }
+            });
+        }
+        catch (Exception e){
+//            Toast.makeText(MainActivity.this, "서버 접속 에러 ", Toast.LENGTH_SHORT).show();
+            Log.d("YoonTag", "서버 접속 에러");
+        }
+    }
+
 
     class FoodMenuListAdapter extends BaseAdapter {
         private Context mContext;
@@ -145,15 +251,13 @@ public class PosMainFragment extends ATTFragment {
             mItems.add(new FoodMenuData());
         }
 
+        public void setmItems(List<FoodMenuData> itemList){
+            this.mItems = itemList;
+            this.notifyDataSetChanged();
+        }
+
         public FoodMenuListAdapter(LayoutInflater inflater){
             this.inflater = inflater;
-            mItems.add(new FoodMenuData());
-            mItems.add(new FoodMenuData());
-            mItems.add(new FoodMenuData());
-            mItems.add(new FoodMenuData());
-            mItems.add(new FoodMenuData());
-            mItems.add(new FoodMenuData());
-            mItems.add(new FoodMenuData());
         }
 
         public int getCount(){
@@ -175,7 +279,9 @@ public class PosMainFragment extends ATTFragment {
                 holder = (ViewHolder) convertView.getTag();
             }
 
-            holder.menuNameTextView.setText("Position "+position);
+            FoodMenuData data = mItems.get(position);
+            holder.menuNameTextView.setText(data.getMenuName());
+            holder.priceTextView.setText("" + data.getMenuPrice());
 
             return convertView;
         }
@@ -228,6 +334,12 @@ public class PosMainFragment extends ATTFragment {
             this.notifyDataSetInvalidated();
         }
 
+        public void removeAllItems(){
+            mItems.clear();
+            totalPrice = 0;
+            this.notifyDataSetChanged();
+        }
+
         public int getTotalPrice(){
             return totalPrice;
         }
@@ -255,9 +367,12 @@ public class PosMainFragment extends ATTFragment {
                 holder = (ViewHolderCounter) convertView.getTag();
             }
 
+            FoodMenuData data = mItems.get(position);
+
             holder.removeButton.setTag(Integer.valueOf(position));
 
-            holder.menuNameTextView.setText("Position "+position);
+            holder.menuNameTextView.setText(data.getMenuName());
+            holder.priceTextView.setText(""+data.getMenuPrice());
 
             return convertView;
         }

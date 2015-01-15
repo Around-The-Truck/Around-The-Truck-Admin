@@ -43,10 +43,17 @@ import kr.co.aroundthetruck.admin.AroundTheTruckApplication;
 import kr.co.aroundthetruck.admin.R;
 import kr.co.aroundthetruck.admin.dto.CalculatorData;
 import kr.co.aroundthetruck.admin.dto.FoodMenuData;
+import kr.co.aroundthetruck.admin.callback.WeatherLoadCallback;
+import kr.co.aroundthetruck.admin.common.UserSession;
+import kr.co.aroundthetruck.admin.loader.WeatherLoader;
 import kr.co.aroundthetruck.admin.model.CurrentWeatherModel;
 import kr.co.aroundthetruck.admin.model.GridModel;
+import kr.co.aroundthetruck.admin.model.HourlyWeatherModel;
+import kr.co.aroundthetruck.admin.model.SkyModel;
+import kr.co.aroundthetruck.admin.model.TemperatureModel;
 import kr.co.aroundthetruck.admin.model.WeatherModel;
 import kr.co.aroundthetruck.admin.ui.ATTFragment;
+import kr.co.aroundthetruck.admin.util.Util;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -54,7 +61,7 @@ import retrofit.client.Response;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TodayResultFragment extends ATTFragment {
+public class TodayResultFragment extends ATTFragment implements WeatherLoadCallback {
     private static final String TAG = TodayResultFragment.class.getSimpleName();
     private static final int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
     private double latitude, longitude;
@@ -173,6 +180,10 @@ public class TodayResultFragment extends ATTFragment {
         cal = Calendar.getInstance(TimeZone.getDefault(), Locale.getDefault());
 
         tvDate.setText(sdf.format(cal.getTime()));
+
+        //                            service.loadWeather("1", String.valueOf(UserSession.getInstance().getLatitude()), String.valueOf(UserSession.getInstance().getLongitude()), cbCurrentWeatherModel);
+
+        WeatherLoader.getLoader().loadWeatherHouly(1, UserSession.getInstance().getLatitude(), UserSession.getInstance().getLongitude(), TodayResultFragment.this);
     }
 
     private void setTypeface() {
@@ -320,7 +331,6 @@ public class TodayResultFragment extends ATTFragment {
 
     }
 
-
     public List<CalculatorData> getServerInfo(){
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams param = new RequestParams();
@@ -347,9 +357,7 @@ public class TodayResultFragment extends ATTFragment {
                         JSONArray arr = new JSONArray(new String(jsonObject.getString("result")));
                         for (int j=0; j<arr.length(); j++) {
 
-                            ColorTemplate colorTemplate = new ColorTemplate(arr.getJSONObject(j).getString("name"))
-
-
+                            ColorTemplate colorTemplate = new ColorTemplate();
 
 //                            FoodMenuData adata = new FoodMenuData(arr.getJSONObject(j).getString("name"),
 //                                    arr.getJSONObject(j).getInt("price"), arr.getJSONObject(j).getString("photo_filename"),
@@ -378,5 +386,26 @@ public class TodayResultFragment extends ATTFragment {
         return info;
     }
 
+
+    @Override
+    public void onWeatherLoadSuccess(byte[] bytes) {
+        String raw = new String(bytes);
+
+        Log.i(TAG, "Raw JSON : " + raw);
+
+        CurrentWeatherModel currentWeatherModel = Util.getGson().fromJson(raw, CurrentWeatherModel.class);
+        HourlyWeatherModel hourlyWeatherModel = currentWeatherModel.getWeather();
+        ArrayList<WeatherModel> weatherList = (ArrayList) hourlyWeatherModel.getWeatherList();
+
+        for (int count = 0; count < weatherList.size(); count++) {
+            WeatherModel weather = weatherList.get(count);
+
+            GridModel grid = weather.getGrid();
+            SkyModel sky = weather.getSky();
+            TemperatureModel temperature = weather.getTemperature();
+
+            Log.i(TAG, "Address : " + grid.getCity() + " " + grid.getCounty() + " " + grid.getVillage() + ", Sky : " + sky.getName() + " - " + sky.getCode() + ", Temperature : " + temperature.getTc() + " - " + temperature.getTmax() + " - " + temperature.getTmin());
+        }
+    }
 
 }

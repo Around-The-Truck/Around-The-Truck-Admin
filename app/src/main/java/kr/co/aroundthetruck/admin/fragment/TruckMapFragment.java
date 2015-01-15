@@ -1,7 +1,12 @@
 package kr.co.aroundthetruck.admin.fragment;
 
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,19 +16,18 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import kr.co.aroundthetruck.admin.R;
 import kr.co.aroundthetruck.admin.callback.TruckListLoadCallback;
+import kr.co.aroundthetruck.admin.common.URL;
 import kr.co.aroundthetruck.admin.common.UserSession;
+import kr.co.aroundthetruck.admin.constant.BroadcastReceiverConstants;
 import kr.co.aroundthetruck.admin.loader.TruckLoader;
 import kr.co.aroundthetruck.admin.model.TruckListModel;
 import kr.co.aroundthetruck.admin.model.TruckModel;
@@ -34,6 +38,7 @@ import kr.co.aroundthetruck.admin.util.Util;
  * A simple {@link android.app.Fragment} subclass.
  */
 public class TruckMapFragment extends ATTFragment implements OnMapReadyCallback, TruckListLoadCallback {
+    private static final String TAG = TruckMapFragment.class.getSimpleName();
 
     private MapFragment mapFragment;
     private GoogleMap map;
@@ -42,9 +47,16 @@ public class TruckMapFragment extends ATTFragment implements OnMapReadyCallback,
     private ArrayList<TruckModel> items;
     private ArrayList<Marker> markerList;
 
+
+    private BroadcastReceiver locationReceiver;
+
+    private boolean isLoaded;
+
     @Override
     public void onTruckListLoadSuccess(int statusCode, byte[] bytes) {
         String raw = new String(bytes);
+
+        Log.i(TAG, "Raw : " + raw);
 
         list = Util.getGson().fromJson(raw, TruckListModel.class);
         items = list.getTruckList();
@@ -62,28 +74,6 @@ public class TruckMapFragment extends ATTFragment implements OnMapReadyCallback,
 
                 map.addMarker(marker);
             }
-
-//
-//            map.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
-//                @Override
-//                public View getInfoWindow(Marker marker) {
-//                    View view = LayoutInflater.from(getActivity()).inflate(R.layout.info_window, null);
-//
-//                    StringBuilder builder = new StringBuilder();
-//
-//                    TruckModel truck = items.get(marker.get());
-//
-//                    TextView tv;
-//
-//                    return view;
-//                }
-//
-//                @Override
-//                public View getInfoContents(Marker marker) {
-//                    return null;
-//                }
-//            });
-
         }
     }
 
@@ -125,17 +115,121 @@ public class TruckMapFragment extends ATTFragment implements OnMapReadyCallback,
     public void initialize() {
         mapFragment.getMapAsync(this);
         markerList = new ArrayList<>();
+
+        locationReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (null != intent) {
+                    if (intent.getAction().equals(BroadcastReceiverConstants.LOCATION_DATA)) {
+                        LatLng seoul = new LatLng(UserSession.getInstance().getLatitude(), UserSession.getInstance().getLongitude());
+                        map.setMyLocationEnabled(true);
+                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(seoul, 13));
+                    }
+                }
+            }
+        };
+        IntentFilter filter = new IntentFilter(BroadcastReceiverConstants.LOCATION_DATA);
+
+
+        getActivity().registerReceiver(locationReceiver, filter);
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
 
-        LatLng sydney = new LatLng(UserSession.getInstance().getLatitude() + 0.5, UserSession.getInstance().getLongitude() + 0.5);
         LatLng seoul = new LatLng(UserSession.getInstance().getLatitude(), UserSession.getInstance().getLongitude());
-        googleMap.setMyLocationEnabled(true);
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 13));
+        map.setMyLocationEnabled(true);
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(seoul, 13));
 
         TruckLoader.getLoader().getTruckListOnMap(UserSession.getInstance().getLatitude(), UserSession.getInstance().getLongitude(), TruckMapFragment.this);
+
+        map.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+            @Override
+            public View getInfoWindow(final Marker marker) {
+                View view = LayoutInflater.from(getActivity()).inflate(R.layout.info_window, null);
+
+                StringBuilder builder = new StringBuilder();
+
+//                final ImageView iv = (ImageView) view.findViewById(R.id.info_window_iv);
+                TextView tv = (TextView) view.findViewById(R.id.info_window_tv);
+
+                TruckModel truck = getTruck(marker.getPosition());
+
+                if (null != truck) {
+                    if (null != truck.getName()) {
+                        builder.append(truck.getName());
+                    }
+
+                    if (0 == truck.getStatus()) {
+                        if (0 == builder.length()) {
+                            builder.append("영업 종료\r\n");
+                        } else {
+                            builder.append(" / 영업 종료\r\n");
+                        }
+                    } else {
+                        if (1 == truck.getStatus()) {
+                            if (0 == builder.length()) {
+                                builder.append("영업중\r\n");
+                            } else {
+                                builder.append(" / 영업 종료\r\n");
+                            }
+                        }
+                    }
+
+                    builder.append(Integer.toString(truck.getFollowCount()) + " 좋아요\r\n");
+
+                    if (null != truck.getPhoto()) {
+//                        Picasso.with(getActivity())
+//                                .setIndicatorsEnabled(true);
+
+                        final String url = URL.getApi("/upload/" + truck.getPhoto());
+
+//                        Picasso.with(getActivity())
+//                                .load(url)
+//                                .fit().error(R.drawable.ic_launcher)
+//                                .into(iv, new Callback() {
+//                                    @Override
+//                                    public void onSuccess() {
+//                                        if (marker != null && marker.isInfoWindowShown()) {
+//                                            marker.hideInfoWindow();
+//                                            marker.showInfoWindow();
+//                                        }
+//                                    }
+//
+//                                    @Override
+//                                    public void onError() {
+//                                        iv.setVisibility(View.GONE);
+//
+//                                        Toast.makeText(getActivity(), "NOPE", Toast.LENGTH_SHORT).show();
+//                                    }
+//                                });
+                        Log.i(TAG, "URL : " + url);
+//                        Toast.makeText(getActivity(), url, Toast.LENGTH_SHORT).show();
+                    } else {
+//                        iv.setVisibility(View.GONE);
+                    }
+
+                    tv.setText(builder.toString());
+                }
+
+                return view;
+            }
+
+            @Override
+            public View getInfoContents(final Marker marker) {
+                return null;
+            }
+        });
+    }
+
+    private TruckModel getTruck(LatLng latLng) {
+        for (int count = 0; count < items.size(); count++) {
+            TruckModel truck = items.get(count);
+            if (latLng.latitude == truck.getLatitude() && latLng.longitude == truck.getLongitude()) {
+                return items.get(count);
+            }
+        }
+        return null;
     }
 }

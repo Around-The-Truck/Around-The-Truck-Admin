@@ -12,7 +12,7 @@ public class URL {
     public static final String WEATHER_SERVER_API = PROTOCOL + "://" + WEATHER_SERVER;
 
     public static final String getApi(String url) {
-        return PROTOCOL + "://" + SERVER;
+        return PROTOCOL + "://" + SERVER + url;
     }
 
     public static final String getWeatherServerUrl() {
@@ -20,6 +20,6 @@ public class URL {
     }
 
     public static final String getWeatherServerApi(String url) {
-        return PROTOCOL + "://" + WEATHER_SERVER;
+        return PROTOCOL + "://" + WEATHER_SERVER + url;
     }
 }

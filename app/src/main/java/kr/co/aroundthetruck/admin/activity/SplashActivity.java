@@ -7,7 +7,9 @@ import android.widget.Button;
 
 import kr.co.aroundthetruck.admin.R;
 import kr.co.aroundthetruck.admin.activity.register.RegisterAdminActivity;
+import kr.co.aroundthetruck.admin.model.TruckListModel;
 import kr.co.aroundthetruck.admin.ui.ATTActivity;
+import kr.co.aroundthetruck.admin.util.Util;
 
 public class SplashActivity extends ATTActivity {
     private static final String TAG = SplashActivity.class.getSimpleName();
@@ -35,5 +37,10 @@ public class SplashActivity extends ATTActivity {
                 startActivity(new Intent(SplashActivity.this, MainActivity.class));
             }
         });
+    }
+
+    private void request(){
+
+
     }
 }

@@ -52,6 +52,8 @@ public class RegisterFoodMenuActivity extends Activity {
     private int targetPosition = 0;
     private final int REQUEST_IMAGE = 002;
 
+    private ImageButton finishImageButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,6 +89,13 @@ public class RegisterFoodMenuActivity extends Activity {
 
         brandNameTextView = (TextView) findViewById(R.id.activity_register_food_menu_brandname_textview);
 
+        finishImageButton = (ImageButton) findViewById(R.id.activity_register_food_menu_finish_imagebutton);
+        finishImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finishButtonClicked();
+            }
+        });
 
     }
 
@@ -116,6 +125,10 @@ public class RegisterFoodMenuActivity extends Activity {
             e.printStackTrace();
 
         }
+    }
+
+    private void finishButtonClicked(){
+
     }
 
     @Override

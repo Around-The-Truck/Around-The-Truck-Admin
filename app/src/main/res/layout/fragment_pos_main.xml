@@ -14,14 +14,11 @@
             android:layout_width="747.5dp"
             android:layout_height="fill_parent">
 
-            <TextView
-                android:layout_width="306dp"
+            <ImageView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="메뉴"
-                android:id="@+id/fragment_pos_main_textView"
-                android:layout_gravity="left|top"
-                android:layout_margin="30dp" />
+                android:id="@+id/fragment_pos_main_title_bar_imageview"
+                android:src="@drawable/pos_main_titlebar_menu" />
 
             <GridView
                 android:layout_width="wrap_content"
@@ -35,32 +32,43 @@
             android:orientation="vertical"
             android:layout_width="446.5dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/pos_posback">
+            android:background="@drawable/pos_posback"
+            android:weightSum="1">
 
             <ListView
                 android:layout_width="wrap_content"
                 android:layout_height="210dp"
                 android:id="@+id/fragment_pos_main_count_Listview"
-                android:layout_marginTop="70dp" />
+                android:layout_marginTop="70dp"
+                android:layout_marginLeft="40dp"
+                android:layout_weight="0.22"
+                android:background="#00ffffff"
+                android:divider="#00ffffff" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="27000 원"
+                android:text="27000"
                 android:id="@+id/fragment_pos_main_count_textview"
-                android:layout_marginTop="120dp" />
+                android:layout_marginTop="120dp"
+                android:layout_marginRight="90dp"
+                android:textColor="@color/main_white"
+                android:layout_gravity="right"
+                android:textSize="60dp" />
 
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="100dp">
+                android:layout_marginTop="50dp"
+                android:layout_gravity="center_horizontal">
 
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="wrap_content"
-                    android:layout_height="fill_parent">
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical">
 
                     <Button
                         android:layout_width="wrap_content"

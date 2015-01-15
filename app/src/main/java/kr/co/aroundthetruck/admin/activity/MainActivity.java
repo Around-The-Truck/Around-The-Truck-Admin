@@ -16,8 +16,11 @@ import kr.co.aroundthetruck.admin.R;
 import kr.co.aroundthetruck.admin.common.UserSession;
 import kr.co.aroundthetruck.admin.constant.BroadcastReceiverConstants;
 import kr.co.aroundthetruck.admin.fragment.MainFragment;
+<<<<<<< HEAD
 import kr.co.aroundthetruck.admin.fragment.TodayResultFragment;
 import kr.co.aroundthetruck.admin.fragment.TruckMapFragment;
+=======
+>>>>>>> 9ed2384ff453e0bfd7fff953b0075ac03ec47cd1
 import kr.co.aroundthetruck.admin.ui.ATTActivity;
 
 public class MainActivity extends ATTActivity implements GoogleApiClient.ConnectionCallbacks,
@@ -28,6 +31,8 @@ public class MainActivity extends ATTActivity implements GoogleApiClient.Connect
     private LocationRequest mLocationRequest;
 
     private Boolean mRequestingLocationUpdates;
+
+    public String testString = "aaaaaaaaannnnnnn";
 
     /**
      * The desired interval for location updates. Inexact. Updates may be more or less frequent.
@@ -58,8 +63,8 @@ public class MainActivity extends ATTActivity implements GoogleApiClient.Connect
             Log.w(TAG, "Location is NULL");
 
             // 사당역
-            latitude = 37.47732;
-            longitude = 126.98167;
+            latitude = 37.5280361;
+            longitude = 126.9653303;
         }
 
         UserSession.getInstance().setLatitude(latitude);
@@ -87,6 +92,13 @@ public class MainActivity extends ATTActivity implements GoogleApiClient.Connect
 
     @Override
     public void initialize() {
+        // 사당역
+        latitude = 37.5280361;
+        longitude = 126.9653303;
+
+        UserSession.getInstance().setLatitude(latitude);
+        UserSession.getInstance().setLongitude(longitude);
+
         buildGoogleApiClient();
         getFragmentManager()
                 .beginTransaction()
@@ -107,8 +119,12 @@ public class MainActivity extends ATTActivity implements GoogleApiClient.Connect
         // connection to GoogleApiClient intact.  Here, we resume receiving
         // location updates if the user has requested them.
 
-        if (mGoogleApiClient.isConnected() && mRequestingLocationUpdates) {
-            startLocationUpdates();
+        try {
+            if (mGoogleApiClient.isConnected() && mRequestingLocationUpdates) {
+                startLocationUpdates();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -194,4 +210,11 @@ public class MainActivity extends ATTActivity implements GoogleApiClient.Connect
         // onConnectionFailed.
         Log.i(TAG, "Connection failed: ConnectionResult.getErrorCode() = " + result.getErrorCode());
     }
+
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+////        Fragment fragment = getFragmentManager().findFragmentById(R.id.fragment_modi)
+////        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.);
+////        fragment.onActivityResult(requestCode, resultCode, data);
+//    }
 }

@@ -2,6 +2,11 @@ package kr.co.aroundthetruck.admin.fragment;
 
 import android.animation.LayoutTransition;
 import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -12,13 +17,39 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.loopj.android.image.SmartImageView;
+import com.squareup.picasso.Picasso;
 
+import org.apache.http.Header;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.w3c.dom.Text;
+
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URLConnection;
+import java.net.URLEncoder;
+
+import kr.co.aroundthetruck.admin.Dialog.MenubarStateChangeDialog;
+import kr.co.aroundthetruck.admin.Dialog.PosPaymentDialog;
 import kr.co.aroundthetruck.admin.R;
+import kr.co.aroundthetruck.admin.YSUtility;
+import kr.co.aroundthetruck.admin.activity.MainActivity;
+import kr.co.aroundthetruck.admin.activity.register.RegisterAdminActivity;
+import kr.co.aroundthetruck.admin.common.URL;
+import kr.co.aroundthetruck.admin.dto.DownLoadImageTask;
+import kr.co.aroundthetruck.admin.util.RoundedTransformation;
 
 
 /**
@@ -35,8 +66,10 @@ public class MenuBarFragment extends Fragment {
         // Required empty public constructor
     }
 
+    private int truckstate = 0;
 
     private Button menuSizeButton;
+    private ImageButton largeSizeButton;
     private int menuBarState = 0; // 0-> 좁은거, 1-> 넓은거
 
     private LinearLayout smallMenuLayout;
@@ -47,7 +80,17 @@ public class MenuBarFragment extends Fragment {
     private ImageButton settingImageButton;
     private ImageButton exitImageButton;
 
-//    private LinearLayout.LayoutParams mLayoutParams;
+    private ImageView truckImageView;
+
+    private TextView largeBrandNameTextview;
+    private TextView largeCategoryTextview;
+
+    private ImageButton truckStateImageButton;
+
+    private ImageButton largeNewsfeedImageButton;
+    private ImageButton largeModifyMenuImageButton;
+    private ImageButton largeSettingButton;
+    private ImageButton largeExitImageButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -69,18 +112,89 @@ public class MenuBarFragment extends Fragment {
         largeMenuLayout = (LinearLayout) view.findViewById(R.id.fragment_menu_bar_large_layout);
         containerLayout = (LinearLayout) view.findViewById(R.id.fragment_menu_bar_container_layout);
 
-        ((LinearLayout)largeMenuLayout.getParent()).removeView(largeMenuLayout);
-//        largeMenuLayout.setLayoutParams(new LinearLayout.LayoutParams(85,85));
-//        mLayoutParams = ((LinearLayout.LayoutParams) largeMenuLayout.getLayoutParams());
-//        mLayoutParams.width = 0;
+
 
         menuSizeButton = (Button) view.findViewById(R.id.fragment_menu_bar_small_button);
         menuSizeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                changeMenuBar();
+                ((LinearLayout)smallMenuLayout.getParent()).removeView(smallMenuLayout);
+                containerLayout.addView(largeMenuLayout);
+
+                LayoutTransition transition = new LayoutTransition();
+                containerLayout.setLayoutTransition(transition);
             }
         });
+        largeSizeButton = (ImageButton) view.findViewById(R.id.fragment_menu_bar_large_imagebutton);
+        largeSizeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((LinearLayout)largeMenuLayout.getParent()).removeView(largeMenuLayout);
+                containerLayout.addView(smallMenuLayout);
+
+                LayoutTransition transition = new LayoutTransition();
+                containerLayout.setLayoutTransition(transition);
+            }
+        });
+
+        truckStateImageButton = (ImageButton) view.findViewById(R.id.fragment_menu_bar_large_state_imagebutton);
+        truckStateImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final MenubarStateChangeDialog dialog = new MenubarStateChangeDialog(getActivity(), truckstate);
+
+                if (truckstate == 0){
+                    dialog.setBackgroundImageview(getResources().getDrawable(R.drawable.dialog_open));
+                } else if(truckstate == 1){
+                    dialog.setBackgroundImageview(getResources().getDrawable(R.drawable.dialog_closed));
+                }
+
+                dialog.show();
+                View.OnClickListener listener1 = new View.OnClickListener() {  // 변경
+                    @Override
+                    public void onClick(View v) {
+                        changeTruckState();
+                        dialog.dismiss();
+                    }
+                };
+
+                dialog.setOnclickListenr1(listener1);
+
+            }
+        });
+
+
+        truckImageView = (ImageView) view.findViewById(R.id.fragment_menu_bar_large_imageview);
+
+        largeBrandNameTextview = (TextView) view.findViewById(R.id.fragment_menu_bar_large_brandname_textview);
+        largeCategoryTextview = (TextView) view.findViewById(R.id.fragment_menu_bar_large_category_textview);
+
+        largeNewsfeedImageButton = (ImageButton) view.findViewById(R.id.fragment_menu_bar_large_imagebutton_newsfeed);
+        largeNewsfeedImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.activity_main_container, NewsFeedFragment.newInstance())
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
+        largeModifyMenuImageButton = (ImageButton) view.findViewById(R.id.fragment_menu_bar_large_imagebutton_menumodi);
+        largeModifyMenuImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.activity_main_container, ModifyFoodMenuFragment.newInstance())
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
+        largeSettingButton = (ImageButton) view.findViewById(R.id.fragment_menu_bar_large_setting_imagebutton);
+        largeExitImageButton = (ImageButton) view.findViewById(R.id.fragment_menu_bar_large_end_imagebutton);
+
+        ((LinearLayout)largeMenuLayout.getParent()).removeView(largeMenuLayout);
 
         Log.v("ystag", "initalize");
 
@@ -99,10 +213,11 @@ public class MenuBarFragment extends Fragment {
         settingImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.activity_main_container, NewsFeedFragment.newInstance())
-                        .addToBackStack(null)
-                        .commit();
+//                getFragmentManager().beginTransaction()
+//                        .replace(R.id.activity_main_container, NewsFeedFragment.newInstance())
+//                        .addToBackStack(null)
+//                        .commit();
+                startActivity(new Intent(getActivity(), RegisterAdminActivity.class));
             }
         });
 
@@ -110,64 +225,88 @@ public class MenuBarFragment extends Fragment {
         exitImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.activity_main_container, ModifyFoodMenuFragment.newInstance())
+                        .addToBackStack(null)
+                        .commit();
             }
         });
 
-    }
 
-    private void changeMenuBar(){
-        if (menuBarState == 0){
-            Log.v("ystag", "메뉴 커짐");
-            containerLayout.addView(largeMenuLayout, 1);
-//            mLayoutParams.width = 200;
-//            largeMenuLayout.requestLayout();
-
-            menuBarState = 1;
-        }
-        else if (menuBarState == 1){
-
-            Log.v("ystag", "메뉴 작아짐");
-            ((LinearLayout)largeMenuLayout.getParent()).removeView(largeMenuLayout);
-
-            menuBarState = 0;
-        }
-
-        LayoutTransition transition = new LayoutTransition();
-        containerLayout.setLayoutTransition(transition);
     }
 
     private void setLayout(LayoutInflater inflater){
-//        adapter = new FoodMenuListAdapter(inflater);
-//        menuSelectGridView.setAdapter(adapter);
+        request();
 
+    }
 
+    private void changeTruckState(){
+
+        if (truckstate == 0){ // 클로즈 상태
+            truckStateImageButton.setImageDrawable(getResources().getDrawable(R.drawable.menubar_large_open) );
+            truckstate = 1;
+        }else if (truckstate == 1){ // 오픈 상태
+            truckStateImageButton.setImageDrawable(getResources().getDrawable(R.drawable.menubar_large_closed) );
+            truckstate = 0;
+        }
     }
 
     private void request(){
         Log.d("YoonTag", "서버 통신 시작");
 
         AsyncHttpClient client = new AsyncHttpClient();
-
         RequestParams param = new RequestParams();
+        Log.d("YoonTag", "서버 통신");
 
+        try {
+            param.put("truckIdx", 5);
+
+        } catch (Exception e){
+            e.printStackTrace();
+            Log.d("YoonTag", "Errorrorror");
+        }
+
+        try{
+            client.get("http://165.194.35.161:3000/getTruckInfo", param, new AsyncHttpResponseHandler() {
+                @Override
+                public void onSuccess(int i, Header[] headers, byte[] bytes) {
+                    Log.d("YoonTag", new String(bytes));
+                    try{
+//                        org.json.JSONArray arr = new org.json.JSONArray(new String(bytes));
+                        JSONObject jsonObject = new JSONObject(new String(bytes));
+                        Log.d("YoonTag", "~~~~~~~!!!!!~~~~~~~"+jsonObject.getString("result"));
+                        JSONArray resultJsonObject = new JSONArray(new String(jsonObject.getString("result")));
+
+                        Log.d("YoonTag", "~~~~~~~!!!!!~~~~~~~"+resultJsonObject.getJSONObject(0).getString("name"));
+                        Log.d("YoonTag", "~~~~~~~!!!!!~~~~~~~"+resultJsonObject.getJSONObject(0).getString("photo_filename"));
+
+
+                        Picasso.with(getActivity()).load(YSUtility.addressImageStorage + URLEncoder.encode(resultJsonObject.getJSONObject(0).getString("photo_filename"), "UTF-8")).fit().transform(new RoundedTransformation(86)).into(truckImageView);
+                        largeBrandNameTextview.setText(resultJsonObject.getJSONObject(0).getString("name"));
+                        largeCategoryTextview.setText(resultJsonObject.getJSONObject(0).getString("cat_name_big") + " / " + resultJsonObject.getJSONObject(0).getString("cat_name_small"));
+
+                    }catch(JSONException e){
+
+                    }catch(Exception e){
+
+                    }
+                }
+
+                @Override
+                public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+                    Log.d("YoonTag", "서버 에러...ㅠㅠ");
+                }
+            });
+        } catch(Exception e){
+
+        }
     }
+
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-//        try {
-//            mListener = (OnFragmentInteractionListener) activity;
-//        } catch (ClassCastException e) {
-//            throw new ClassCastException(activity.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
     }
 
     @Override
@@ -186,6 +325,7 @@ public class MenuBarFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
+
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);

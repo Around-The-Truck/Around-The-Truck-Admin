@@ -13,6 +13,8 @@ public class AdminInformationData implements Serializable {
     private String openData;
     private String selectPhotoUri;
 
+    public int [] optionClicked;
+
 
     public AdminInformationData() {
 

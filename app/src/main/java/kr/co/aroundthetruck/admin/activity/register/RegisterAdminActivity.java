@@ -25,6 +25,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -34,6 +35,7 @@ import com.google.android.gms.internal.mc;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.squareup.picasso.Picasso;
 
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
@@ -58,16 +60,11 @@ import kr.co.aroundthetruck.admin.YSUtility;
 import kr.co.aroundthetruck.admin.dto.AdminInformationData;
 import kr.co.aroundthetruck.admin.dto.FoodMenuData;
 import kr.co.aroundthetruck.admin.ui.ATTActivity;
+import kr.co.aroundthetruck.admin.util.RoundedTransformation;
 
 public class RegisterAdminActivity extends ATTActivity {
 
-    private LinearLayout layout1;
-    private LinearLayout layout2;
-    private LinearLayout layout3;
-
-    private Button nextButton1;
-    private Button nextButton2;
-    private Button finishButton;
+    private ImageButton finishButton;
 
     private Spinner spinnerCat;
     private Spinner spinnerSub;
@@ -78,11 +75,14 @@ public class RegisterAdminActivity extends ATTActivity {
     private ImageView imageView;
     private final int REQUEST_IMAGE = 002;
 
-    private GridView gridview;
-
     private EditText brandNameEditText;
 
     private Uri selectPhotoUri;
+
+    private ImageButton[] optionImageButton = new ImageButton[6];
+    private int[] optionClicked = new int[6];
+
+    private DatePicker datePicker;
 
     Context mContext;
 
@@ -98,37 +98,140 @@ public class RegisterAdminActivity extends ATTActivity {
 
     @Override
     public void setLayout() {
-        layout1.setVisibility(View.VISIBLE);
-        layout2.setVisibility(View.INVISIBLE);
-        layout3.setVisibility(View.INVISIBLE);
+
     }
 
     @Override
     public void initialize() {
-        layout1 = (LinearLayout) findViewById(R.id.activity_register_admin_layout1);
-        layout2 = (LinearLayout) findViewById(R.id.activity_register_admin_layout2);
-        layout3 = (LinearLayout) findViewById(R.id.activity_register_admin_layout3);
 
-        nextButton1 = (Button) findViewById(R.id.activity_register_admin_button_next1);
-        nextButton2 = (Button) findViewById(R.id.activity_register_admin_button_next2);
-        finishButton = (Button) findViewById(R.id.activity_register_admin_button_fisish);
+        optionImageButton[0] = (ImageButton) findViewById(R.id.activity_register_admin_option_imagebutton1);
+        optionImageButton[1] = (ImageButton) findViewById(R.id.activity_register_admin_option_imagebutton2);
+        optionImageButton[2] = (ImageButton) findViewById(R.id.activity_register_admin_option_imagebutton3);
+        optionImageButton[3] = (ImageButton) findViewById(R.id.activity_register_admin_option_imagebutton4);
+        optionImageButton[4] = (ImageButton) findViewById(R.id.activity_register_admin_option_imagebutton5);
+        optionImageButton[5] = (ImageButton) findViewById(R.id.activity_register_admin_option_imagebutton6);
 
-        nextButton1.setOnClickListener(new View.OnClickListener() {
+        for (int i = 0; i < optionClicked.length; i++) {
+            optionClicked[i] = 0;
+        }
+
+        optionImageButton[0].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                layout2.setVisibility(View.VISIBLE);
-                nextButton1.setVisibility(View.INVISIBLE);
+                if (optionClicked[0] == 0) {
+                    Picasso.with(RegisterAdminActivity.this)
+                            .load(R.drawable.register_card_r)
+                            .skipMemoryCache()
+                            .skipMemoryCache().fit()
+                            .into(optionImageButton[0]);
+                    optionClicked[0] = 1;
+                } else {
+                    Picasso.with(RegisterAdminActivity.this)
+                            .load(R.drawable.register_card_g)
+                            .skipMemoryCache().fit()
+                            .into(optionImageButton[0]);
+                    optionClicked[0] = 0;
+                }
+
             }
         });
 
-        nextButton2.setOnClickListener(new View.OnClickListener() {
+        optionImageButton[1].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                layout3.setVisibility(View.VISIBLE);
-                nextButton2.setVisibility(View.INVISIBLE);
+                if (optionClicked[1] == 0) {
+                    Picasso.with(RegisterAdminActivity.this)
+                            .load(R.drawable.register_seat_r)
+                            .skipMemoryCache().fit()
+                            .into(optionImageButton[1]);
+                    optionClicked[1] = 1;
+                } else {
+                    Picasso.with(RegisterAdminActivity.this)
+                            .load(R.drawable.register_seat_g)
+                            .skipMemoryCache().fit()
+                            .into(optionImageButton[1]);
+                    optionClicked[1] = 0;
+                }
             }
         });
 
+        optionImageButton[2].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (optionClicked[2] == 0) {
+                    Picasso.with(RegisterAdminActivity.this)
+                            .load(R.drawable.register_open_r)
+                            .skipMemoryCache().fit()
+                            .into(optionImageButton[2]);
+                    optionClicked[2] = 1;
+                } else {
+                    Picasso.with(RegisterAdminActivity.this)
+                            .load(R.drawable.register_open_g)
+                            .skipMemoryCache().fit()
+                            .into(optionImageButton[2]);
+                    optionClicked[2] = 0;
+                }
+            }
+        });
+
+        optionImageButton[3].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (optionClicked[3] == 0) {
+                    Picasso.with(RegisterAdminActivity.this)
+                            .load(R.drawable.register_takeout_r)
+                            .skipMemoryCache().fit()
+                            .into(optionImageButton[3]);
+                    optionClicked[3] = 1;
+                } else {
+                    Picasso.with(RegisterAdminActivity.this)
+                            .load(R.drawable.register_takeout_g)
+                            .skipMemoryCache().fit()
+                            .into(optionImageButton[3]);
+                    optionClicked[3] = 0;
+                }
+            }
+        });
+
+        optionImageButton[4].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (optionClicked[4] == 0) {
+                    Picasso.with(RegisterAdminActivity.this)
+                            .load(R.drawable.register_group_r)
+                            .skipMemoryCache().fit()
+                            .into(optionImageButton[4]);
+                    optionClicked[4] = 1;
+                } else {
+                    Picasso.with(RegisterAdminActivity.this)
+                            .load(R.drawable.register_group_g)
+                            .skipMemoryCache().fit()
+                            .into(optionImageButton[4]);
+                    optionClicked[4] = 0;
+                }
+            }
+        });
+
+        optionImageButton[5].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (optionClicked[5] == 0) {
+                    Picasso.with(RegisterAdminActivity.this)
+                            .load(R.drawable.register_reser_r)
+                            .skipMemoryCache().fit()
+                            .into(optionImageButton[5]);
+                    optionClicked[5] = 1;
+                } else {
+                    Picasso.with(RegisterAdminActivity.this)
+                            .load(R.drawable.register_reser_g)
+                            .skipMemoryCache().fit()
+                            .into(optionImageButton[5]);
+                    optionClicked[5] = 0;
+                }
+            }
+        });
+
+        finishButton = (ImageButton) findViewById(R.id.activity_register_admin_button_finsih);
         finishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -156,7 +259,6 @@ public class RegisterAdminActivity extends ATTActivity {
                 android.R.layout.simple_dropdown_item_1line);
         spinnerSub.setAdapter(adapter2);
 
-
         // ImageView
         imageView = (ImageView) findViewById(R.id.activity_register_admin_imageView2);
         imageView.setOnClickListener(new View.OnClickListener() {
@@ -169,29 +271,27 @@ public class RegisterAdminActivity extends ATTActivity {
             }
         });
 
-        gridview = (GridView) findViewById(R.id.activity_register_admin_gridview);
-        gridview.setAdapter(new ImageAdapter(this));
-        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                Toast.makeText(RegisterAdminActivity.this, "" + position, Toast.LENGTH_SHORT).show();
-            }
-
-        });
-
         //
         brandNameEditText = (EditText) findViewById(R.id.activity_register_admin_edittext_name);
 
+
+        //
+        datePicker = (DatePicker) findViewById(R.id.activity_register_admin_datePicker);
+        datePicker.setMaxDate(new Date().getTime());
+//        EditText edittext = (EditText) datePicker.findViewById(Resources.getSystem().getIdentifier("datepicker_input", "id",  "android"));
+//
+//        edittext.setTextColor(Color.BLUE);
 
     }
 
     private void finishButtonIsClicked() {
 
         EditText editText1 = (EditText) findViewById(R.id.activity_register_admin_edittext_phone_number);
-        DatePicker datePicker = (DatePicker) findViewById(R.id.activity_register_admin_datePicker);
+
 
         String date = datePicker.getYear() + "-" + datePicker.getMonth() + "-" + datePicker.getDayOfMonth();
         AdminInformationData adminData = new AdminInformationData(brandNameEditText.getText().toString(), editText1.getText().toString(), date, (String) spinnerCat.getSelectedItem(), (String) spinnerSub.getSelectedItem());
+        adminData.optionClicked = optionClicked;
 
         adminData.setSelectPhotoUri(selectPhotoUri.toString());
         request(adminData);
@@ -207,8 +307,8 @@ public class RegisterAdminActivity extends ATTActivity {
     public String getRealPathFromURI(Context context, Uri contentUri) {
         Cursor cursor = null;
         try {
-            String[] proj = { MediaStore.Images.Media.DATA };
-            cursor = context.getContentResolver().query(contentUri,  proj, null, null, null);
+            String[] proj = {MediaStore.Images.Media.DATA};
+            cursor = context.getContentResolver().query(contentUri, proj, null, null, null);
             int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
             cursor.moveToFirst();
             return cursor.getString(column_index);
@@ -236,19 +336,19 @@ public class RegisterAdminActivity extends ATTActivity {
             param.put("category_big", 1);
             param.put("category_small", 1);
 
-            param.put("takeout_yn", 1);
-            param.put("cansit_yn", 1);
-            param.put("card_yn", 1);
-            param.put("reserve_yn", 1);
-            param.put("group_order_yn", 1);
-            param.put("always_open_yn", 1);
+            param.put("takeout_yn", data.optionClicked[3]);
+            param.put("cansit_yn", data.optionClicked[1]);
+            param.put("card_yn", data.optionClicked[0]);
+            param.put("reserve_yn", data.optionClicked[5]);
+            param.put("group_order_yn", data.optionClicked[4]);
+            param.put("always_open_yn", data.optionClicked[2]);
             param.put("idx", "6");
 
             Log.d("YoonTag", data.getSelectPhotoUri().toString());
             Uri selectPhotoUri = Uri.parse((String) data.getSelectPhotoUri());
             param.put("file", new File(fullPath));
 
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             Log.d("YoonTag", "Errorrorror");
         }
@@ -276,84 +376,10 @@ public class RegisterAdminActivity extends ATTActivity {
                 Log.d("YoonTag", "에러러러러");
             }
         });
-
-
-//        final String urlStr = "http://165.194.35.161:3000/truckJoin";
-//        Log.d("YoonTag", "server : " + urlStr);
-////        StringBuilder output = new StringBuilder();
-//        try {
-//
-//            MultipartEntityBuilder builder = MultipartEntityBuilder.create().setCharset(Charset.forName("UTF-8")).setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
-//
-//            builder.addTextBody("truckName", data.getBrandName());
-//
-//            HttpClient client = AndroidHttpClient.newInstance("Android");
-//            HttpPost post = new HttpPost(urlStr);
-//
-////            post.setEntity(builder.build());
-//
-//            HttpResponse httpRes = client.execute(post);
-//
-//            HttpEntity httpEntity = httpRes.getEntity();
-//            if(httpEntity != null) {
-//                Log.d("YoonTag", EntityUtils.toString(httpEntity));
-//            }
-//
-////            HttpClient client = new DefaultHttpClient();
-////            HttpPost httppost = new HttpPost(urlStr);
-////
-////            // 파일 Body 생성
-////            File truckImg = new File(data.getSelectPhotoUri().toString());
-////            FileBody bin0 = new FileBody(truckImg);
-////
-////
-////            // MultipartEntityBuilder
-////            MultipartEntityBuilder meb = MultipartEntityBuilder.create();
-////
-////            //Builder 설정하기
-////            // 선언할때 넣는게 아니라 선언 후 메소드로 설정한다.
-////            meb.setBoundary("==============");
-////            meb.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
-////            meb.setCharset(Charset.defaultCharset());
-////
-////            //문자열을 보내려면 addPart와 StringBody가 아닌 addTextBody를 사용한다.
-////            meb.addTextBody("truckName", data.getBrandName());
-////            meb.addTextBody("phone", data.getPhoneNumber());
-////            meb.addTextBody("open_data", data.getOpenData());
-////
-////            meb.addTextBody("category_big", data.getCategory());
-////            meb.addTextBody("category_small", data.getSubCategory());
-////
-//////            meb.addPart("file", bin0);
-////
-////            Log.d("YoonTag", "==================0");
-////            //HttpEntity를 빌드하고 HttpPost 객체에 삽입한다.
-////            HttpEntity entity = meb.build();
-////            httppost.setEntity(entity);
-////            Log.d("YoonTag", "==================1");
-//////            Log.d("YoonTag", entity.toString());
-////            HttpResponse response = client.execute(httppost);
-////            Log.d("YoonTag", "server : " + urlStr);
-////            HttpEntity resEntity = response.getEntity();
-////
-////            Log.d("YoonTag", resEntity.toString());
-////
-//////
-////            InputStream instream =response.getEntity().getContent();
-////            BufferedReader reader = new BufferedReader(new InputStreamReader(instream));
-//
-//
-//        } catch(ClientProtocolException e){
-//            e.printStackTrace();
-//        } catch (IOException e ){
-//            e.printStackTrace();
-//        } catch(Exception e){
-//            Log.d("YoonTag", "======== Exception 발생 ");
-//            e.printStackTrace();
-//        }
     }
 
     private String fullPath;
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // TODO Auto-generated method stub
@@ -365,18 +391,18 @@ public class RegisterAdminActivity extends ATTActivity {
 
             Uri selPhotoUri = data.getData();
             try {
-                Bitmap selPhoto = MediaStore.Images.Media.getBitmap(getContentResolver(), selPhotoUri);
-                Bitmap roundPhoto = YSUtility.GetBitmapClippedCircle(selPhoto);
-                imageView.setImageBitmap(roundPhoto);
                 selectPhotoUri = selPhotoUri;
+
+                Picasso.with(RegisterAdminActivity.this)
+                        .load(selectPhotoUri)
+                        .skipMemoryCache().fit()
+                        .transform(new RoundedTransformation(211))
+                        .into(imageView);
 
 
                 // sangho
                 fullPath = getRealPathFromURI(this, selPhotoUri);
-            } catch (FileNotFoundException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (IOException e) {
+            } catch (Exception e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
 
@@ -399,50 +425,6 @@ public class RegisterAdminActivity extends ATTActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    class ImageAdapter extends BaseAdapter {
-        private Context mContext;
-        private Integer[] mThumbIds = {
-                R.drawable.ic_launcher, R.drawable.ic_launcher,
-                R.drawable.ic_launcher, R.drawable.ic_launcher,
-                R.drawable.ic_launcher, R.drawable.ic_launcher,
-                R.drawable.ic_launcher, R.drawable.ic_launcher,
-                R.drawable.ic_launcher, R.drawable.ic_launcher,
-                R.drawable.ic_launcher, R.drawable.ic_launcher
-        };
-
-        public ImageAdapter(Context c) {
-            mContext = c;
-        }
-
-        public int getCount() {
-            return mThumbIds.length;
-        }
-
-        public Object getItem(int position) {
-            return null;
-        }
-
-        public long getItemId(int position) {
-            return 0;
-        }
-
-        public View getView(int position, View convertView, ViewGroup parent) {
-            ImageView imageView;
-            if (convertView == null) {
-                imageView = new ImageView(mContext);
-                imageView.setLayoutParams(new GridView.LayoutParams(85, 85));
-                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                imageView.setPadding(8, 8, 8, 8);
-            } else {
-                imageView = (ImageView) convertView;
-            }
-
-            imageView.setImageResource(mThumbIds[position]);
-            return imageView;
-        }
-
     }
 
 //    // 서버 송수신

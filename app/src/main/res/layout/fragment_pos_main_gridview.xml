@@ -1,27 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="wrap_content"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:padding="10dp"
-    android:background="@drawable/pos_menuback">
+    android:background="@drawable/pos_menuback"
+    android:weightSum="1">
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
-        android:id="@+id/fragment_pos_main_gridview_textview_menuName"
-        android:layout_gravity="center"
-        android:textColor="@color/main_color"
-        android:textAlignment="center" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="225.5dp"
+        android:layout_height="152dp"
+        android:layout_margin="3dp">
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Medium Text"
-        android:id="@+id/fragment_pos_main_gridview_textview_price"
-        android:textAlignment="center"
-        android:textColor="@color/main_color"
-        android:layout_marginTop="70dp" />
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="80dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Large Text"
+            android:id="@+id/fragment_pos_main_gridview_textview_menuName"
+            android:textColor="@color/main_color"
+            android:textAlignment="center"
+            android:gravity="center_vertical|center_horizontal" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Medium Text"
+            android:id="@+id/fragment_pos_main_gridview_textview_price"
+            android:textAlignment="center"
+            android:textColor="@color/main_color"
+            android:layout_marginTop="5dp"
+            android:gravity="center_vertical|center_horizontal" />
+    </LinearLayout>
+
 </LinearLayout>

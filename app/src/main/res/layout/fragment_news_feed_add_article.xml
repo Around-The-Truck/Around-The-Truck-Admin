@@ -1,0 +1,94 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="1183dp"
+    android:layout_height="fill_parent"
+    tools:context="kr.co.aroundthetruck.admin.fragment.NewsFeedAddArticleFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="71.5dp">
+
+            <ImageView
+                android:layout_width="86.5dp"
+                android:layout_height="86.5dp"
+                android:id="@+id/fragment_news_feed_add_article_profile_imageview"
+                android:layout_marginTop="50.5dp"
+                android:src="@drawable/articleadd_newsphoto"
+                android:layout_marginBottom="22dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Medium Text"
+                android:id="@+id/fragment_news_feed_add_artcle_profile_textview"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="25dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <ImageView
+                android:layout_width="491.5dp"
+                android:layout_height="491dp"
+                android:id="@+id/fragment_news_feed_add_article_imageview"
+                android:src="@drawable/articleadd_photobox"
+                android:layout_marginLeft="68dp"
+                android:layout_marginRight="31dp" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="472.5dp"
+                android:layout_height="178dp"
+                android:background="#ffdddddd">
+
+                <EditText
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:id="@+id/fragment_news_feed_add_article_edittext"
+                    android:hint="텍스트를 입력해주세요"
+                    android:gravity="center" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/fragment_news_feed_add_article_imagebutton"
+            android:src="@drawable/articleadd_register_button"
+            android:background="#00ffffff"
+            android:layout_gravity="right"
+            android:layout_marginRight="54.5dp"
+            android:layout_marginTop="600dp" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/fragment_news_feed_add_article_cancel_imagebutton"
+            android:background="#00ffffff"
+            android:src="@drawable/articleadd_cancel_button"
+            android:layout_gravity="right"
+            android:layout_marginRight="54.5dp"
+            android:layout_marginTop="10dp" />
+    </LinearLayout>
+
+</FrameLayout>

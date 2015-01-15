@@ -39,7 +39,6 @@ public class MainFragment extends ATTFragment {
     private static final String TAG = MainFragment.class.getSimpleName();
     private BroadcastReceiver dataReceiver;
 
-
     private Button btn;
 
     private BroadcastReceiver broadcastReceiver;
@@ -183,8 +182,8 @@ public class MainFragment extends ATTFragment {
                                     .setEndpoint(URL.WEATHER_SERVER_API)
                                     .build();
 
-                            WeatherLoader service = restAdapter.create(WeatherLoader.class);
-                            service.loadWeather("1", String.valueOf(UserSession.getInstance().getLatitude()), String.valueOf(UserSession.getInstance().getLongitude()), cbCurrentWeatherModel);
+//                            WeatherLoader service = restAdapter.create(WeatherLoader.class);
+//                            service.loadWeather("1", String.valueOf(UserSession.getInstance().getLatitude()), String.valueOf(UserSession.getInstance().getLongitude()), cbCurrentWeatherModel);
                         }
                     } else {
                         Toast.makeText(getActivity(), "intent.getAction() is null", Toast.LENGTH_SHORT).show();
