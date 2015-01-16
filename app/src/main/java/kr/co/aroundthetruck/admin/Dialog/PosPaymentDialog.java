@@ -32,13 +32,14 @@ public class PosPaymentDialog extends Dialog implements View.OnClickListener{
         btn1 = (ImageButton) findViewById(R.id.dialog_pos_payment_imagebutton1);
         btn2 = (ImageButton) findViewById(R.id.dialog_pos_payment_imagebutton2);
 
-//        btn1.setOnClickListener(this);
-        btn2.setOnClickListener(this);
-
     }
 
     public void setOnclickListenr1(View.OnClickListener listener1){
         btn1.setOnClickListener(listener1);
+    }
+
+    public void setOnclickListener2(View.OnClickListener listener2){
+        btn2.setOnClickListener(listener2);
     }
 
     @Override

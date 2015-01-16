@@ -1,165 +1,134 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:fillViewport="true">
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"></LinearLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="kr.co.aroundthetruck.admin.fragment.TodayResultFragment">
+        tools:context="kr.co.aroundthetruck.admin.fragment.TodayResultFragment"
+        android:background="#fff1f0f0">
 
-        <LinearLayout
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="20dp"
-            android:orientation="vertical">
-            <!--android:id="@+id/fragment_today_result_container_title"-->
+            android:id="@+id/imageView" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:orientation="vertical">
+        <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/scrollView"
+            android:fillViewport="true">
 
-                <TextView
-                    android:id="@+id/fragment_today_result_tv_title"
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="오늘의 판매정보"
-                    style="?android:attr/textAppearanceLarge" />
-
-                <TextView
-                    android:id="@+id/fragment_today_result_tv_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="?android:attr/textAppearanceLarge"
-                    tools:text="2014/01/01 수요일" />
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/fragment_today_result_tv_working_time_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="영업시간"
-                    style="?android:attr/textAppearanceLarge" />
-
-                <TextView
-                    android:id="@+id/fragment_today_result_tv_working_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="?android:attr/textAppearanceLarge"
-                    android:text="오전 10:30 - 오후 7:30" />
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp">
+                    android:id="@+id/fragment_today_result_background_imageview"
+                    android:src="@drawable/calculate_background" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="20dp"
-                    android:orientation="vertical">
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent">
 
-                    <TextView
-                        android:id="@+id/fragment_today_result_tv_total_sales_title"
+                    <LinearLayout
+                        android:orientation="vertical"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="총 매출"
-                        style="?android:attr/textAppearanceLarge" />
+                        android:layout_height="fill_parent">
 
-                    <TextView
-                        android:id="@+id/fragment_today_result_tv_total_sales"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="?android:attr/textAppearanceLarge"
-                        android:text="400,000원" />
+                        <TextView
+                            android:id="@+id/fragment_today_result_tv_date"
+                            android:layout_width="450dp"
+                            android:layout_height="120dp"
+                            style="?android:attr/textAppearanceLarge"
+                            tools:text="2014/01/01 수요일"
+                            android:layout_marginTop="62dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentStart="false"
+                            android:layout_marginLeft="68.5dp" />
+
+                        <TextView
+                            android:id="@+id/fragment_today_result_tv_working_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="?android:attr/textAppearanceLarge"
+                            android:text="오전 10:30 - 오후 7:30"
+                            android:layout_alignBottom="@+id/fragment_today_result_tv_total_customer_count"
+                            android:layout_alignStart="@+id/fragment_today_result_tv_date"
+                            android:layout_below="@+id/fragment_today_result_tv_date"
+                            android:layout_alignEnd="@+id/fragment_today_result_tv_date"
+                            android:layout_marginTop="47.5dp"
+                            android:layout_marginLeft="68.5dp" />
+
+                        <TextView
+                            android:id="@+id/fragment_today_result_tv_total_sales"
+                            android:layout_width="437dp"
+                            android:layout_height="100dp"
+                            style="?android:attr/textAppearanceLarge"
+                            android:text="400,000원"
+                            android:layout_below="@+id/fragment_today_result_tv_working_time"
+                            android:layout_alignStart="@+id/fragment_today_result_tv_working_time"
+                            android:layout_marginTop="122dp"
+                            android:gravity="bottom|right" />
+
+                        <TextView
+                            android:id="@+id/fragment_today_result_tv_cost_per_person"
+                            android:layout_width="437dp"
+                            android:layout_height="100dp"
+                            android:text="4,000원"
+                            style="?android:attr/textAppearanceLarge"
+                            android:layout_alignBottom="@+id/fragment_today_result_linearlayout1"
+                            android:layout_alignStart="@+id/fragment_today_result_tv_total_sales"
+                            android:layout_marginTop="100dp"
+                            android:gravity="bottom|right" />
+
+                        <com.github.mikephil.charting.charts.BarChart
+                            android:id="@+id/fragment_today_result_bc_age"
+                            android:layout_width="450dp"
+                            android:layout_height="300dp"
+                            android:layout_marginTop="160dp"
+                            android:layout_marginLeft="60dp" />
+
+                        <com.github.mikephil.charting.charts.PieChart
+                            android:id="@+id/fragment_today_result_pc_sex"
+                            android:layout_width="250dp"
+                            android:layout_height="250dp" />
+
+                        <TextView
+                            android:id="@+id/fragment_today_result_tv_total_customer_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="?android:attr/textAppearanceLarge"
+                            android:text="400명"
+                            android:layout_toStartOf="@+id/fragment_today_result_tv_date"
+                            android:layout_below="@+id/fragment_today_result_tv_date" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent">
+
+                        <com.github.mikephil.charting.charts.LineChart
+                            android:id="@+id/fragment_today_result_lc_time"
+                            android:layout_width="450dp"
+                            android:layout_height="300dp" />
+
+                    </LinearLayout>
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/fragment_today_result_tv_total_customer_count_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="총 손님 수"
-                        style="?android:attr/textAppearanceLarge" />
-
-                    <TextView
-                        android:id="@+id/fragment_today_result_tv_total_customer_count"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="?android:attr/textAppearanceLarge"
-                        android:text="400명" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/fragment_today_result_tv_cost_per_person_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="1인당 평균 매출"
-                    style="?android:attr/textAppearanceLarge" />
-
-                <TextView
-                    android:id="@+id/fragment_today_result_tv_cost_per_person"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="4,000원"
-                    style="?android:attr/textAppearanceLarge" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <com.github.mikephil.charting.charts.PieChart
-                    android:id="@+id/fragment_today_result_pc_sex"
-                    android:layout_width="250dp"
-                    android:layout_height="250dp" />
-
-                <com.github.mikephil.charting.charts.BarChart
-                    android:id="@+id/fragment_today_result_bc_age"
-                    android:layout_width="250dp"
-                    android:layout_height="250dp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <com.github.mikephil.charting.charts.LineChart
-                    android:id="@+id/fragment_today_result_lc_time"
-                    android:layout_width="250dp"
-                    android:layout_height="250dp" />
-
-                <ListView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:id="@+id/fragment_today_lank_listview" />
-
-            </LinearLayout>
-        </LinearLayout>
+            </RelativeLayout>
+        </ScrollView>
 
 
         <!--<LinearLayout-->
@@ -204,4 +173,5 @@
         <!--tools:text="19" />-->
         <!--</LinearLayout>-->
     </FrameLayout>
-</ScrollView>
+
+</FrameLayout>

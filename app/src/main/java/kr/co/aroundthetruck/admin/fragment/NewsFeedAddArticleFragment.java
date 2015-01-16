@@ -33,6 +33,7 @@ import java.net.URLEncoder;
 
 import kr.co.aroundthetruck.admin.R;
 import kr.co.aroundthetruck.admin.YSUtility;
+import kr.co.aroundthetruck.admin.activity.MainActivity;
 import kr.co.aroundthetruck.admin.util.RoundedTransformation;
 
 
@@ -131,7 +132,7 @@ public class NewsFeedAddArticleFragment extends Fragment {
         Log.d("YoonTag", "서버 통신");
 
         try {
-            param.put("truckIdx", 5);
+            param.put("truckIdx", ((MainActivity)getActivity()).truckIdx);
 
         } catch (Exception e){
             e.printStackTrace();

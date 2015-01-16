@@ -1,6 +1,7 @@
 package kr.co.aroundthetruck.admin;
 
 import android.app.Application;
+import android.content.Context;
 import android.graphics.Typeface;
 
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
@@ -11,6 +12,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+
+import java.lang.reflect.Field;
 
 /**
  * Created by sehonoh on 14. 11. 30..
@@ -51,5 +54,22 @@ public class AroundTheTruckApplication extends Application {
         nanumGothicLight = Typeface.createFromAsset(getAssets(), "NanumBarunGothicLight.otf");
         nanumGothic = Typeface.createFromAsset(getAssets(), "NanumBarunGothic.otf");
         nanumGothicBold = Typeface.createFromAsset(getAssets(), "NanumBarunGothicBold.otf");
+    }
+
+    public static void setDefaultFont(Context ctx, String staticTypefaceFieldName, String fontAssetName) {
+        final Typeface regular = Typeface.createFromAsset(ctx.getAssets(), fontAssetName);
+        replaceFont(staticTypefaceFieldName, regular);
+    }
+
+    protected static void replaceFont(String staticTypefaceFieldName, final Typeface newTypeface) {
+        try {
+            final Field StaticField = Typeface.class.getDeclaredField(staticTypefaceFieldName);
+            StaticField.setAccessible(true);
+            StaticField.set(null, newTypeface);
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
 }

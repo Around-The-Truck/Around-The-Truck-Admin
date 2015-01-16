@@ -36,6 +36,7 @@ import java.util.List;
 
 import kr.co.aroundthetruck.admin.R;
 import kr.co.aroundthetruck.admin.YSUtility;
+import kr.co.aroundthetruck.admin.activity.MainActivity;
 import kr.co.aroundthetruck.admin.dto.FoodMenuData;
 import kr.co.aroundthetruck.admin.dto.YSNetwork;
 import kr.co.aroundthetruck.admin.util.RoundedTransformation;
@@ -118,7 +119,7 @@ public class ModifyFoodMenuFragment extends Fragment {
         Log.d("YoonTag", "서버 통신");
 
         try {
-            param.put("truckIdx", "1");
+            param.put("truckIdx", ((MainActivity)getActivity()).truckIdx);
 
         } catch (Exception e){
             e.printStackTrace();

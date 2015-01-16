@@ -28,8 +28,15 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.apache.http.Header;
 import org.w3c.dom.Text;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -39,6 +46,7 @@ import kr.co.aroundthetruck.admin.R;
 import kr.co.aroundthetruck.admin.YSUtility;
 import kr.co.aroundthetruck.admin.dto.AdminInformationData;
 import kr.co.aroundthetruck.admin.dto.FoodMenuData;
+import kr.co.aroundthetruck.admin.dto.RegisterFoodMenuData;
 
 
 public class RegisterFoodMenuActivity extends Activity {
@@ -53,6 +61,8 @@ public class RegisterFoodMenuActivity extends Activity {
     private final int REQUEST_IMAGE = 002;
 
     private ImageButton finishImageButton;
+
+    private String truckIdx = "5";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +82,7 @@ public class RegisterFoodMenuActivity extends Activity {
             @Override
             public void onClick(View v) {
                 targetPosition = (Integer) v.getTag();
-                Log.v("ystag", targetPosition +"번 이미지뷰 선택됨");
+                Log.v("YoonTag", targetPosition +"번 이미지뷰 선택됨");
 
                 Intent intent = new Intent(Intent.ACTION_PICK,
                         android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -128,7 +138,77 @@ public class RegisterFoodMenuActivity extends Activity {
     }
 
     private void finishButtonClicked(){
+        request();
 
+    }
+
+    private void request(){
+//        [{"photoFieldName":"file0",
+//                "name":"맛있는 군인들",
+//                "price":"1000",
+//                "description":"건강에 좋습니다.",
+//                "ingredients":"군인1, 군인2, 군인3"},
+//        {"photoFieldName":"file1", "name":"특급전사", "price":"1000", "description":"화끈한 특급전사", "ingredients":"진이형"}]
+
+        AsyncHttpClient client = new AsyncHttpClient();
+
+        RequestParams param = new RequestParams();
+        // 이렇게 인자를 넘겨야 될 때
+        // 이름을 정해주고 추가하면 됨!
+        //param.put("id", "rlaace423");
+        //param.put("file", new File(fullPath));
+
+        try {
+            List<RegisterFoodMenuData> foodmenuList = adapter.getFoodMenuListServer();
+            String json = new Gson().toJson(foodmenuList);
+            Log.d("YoonTag", json);
+
+//            param.put("truckName", data.getBrandName());
+//            param.put("phone", data.getPhoneNumber());
+//            param.put("open_date", data.getOpenData());
+//            param.put("category_big", 1);
+//            param.put("category_small", 1);
+//
+//            param.put("takeout_yn", data.optionClicked[3]);
+//            param.put("cansit_yn", data.optionClicked[1]);
+//            param.put("card_yn", data.optionClicked[0]);
+//            param.put("reserve_yn", data.optionClicked[5]);
+//            param.put("group_order_yn", data.optionClicked[4]);
+//            param.put("always_open_yn", data.optionClicked[2]);
+//            param.put("idx", "6");
+//
+//            Log.d("YoonTag", data.getSelectPhotoUri().toString());
+//            Uri selectPhotoUri = Uri.parse((String) data.getSelectPhotoUri());
+//            param.put("file", new File(fullPath));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.d("YoonTag", "Errorrorror");
+        }
+
+
+//        client.post("http://165.194.35.161:3000/addMenuList", param, new AsyncHttpResponseHandler() {
+//            @Override
+//            public void onSuccess(int i, Header[] headers, byte[] bytes) {
+//                Log.d("YoonTag", bytes.toString());
+//                Log.d("YoonTag", new String(bytes));
+////                try {
+////                    org.json.JSONArray arr = new org.json.JSONArray(new String(bytes));
+////                    for (int i=0; i<arr.length(); i++) {
+////                        MainActivity.items.add(new CustomerItem(arr.getJSONObject(i).getString("image1_id"),arr.getJSONObject(i).getString("name"),arr.getJSONObject(i).getString("category"),arr.getJSONObject(i).getString("price")));
+////                    }
+////
+////                } catch (Exception e) {
+////                    e.printStackTrace();
+////                }
+//            }
+//
+//            @Override
+//            public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+//                Log.d("YoonTag", new String(bytes));
+//                Log.d("YoonTag", "에러러러러");
+//            }
+//        });
     }
 
     @Override
@@ -208,16 +288,16 @@ public class RegisterFoodMenuActivity extends Activity {
             notifyDataSetChanged();
         }
 
-        public void addItem(FoodMenuData data){
-            mItems.add(data);
-            totalPrice += data.getMenuPrice();
-            this.notifyDataSetInvalidated();
+        public List<FoodMenuData> getFoodMenuList(){
+            return mItems;
         }
 
-        public void removeItem(int position){
-            FoodMenuData data = mItems.remove(position);
-            totalPrice -= data.getMenuPrice();
-            this.notifyDataSetInvalidated();
+        public List<RegisterFoodMenuData> getFoodMenuListServer(){
+            List<RegisterFoodMenuData> listItem = new ArrayList<>();
+            for (int i = 0; i<mItems.size() -1; i++){
+                listItem.add(new RegisterFoodMenuData("file"+i, mItems.get(i).getMenuName(), "" + mItems.get(i).getMenuPrice(), mItems.get(i).getDesciption(), ""));
+            }
+            return listItem;
         }
 
         public int getTotalPrice(){

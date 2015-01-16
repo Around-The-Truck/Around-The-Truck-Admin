@@ -62,7 +62,7 @@ public class TodayResultFragment extends ATTFragment {
     private Location currentLocation;
 
     private TextView tvDate, tvWorkingTime, tvTotalSales, tvTotalCustomerCount, tvCostPerPerson;
-    private TextView tvTitle, tvWorkingTimeTitle, tvTotalSalesTitle, tvTotalCustomerCountTitle, tvCostPerPersonTitle;
+//    private TextView tvTitle, tvWorkingTimeTitle, tvTotalSalesTitle, tvTotalCustomerCountTitle, tvCostPerPersonTitle;
 
     public static final int graph_color1 = Color.parseColor("#f27070");
     public static final int graph_color2 = Color.parseColor("#ef453e");
@@ -164,17 +164,17 @@ public class TodayResultFragment extends ATTFragment {
         tvTotalCustomerCount = (TextView) view.findViewById(R.id.fragment_today_result_tv_total_customer_count);
         tvCostPerPerson = (TextView) view.findViewById(R.id.fragment_today_result_tv_cost_per_person);
 
-        tvTitle = (TextView) view.findViewById(R.id.fragment_today_result_tv_title);
-        tvWorkingTimeTitle = (TextView) view.findViewById(R.id.fragment_today_result_tv_working_time_title);
-        tvTotalSalesTitle = (TextView) view.findViewById(R.id.fragment_today_result_tv_total_sales_title);
-        tvTotalCustomerCountTitle = (TextView) view.findViewById(R.id.fragment_today_result_tv_total_customer_count_title);
-        tvCostPerPersonTitle = (TextView) view.findViewById(R.id.fragment_today_result_tv_cost_per_person_title);
+//        tvTitle = (TextView) view.findViewById(R.id.fragment_today_result_tv_title);
+//        tvWorkingTimeTitle = (TextView) view.findViewById(R.id.fragment_today_result_tv_working_time_title);
+//        tvTotalSalesTitle = (TextView) view.findViewById(R.id.fragment_today_result_tv_total_sales_title);
+//        tvTotalCustomerCountTitle = (TextView) view.findViewById(R.id.fragment_today_result_tv_total_customer_count_title);
+//        tvCostPerPersonTitle = (TextView) view.findViewById(R.id.fragment_today_result_tv_cost_per_person_title);
 
         pcSex = (PieChart) view.findViewById(R.id.fragment_today_result_pc_sex);
         bcAge = (BarChart) view.findViewById(R.id.fragment_today_result_bc_age);
         lcTime = (LineChart) view.findViewById(R.id.fragment_today_result_lc_time);
 
-        menuLanking = (ListView) view.findViewById(R.id.fragment_today_lank_listview);
+//        menuLanking = (ListView) view.findViewById(R.id.fragment_today_lank_listview);
 
 
 //        tcTime = (TextClock) view.findViewById(R.id.fragment_today_result_tc_time);
@@ -197,15 +197,17 @@ public class TodayResultFragment extends ATTFragment {
         tvTotalCustomerCount.setTypeface(AroundTheTruckApplication.nanumGothic);
         tvCostPerPerson.setTypeface(AroundTheTruckApplication.nanumGothic);
 
-        tvTitle.setTypeface(AroundTheTruckApplication.nanumGothic);
-        tvWorkingTimeTitle.setTypeface(AroundTheTruckApplication.nanumGothic);
-        tvTotalSalesTitle.setTypeface(AroundTheTruckApplication.nanumGothic);
-        tvTotalCustomerCountTitle.setTypeface(AroundTheTruckApplication.nanumGothic);
-        tvCostPerPersonTitle.setTypeface(AroundTheTruckApplication.nanumGothic);
+//        tvTitle.setTypeface(AroundTheTruckApplication.nanumGothic);
+//        tvWorkingTimeTitle.setTypeface(AroundTheTruckApplication.nanumGothic);
+//        tvTotalSalesTitle.setTypeface(AroundTheTruckApplication.nanumGothic);
+//        tvTotalCustomerCountTitle.setTypeface(AroundTheTruckApplication.nanumGothic);
+//        tvCostPerPersonTitle.setTypeface(AroundTheTruckApplication.nanumGothic);
 
         pcSex.setValueTypeface(AroundTheTruckApplication.nanumGothic);
         bcAge.setValueTypeface(AroundTheTruckApplication.nanumGothic);
         lcTime.setValueTypeface(AroundTheTruckApplication.nanumGothic);
+
+
 //        tvRegion.setTypeface(AroundTheTruckApplication.nanumGothicLight);
     }
 
@@ -394,7 +396,7 @@ public class TodayResultFragment extends ATTFragment {
         Log.d("YoonTag", "서버 통신");
 
         try {
-            param.put("truckIdx", "5");
+            param.put("truckIdx", "12");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -435,7 +437,6 @@ public class TodayResultFragment extends ATTFragment {
 
                 @Override
                 public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
-                    Log.d("YoonTag", new String(bytes));
                     Log.d("YoonTag", "에러러러러");
                 }
 

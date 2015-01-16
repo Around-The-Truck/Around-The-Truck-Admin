@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="kr.co.aroundthetruck.admin">
+    package="kr.co.aroundthetruck.admin" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <!-- The following two permissions are not required to use
-         Google Maps Android API v2, but are recommended. -->
+    <!--
+         The following two permissions are not required to use
+         Google Maps Android API v2, but are recommended.
+    -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
@@ -15,54 +17,57 @@
         android:required="true" />
 
     <application
-        android:name="kr.co.aroundthetruck.admin.AroundTheTruckApplication"
+        android:name=".AroundTheTruckApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
-
+        android:theme="@style/AppTheme" >
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyBB_3gBvEy0uejRMtJhNgZ6zXQwB9QRoYs" />
 
         <activity
-            android:name="kr.co.aroundthetruck.admin.activity.SplashActivity"
+            android:name=".activity.SplashActivity"
             android:label="@string/app_name"
             android:screenOrientation="landscape"
-            android:windowSoftInputMode="stateAlwaysHidden">
+            android:windowSoftInputMode="stateAlwaysHidden" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name="kr.co.aroundthetruck.admin.activity.SignUpActivity"
+            android:name=".activity.SignUpActivity"
             android:label="@string/app_name"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="stateAlwaysHidden" />
-
         <activity
-            android:name="kr.co.aroundthetruck.admin.activity.MainActivity"
+            android:name=".activity.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="stateAlwaysHidden" />
-
         <activity
-            android:name="kr.co.aroundthetruck.admin.activity.register.RegisterAdminActivity"
+            android:name=".activity.register.RegisterAdminActivity"
             android:label="@string/app_name"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="stateAlwaysHidden" />
-
         <activity
-            android:name="kr.co.aroundthetruck.admin.activity.register.RegisterFoodMenuActivity"
+            android:name=".activity.register.RegisterFoodMenuActivity"
             android:label="@string/app_name"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".activity.pay.CardReaderActivity"
+            android:label="@string/title_activity_card_reader" >
+        </activity>
+        <activity
+            android:name=".activity.pay.CardSignActivity"
+            android:label="@string/title_activity_card_sign" >
+        </activity>
     </application>
+
 </manifest>

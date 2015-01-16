@@ -15,6 +15,11 @@ public class FoodMenuData {
 //    description : 메뉴 설명
 //    ingredients : 재료..?
 
+    //        [{"photoFieldName":"file0",
+//                "name":"맛있는 군인들",
+//                "price":"1000",
+//                "description":"건강에 좋습니다.",
+//                "ingredients":"군인1, 군인2, 군인3"},
 
     private Drawable mIcon;
 
@@ -51,6 +56,8 @@ public class FoodMenuData {
     }
 
     public String getPhoto_filename(){return photo_filename;}
+
+    public String getDesciption(){return desciption;}
 
     public Drawable getIcon(){
         return mIcon;
