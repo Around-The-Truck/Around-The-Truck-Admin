@@ -35,6 +35,8 @@
                     android:layout_height="wrap_content"
                     style="?android:attr/textAppearanceLarge"
                     tools:text="2014/01/01 수요일" />
+
+
             </LinearLayout>
 
             <LinearLayout
@@ -57,6 +59,7 @@
                     style="?android:attr/textAppearanceLarge"
                     android:text="오전 10:30 - 오후 7:30" />
             </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -149,6 +152,11 @@
                     android:id="@+id/fragment_today_result_lc_time"
                     android:layout_width="250dp"
                     android:layout_height="250dp" />
+
+                <ListView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/fragment_today_lank_listview" />
 
             </LinearLayout>
         </LinearLayout>
