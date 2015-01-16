@@ -15,9 +15,7 @@ import com.google.android.gms.location.LocationServices;
 import kr.co.aroundthetruck.admin.R;
 import kr.co.aroundthetruck.admin.common.UserSession;
 import kr.co.aroundthetruck.admin.constant.BroadcastReceiverConstants;
-
-import kr.co.aroundthetruck.admin.fragment.TodayResultFragment;
-
+import kr.co.aroundthetruck.admin.fragment.MainFragment;
 import kr.co.aroundthetruck.admin.ui.ATTActivity;
 
 public class MainActivity extends ATTActivity implements GoogleApiClient.ConnectionCallbacks,
@@ -30,7 +28,7 @@ public class MainActivity extends ATTActivity implements GoogleApiClient.Connect
     private Boolean mRequestingLocationUpdates;
 
     public String testString = "aaaaaaaaannnnnnn";
-    public static String  truckIdx = "14";
+    public static String truckIdx = "14";
 
     /**
      * The desired interval for location updates. Inexact. Updates may be more or less frequent.
@@ -100,7 +98,7 @@ public class MainActivity extends ATTActivity implements GoogleApiClient.Connect
         buildGoogleApiClient();
         getFragmentManager()
                 .beginTransaction()
-                .add(R.id.activity_main_container, TodayResultFragment.newInstance()).commit();
+                .add(R.id.activity_main_container, MainFragment.newInstance()).commit();
     }
 
 

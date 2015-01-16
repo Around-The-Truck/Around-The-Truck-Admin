@@ -20,7 +20,7 @@ import java.lang.reflect.Field;
  */
 public class AroundTheTruckApplication extends Application {
     private static final String TAG = AroundTheTruckApplication.class.getSimpleName();
-    public static Typeface nanumGothicULT, nanumGothicLight, nanumGothic, nanumGothicBold;
+    public static Typeface multicolore, nanumGothicLight, nanumGothic, nanumGothicBold;
 
     @Override
     public void onCreate() {
@@ -50,10 +50,15 @@ public class AroundTheTruckApplication extends Application {
 
         ImageLoader.getInstance().init(config);
 
-//        nanumGothicULT = Typeface.createFromAsset(getAssets(), "NanumBarunGothicUltraLight.otf");
+        multicolore = Typeface.createFromAsset(getAssets(), "Multicolore.otf");
         nanumGothicLight = Typeface.createFromAsset(getAssets(), "NanumBarunGothicLight.otf");
         nanumGothic = Typeface.createFromAsset(getAssets(), "NanumBarunGothic.otf");
         nanumGothicBold = Typeface.createFromAsset(getAssets(), "NanumBarunGothicBold.otf");
+
+
+        setDefaultFont(this, "DEFAULT", "NanumBarunGothic.otf");
+        setDefaultFont(this, "SANS_SERIF", "NanumBarunGothic.otf");
+        setDefaultFont(this, "SERIF", "NanumBarunGothic.otf");
     }
 
     public static void setDefaultFont(Context ctx, String staticTypefaceFieldName, String fontAssetName) {

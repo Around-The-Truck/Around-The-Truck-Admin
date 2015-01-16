@@ -45,8 +45,6 @@ import kr.co.aroundthetruck.admin.AroundTheTruckApplication;
 import kr.co.aroundthetruck.admin.R;
 import kr.co.aroundthetruck.admin.dto.CalculatorData;
 import kr.co.aroundthetruck.admin.model.CurrentWeatherModel;
-import kr.co.aroundthetruck.admin.model.GridModel;
-import kr.co.aroundthetruck.admin.model.WeatherModel;
 import kr.co.aroundthetruck.admin.ui.ATTFragment;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -95,34 +93,6 @@ public class TodayResultFragment extends ATTFragment {
     private Callback<CurrentWeatherModel> cbCurrentWeatherModel = new Callback<CurrentWeatherModel>() {
         @Override
         public void success(CurrentWeatherModel currentWeatherModel, Response response) {
-            if (null != currentWeatherModel) {
-                if (null != currentWeatherModel.getWeather()) {
-                    if (null != currentWeatherModel.getWeather().getWeatherList()) {
-                        if (null != currentWeatherModel.getWeather().getWeatherList().get(0)) {
-                            WeatherModel weatherModel = currentWeatherModel.getWeather().getWeatherList().get(0);
-
-                            if (null != weatherModel.getGrid()) {
-                                GridModel grid = weatherModel.getGrid();
-                                StringBuilder regionBuilder = new StringBuilder();
-
-                                if (null != grid.getCity()) {
-                                    regionBuilder.append(grid.getCity()).append(" ");
-                                }
-
-                                if (null != grid.getCounty()) {
-                                    regionBuilder.append(grid.getCounty());
-                                }
-
-                                if (regionBuilder.length() < 1) {
-//                                        tvRegion.setText("위치 정보를 가져올 수 없습니다.");
-                                } else {
-//                                        tvRegion.setText(regionBuilder.toString());
-                                }
-                            }
-                        }
-                    }
-                }
-            }
         }
 
         @Override
@@ -269,7 +239,6 @@ public class TodayResultFragment extends ATTFragment {
         pcSex.highlightValues(null);
         pcSex.invalidate();
         pcSex.animateX(1800);
-
 
 
 ///////////////////////
