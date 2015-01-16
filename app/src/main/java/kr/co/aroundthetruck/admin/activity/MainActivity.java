@@ -16,11 +16,8 @@ import kr.co.aroundthetruck.admin.R;
 import kr.co.aroundthetruck.admin.common.UserSession;
 import kr.co.aroundthetruck.admin.constant.BroadcastReceiverConstants;
 import kr.co.aroundthetruck.admin.fragment.MainFragment;
-<<<<<<< HEAD
 import kr.co.aroundthetruck.admin.fragment.TodayResultFragment;
 import kr.co.aroundthetruck.admin.fragment.TruckMapFragment;
-=======
->>>>>>> 9ed2384ff453e0bfd7fff953b0075ac03ec47cd1
 import kr.co.aroundthetruck.admin.ui.ATTActivity;
 
 public class MainActivity extends ATTActivity implements GoogleApiClient.ConnectionCallbacks,

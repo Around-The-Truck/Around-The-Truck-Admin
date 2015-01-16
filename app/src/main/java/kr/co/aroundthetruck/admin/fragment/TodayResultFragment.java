@@ -2,6 +2,7 @@ package kr.co.aroundthetruck.admin.fragment;
 
 
 import android.app.Fragment;
+import android.content.Context;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
@@ -10,6 +11,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
@@ -28,10 +31,12 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
+
 import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -43,17 +48,10 @@ import kr.co.aroundthetruck.admin.AroundTheTruckApplication;
 import kr.co.aroundthetruck.admin.R;
 import kr.co.aroundthetruck.admin.dto.CalculatorData;
 import kr.co.aroundthetruck.admin.dto.FoodMenuData;
-import kr.co.aroundthetruck.admin.callback.WeatherLoadCallback;
-import kr.co.aroundthetruck.admin.common.UserSession;
-import kr.co.aroundthetruck.admin.loader.WeatherLoader;
 import kr.co.aroundthetruck.admin.model.CurrentWeatherModel;
 import kr.co.aroundthetruck.admin.model.GridModel;
-import kr.co.aroundthetruck.admin.model.HourlyWeatherModel;
-import kr.co.aroundthetruck.admin.model.SkyModel;
-import kr.co.aroundthetruck.admin.model.TemperatureModel;
 import kr.co.aroundthetruck.admin.model.WeatherModel;
 import kr.co.aroundthetruck.admin.ui.ATTFragment;
-import kr.co.aroundthetruck.admin.util.Util;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -61,7 +59,7 @@ import retrofit.client.Response;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TodayResultFragment extends ATTFragment implements WeatherLoadCallback {
+public class TodayResultFragment extends ATTFragment {
     private static final String TAG = TodayResultFragment.class.getSimpleName();
     private static final int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
     private double latitude, longitude;
@@ -70,6 +68,10 @@ public class TodayResultFragment extends ATTFragment implements WeatherLoadCallb
 
     private TextView tvDate, tvWorkingTime, tvTotalSales, tvTotalCustomerCount, tvCostPerPerson;
     private TextView tvTitle, tvWorkingTimeTitle, tvTotalSalesTitle, tvTotalCustomerCountTitle, tvCostPerPersonTitle;
+
+    public static final int graph_color1 = Color.parseColor("#f27070");
+    public static final int graph_color2 = Color.parseColor("#ef453e");
+    public static final int graph_color3 = Color.parseColor("#d62b2b");
 
     // 성별 차트
     private PieChart pcSex;
@@ -80,11 +82,15 @@ public class TodayResultFragment extends ATTFragment implements WeatherLoadCallb
     //시간대별 매출
     private LineChart lcTime;
 
+    private ListView menuLanking;
+
 //    private TextView tvRegion;
 //    private TextClock tcTime;
 
     private SimpleDateFormat sdf;
     private Calendar cal;
+
+    private CalculatorData info;
 
     private Callback<CurrentWeatherModel> cbCurrentWeatherModel = new Callback<CurrentWeatherModel>() {
         @Override
@@ -149,8 +155,10 @@ public class TodayResultFragment extends ATTFragment implements WeatherLoadCallb
 
         setLayout(view);
         initialize();
+        getServerInfo();
         setTypeface();
-        setChartData();
+
+
     }
 
     @Override
@@ -170,20 +178,22 @@ public class TodayResultFragment extends ATTFragment implements WeatherLoadCallb
         pcSex = (PieChart) view.findViewById(R.id.fragment_today_result_pc_sex);
         bcAge = (BarChart) view.findViewById(R.id.fragment_today_result_bc_age);
         lcTime = (LineChart) view.findViewById(R.id.fragment_today_result_lc_time);
+
+        menuLanking = (ListView)view.findViewById(R.id.fragment_today_lank_listview);
+
+
+
 //        tcTime = (TextClock) view.findViewById(R.id.fragment_today_result_tc_time);
 //        tvRegion = (TextView) view.findViewById(R.id.fragment_today_result_tv_region);
     }
 
     @Override
     public void initialize() {
+
         sdf = new SimpleDateFormat(getResources().getString(R.string.weekday));
         cal = Calendar.getInstance(TimeZone.getDefault(), Locale.getDefault());
 
         tvDate.setText(sdf.format(cal.getTime()));
-
-        //                            service.loadWeather("1", String.valueOf(UserSession.getInstance().getLatitude()), String.valueOf(UserSession.getInstance().getLongitude()), cbCurrentWeatherModel);
-
-        WeatherLoader.getLoader().loadWeatherHouly(1, UserSession.getInstance().getLatitude(), UserSession.getInstance().getLongitude(), TodayResultFragment.this);
     }
 
     private void setTypeface() {
@@ -205,11 +215,24 @@ public class TodayResultFragment extends ATTFragment implements WeatherLoadCallb
 //        tvRegion.setTypeface(AroundTheTruckApplication.nanumGothicLight);
     }
 
-    private void setChartData() {
+    private void setTextData() throws ParseException {
+        tvWorkingTime.setText(info.getWorkingTime());
+        tvTotalSales.setText(Integer.toString(info.getTodoys_sum()));
+        tvTotalCustomerCount.setText(Integer.toString(info.getTotalCustomerCount()));
+        tvCostPerPerson.setText(Integer.toString(info.getSalesPerPerson()));
+    }
+
+    private void setListData(){
+        menuLanking.setAdapter( new MyCustomAdapter(TodayResultFragment.this.getActivity(),R.layout.text_row ,info.getLankingMenu()));
+
+    }
+
+    private void setChartData() throws ParseException {
         ArrayList<Entry> yVals = new ArrayList<>();
-        for (int i = 0; i < 2; i++) {
-            yVals.add(new Entry((float) (Math.random() * 5) + 1, i));
-        }
+
+        yVals.add(new Entry((float) info.getMen(), 0));
+        yVals.add(new Entry((float) info.getWomen() , 1));
+
 
         ArrayList<String> xVals = new ArrayList<>();
         xVals.add("남자");
@@ -220,19 +243,8 @@ public class TodayResultFragment extends ATTFragment implements WeatherLoadCallb
 
 
         ArrayList<Integer> colors = new ArrayList<>();
-
-
-        for (int a : ColorTemplate.JOYFUL_COLORS){
-            colors.add(a);
-
-        }
-
-        for(int a: ColorTemplate.LIBERTY_COLORS){
-
-            colors.add(a);
-        }
-
-
+        colors.add(graph_color1);
+        colors.add(graph_color2);
         set1.setColors(colors);
 
         PieData data = new PieData(xVals, set1);
@@ -247,38 +259,49 @@ public class TodayResultFragment extends ATTFragment implements WeatherLoadCallb
         pcSex.highlightValues(null);
         pcSex.invalidate();
         pcSex.animateX(1800);
+        pcSex.setCenterText("30");
+        pcSex.setCenterTextSize(30f);
+        pcSex.setCenterTextTypeface(AroundTheTruckApplication.nanumGothic);
 
-
+///////////////////////
         ArrayList<String> xVals1 = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 4; i++) {
             xVals1.add("");
         }
 
         ArrayList<BarEntry> yVals1 = new ArrayList<>();
-        float val = (float) (Math.random() * 3);
+        float val = (float) (info.getHistoryAge(0));
         yVals1.add(new BarEntry(val, 1));
 
 
         ArrayList<BarEntry> yVals2 = new ArrayList<>();
-        val = (float) (Math.random() * 3);
+        val = (float) (info.getHistoryAge(1));
         yVals2.add(new BarEntry(val, 2));
 
 
         ArrayList<BarEntry> yVals3 = new ArrayList<>();
-        val = (float) (Math.random() * 3);
+        val = (float) (info.getHistoryAge(2));
         yVals3.add(new BarEntry(val, 3));
+
+        ArrayList<BarEntry> yVals4 = new ArrayList<>();
+        val = (float) (info.getHistoryAge(3));
+        yVals4.add(new BarEntry(val, 4));
 
         BarDataSet bcSet1 = new BarDataSet(yVals1, "10대");
         BarDataSet bcSet2 = new BarDataSet(yVals2, "20대");
         BarDataSet bcSet3 = new BarDataSet(yVals3, "30대");
-        bcSet1.setColor(colors.get(0));
-        bcSet2.setColor(colors.get(1));
-        bcSet3.setColor(colors.get(2));
+        BarDataSet bcSet4 = new BarDataSet(yVals4, "40대 이상");
+
+        bcSet1.setColor(graph_color1);
+        bcSet2.setColor(graph_color2);
+        bcSet3.setColor(graph_color3);
+        bcSet4.setColor(graph_color3);
 
         ArrayList<BarDataSet> dataSets = new ArrayList<>();
         dataSets.add(bcSet1);
         dataSets.add(bcSet2);
         dataSets.add(bcSet3);
+        dataSets.add(bcSet4);
 
         BarData bcData = new BarData(xVals1, dataSets);
 
@@ -286,34 +309,32 @@ public class TodayResultFragment extends ATTFragment implements WeatherLoadCallb
         bcAge.setDrawHorizontalGrid(false);
         bcAge.setDrawVerticalGrid(false);
         bcAge.setDescription("");
+        bcAge.setDrawBarShadow(false); // erase greybar
         bcAge.setData(bcData);
 
         ////////////////////////////////////////////////
         ArrayList<String> xBar1 = new ArrayList<>();
-        xBar1.add("12");
-        xBar1.add("1");
-        xBar1.add("2");
-        xBar1.add("3");
-        xBar1.add("4");
-        xBar1.add("5");
-        xBar1.add("6");
-        xBar1.add("7");
+        for(String a : info.getTimeSperator()){
+            xBar1.add(a);
+        }
 
         ArrayList<Entry> yBals1 = new ArrayList<Entry>();
 
-        for(int i  = 0 ; i < 8 ; i++) {
-            val = (float) (Math.random() * 3);
-            yBals1.add(new Entry(val, i));
+        int i = 0;
+        for(int a : info.getTimeCount()) {
+            yBals1.add(new Entry(a,i ));
+            i++;
 
         }
 
+
         LineDataSet lcset1 = new LineDataSet(yBals1, "시간대별 매출");
 
-            lcset1.setLineWidth(1.75f);
-            lcset1.setCircleSize(3f);
-            lcset1.setColor(Color.BLACK);
-            lcset1.setCircleColor(Color.BLACK);
-            lcset1.setHighLightColor(Color.BLACK);
+        lcset1.setLineWidth(1.75f);
+        lcset1.setCircleSize(3f);
+        lcset1.setColor(graph_color1);
+        lcset1.setCircleColor(graph_color1);
+        lcset1.setHighLightColor(graph_color1);
 
 
         ArrayList<LineDataSet> lcdataSets = new ArrayList<LineDataSet>();
@@ -331,22 +352,63 @@ public class TodayResultFragment extends ATTFragment implements WeatherLoadCallb
 
     }
 
-    public List<CalculatorData> getServerInfo(){
+    public class MyCustomAdapter extends ArrayAdapter<String> {
+
+        String[] objects;
+        int textViewResourceId;
+        Context mcontext;
+
+        public MyCustomAdapter(Context context, int textViewResourceId,
+                               String[] objects) {
+            super(context, textViewResourceId, objects);
+
+            this.mcontext =context;
+            this.objects = objects;
+            this.textViewResourceId = textViewResourceId;
+        }
+        @Override
+        public View getDropDownView(int position, View convertView,
+                                    ViewGroup parent) {
+            return getCustomView(position, convertView, parent);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            // TODO Auto-generated method stub
+            return getCustomView(position, convertView, parent);
+        }
+
+        public View getCustomView(int position, View convertView, ViewGroup parent) {
+            // TODO Auto-generated method stub
+            //return super.getView(position, convertView, parent);
+
+            LayoutInflater inflater= getActivity().getLayoutInflater();
+            View row=inflater.inflate(textViewResourceId, parent, false);
+            TextView label=(TextView)row.findViewById(R.id.ranking_menu);
+            label.setTypeface(AroundTheTruckApplication.nanumGothic);
+            label.setText(objects[position]);
+
+            return row;
+        }
+    }
+
+
+    public void getServerInfo(){
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams param = new RequestParams();
         Log.d("YoonTag", "서버 통신");
 
         try {
-            param.put("truckIdx", "1");
+            param.put("truckIdx", "5");
 
         } catch (Exception e){
             e.printStackTrace();
             Log.d("YoonTag", "param Exception" + e);
         }
-        final List<CalculatorData> info = new ArrayList<>();
+
 
         try {
-            client.post("http://165.194.35.161:3000/Ca", param, new AsyncHttpResponseHandler() {
+            client.get("http://165.194.35.161:3000/calculate", param, new AsyncHttpResponseHandler() {
                 @Override
                 public void onSuccess(int i, Header[] headers, byte[] bytes) {
                     Log.d("YoonTag", bytes.toString());
@@ -355,15 +417,20 @@ public class TodayResultFragment extends ATTFragment implements WeatherLoadCallb
                     try {
                         JSONObject jsonObject = new JSONObject(new String(bytes));
                         JSONArray arr = new JSONArray(new String(jsonObject.getString("result")));
-                        for (int j=0; j<arr.length(); j++) {
 
-                            ColorTemplate colorTemplate = new ColorTemplate();
 
-//                            FoodMenuData adata = new FoodMenuData(arr.getJSONObject(j).getString("name"),
-//                                    arr.getJSONObject(j).getInt("price"), arr.getJSONObject(j).getString("photo_filename"),
-////                                    arr.getJSONObject(j).getString("description"));
-////                            menuList.add(adata);
-                        }
+                        int j = arr.length() -1;
+
+                        CalculatorData calculatorData = new CalculatorData(arr.getJSONObject(j).getString("start"),arr.getJSONObject(j).getString("end"),
+                                arr.getJSONObject(j).getInt("todays_sum"),arr.getJSONObject(j).getInt("salesPerPerson"),
+                                arr.getJSONObject(j).getString("historyAge"),arr.getJSONObject(j).getString("historyGender"),arr.getJSONObject(j).getString("historyMenuName"),
+                                arr.getJSONObject(j).getString("historyCardCashPoint"),arr.getJSONObject(j).getString("timeSeperator"),arr.getJSONObject(j).getString("timeCnt"));
+
+                        info = calculatorData;
+                        setChartData();
+                        setTextData();
+                        setListData();
+
                     } catch (Exception e) {
                         Log.d("YoonTag", "Json Error : " + e);
                         e.printStackTrace();
@@ -376,6 +443,7 @@ public class TodayResultFragment extends ATTFragment implements WeatherLoadCallb
                     Log.d("YoonTag", new String(bytes));
                     Log.d("YoonTag", "에러러러러");
                 }
+
             });
         }
         catch (Exception e){
@@ -383,29 +451,8 @@ public class TodayResultFragment extends ATTFragment implements WeatherLoadCallb
             Log.d("YoonTag", "서버 접속 에러");
         }
 
-        return info;
+
     }
 
-
-    @Override
-    public void onWeatherLoadSuccess(byte[] bytes) {
-        String raw = new String(bytes);
-
-        Log.i(TAG, "Raw JSON : " + raw);
-
-        CurrentWeatherModel currentWeatherModel = Util.getGson().fromJson(raw, CurrentWeatherModel.class);
-        HourlyWeatherModel hourlyWeatherModel = currentWeatherModel.getWeather();
-        ArrayList<WeatherModel> weatherList = (ArrayList) hourlyWeatherModel.getWeatherList();
-
-        for (int count = 0; count < weatherList.size(); count++) {
-            WeatherModel weather = weatherList.get(count);
-
-            GridModel grid = weather.getGrid();
-            SkyModel sky = weather.getSky();
-            TemperatureModel temperature = weather.getTemperature();
-
-            Log.i(TAG, "Address : " + grid.getCity() + " " + grid.getCounty() + " " + grid.getVillage() + ", Sky : " + sky.getName() + " - " + sky.getCode() + ", Temperature : " + temperature.getTc() + " - " + temperature.getTmax() + " - " + temperature.getTmin());
-        }
-    }
 
 }
