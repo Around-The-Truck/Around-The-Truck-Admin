@@ -29,8 +29,9 @@ public class CalculatorData {
 
     List<String> timeSperator;
     List<Integer> timeCount;
+    List<Integer> pointGetUse;
 
-    public CalculatorData(String startData, String endDate, int todoys_sum, int salesPerPerson, String age, String gender, String menu, String cardcash, String timeSeperator, String timeCount) throws JSONException {
+    public CalculatorData(String startData, String endDate, int todoys_sum, int salesPerPerson, String age, String gender, String menu, String cardcash, String timeSeperator, String timeCount, String pointGetUse) throws JSONException {
 
         this.startDate = startData;
         this.endDate = endDate;
@@ -42,7 +43,16 @@ public class CalculatorData {
         this.cardcash = getArrayItem(cardcash);
         this.timeSperator = getStringArrayItem(timeSeperator);
         this.timeCount = getArrayItem(timeCount);
+        this.pointGetUse = getArrayItem(pointGetUse);
 
+    }
+
+    public List<Integer> getCardcash(){
+        return cardcash;
+    }
+
+    public List<Integer> getPointGetUse(){
+        return pointGetUse;
     }
 
     public int getWomen() {

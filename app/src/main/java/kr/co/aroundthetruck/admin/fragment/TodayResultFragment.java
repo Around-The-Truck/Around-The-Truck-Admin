@@ -4,6 +4,7 @@ package kr.co.aroundthetruck.admin.fragment;
 import android.app.Fragment;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
@@ -61,8 +62,10 @@ public class TodayResultFragment extends ATTFragment {
 
     private Location currentLocation;
 
-    private TextView tvDate, tvWorkingTime, tvTotalSales, tvTotalCustomerCount, tvCostPerPerson;
+    private TextView tvDate, tvWorkingTime, tvTotalSales, tvTotalCustomerCount, tvCostPerPerson, tvDateDay, tvPointuse, tvPointget;
 //    private TextView tvTitle, tvWorkingTimeTitle, tvTotalSalesTitle, tvTotalCustomerCountTitle, tvCostPerPersonTitle;
+
+    private TextView paycashTextview, payCardTextview;
 
     public static final int graph_color1 = Color.parseColor("#f27070");
     public static final int graph_color2 = Color.parseColor("#ef453e");
@@ -84,6 +87,8 @@ public class TodayResultFragment extends ATTFragment {
 
     private SimpleDateFormat sdf;
     private Calendar cal;
+    private SimpleDateFormat sdf2;
+    private Calendar cal2;
 
     private CalculatorData info;
 
@@ -163,6 +168,13 @@ public class TodayResultFragment extends ATTFragment {
         tvTotalSales = (TextView) view.findViewById(R.id.fragment_today_result_tv_total_sales);
         tvTotalCustomerCount = (TextView) view.findViewById(R.id.fragment_today_result_tv_total_customer_count);
         tvCostPerPerson = (TextView) view.findViewById(R.id.fragment_today_result_tv_cost_per_person);
+        tvDateDay = (TextView) view.findViewById(R.id.fragment_today_result_tv_day);
+
+        paycashTextview = (TextView) view.findViewById(R.id.fragment_today_result_pay_cash_textview);
+        payCardTextview = (TextView) view.findViewById(R.id.fragment_today_reuslt_pay_card_textview);
+
+        tvPointget = (TextView) view.findViewById(R.id.fragment_today_result_tv_pointget);
+        tvPointuse = (TextView) view.findViewById(R.id.fragment_today_result_tv_pointuse);
 
 //        tvTitle = (TextView) view.findViewById(R.id.fragment_today_result_tv_title);
 //        tvWorkingTimeTitle = (TextView) view.findViewById(R.id.fragment_today_result_tv_working_time_title);
@@ -174,7 +186,7 @@ public class TodayResultFragment extends ATTFragment {
         bcAge = (BarChart) view.findViewById(R.id.fragment_today_result_bc_age);
         lcTime = (LineChart) view.findViewById(R.id.fragment_today_result_lc_time);
 
-//        menuLanking = (ListView) view.findViewById(R.id.fragment_today_lank_listview);
+        menuLanking = (ListView) view.findViewById(R.id.fragment_today_lank_listview);
 
 
 //        tcTime = (TextClock) view.findViewById(R.id.fragment_today_result_tc_time);
@@ -184,18 +196,21 @@ public class TodayResultFragment extends ATTFragment {
     @Override
     public void initialize() {
 
-        sdf = new SimpleDateFormat(getResources().getString(R.string.weekday));
+        sdf = new SimpleDateFormat("yyyy/MM/dd");
         cal = Calendar.getInstance(TimeZone.getDefault(), Locale.getDefault());
+        sdf2 = new SimpleDateFormat("EEE");
+        cal2 = Calendar.getInstance(TimeZone.getDefault(), Locale.getDefault());
 
         tvDate.setText(sdf.format(cal.getTime()));
+        tvDateDay.setText(sdf2.format(cal.getTime()));
     }
 
     private void setTypeface() {
         tvDate.setTypeface(AroundTheTruckApplication.nanumGothic);
-        tvWorkingTime.setTypeface(AroundTheTruckApplication.nanumGothic);
-        tvTotalSales.setTypeface(AroundTheTruckApplication.nanumGothic);
+        tvWorkingTime.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "Multicolore.otf"));
+        tvTotalSales.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "Multicolore.otf"));
         tvTotalCustomerCount.setTypeface(AroundTheTruckApplication.nanumGothic);
-        tvCostPerPerson.setTypeface(AroundTheTruckApplication.nanumGothic);
+        tvCostPerPerson.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "Multicolore.otf"));
 
 //        tvTitle.setTypeface(AroundTheTruckApplication.nanumGothic);
 //        tvWorkingTimeTitle.setTypeface(AroundTheTruckApplication.nanumGothic);
@@ -231,10 +246,10 @@ public class TodayResultFragment extends ATTFragment {
 
 
         ArrayList<String> xVals = new ArrayList<>();
-        xVals.add("남자");
-        xVals.add("여자");
+        xVals.add("  ");
+        xVals.add(" ");
 
-        PieDataSet set1 = new PieDataSet(yVals, "성별 비율");
+        PieDataSet set1 = new PieDataSet(yVals, " ");
         set1.setSliceSpace(3f);
 
 
@@ -246,7 +261,6 @@ public class TodayResultFragment extends ATTFragment {
         PieData data = new PieData(xVals, set1);
         pcSex.setData(data);
 
-
         pcSex.setDrawHoleEnabled(true);
         pcSex.setDescription("");
         pcSex.setUsePercentValues(true);
@@ -255,9 +269,8 @@ public class TodayResultFragment extends ATTFragment {
         pcSex.highlightValues(null);
         pcSex.invalidate();
         pcSex.animateX(1800);
-        pcSex.setCenterText("30");
-        pcSex.setCenterTextSize(30f);
-        pcSex.setCenterTextTypeface(AroundTheTruckApplication.nanumGothic);
+
+
 
 ///////////////////////
         ArrayList<String> xVals1 = new ArrayList<>();
@@ -396,7 +409,7 @@ public class TodayResultFragment extends ATTFragment {
         Log.d("YoonTag", "서버 통신");
 
         try {
-            param.put("truckIdx", "12");
+            param.put("truckIdx", "5");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -421,12 +434,19 @@ public class TodayResultFragment extends ATTFragment {
                         CalculatorData calculatorData = new CalculatorData(arr.getJSONObject(j).getString("start"), arr.getJSONObject(j).getString("end"),
                                 arr.getJSONObject(j).getInt("todays_sum"), arr.getJSONObject(j).getInt("salesPerPerson"),
                                 arr.getJSONObject(j).getString("historyAge"), arr.getJSONObject(j).getString("historyGender"), arr.getJSONObject(j).getString("historyMenuName"),
-                                arr.getJSONObject(j).getString("historyCardCashPoint"), arr.getJSONObject(j).getString("timeSeperator"), arr.getJSONObject(j).getString("timeCnt"));
+                                arr.getJSONObject(j).getString("historyCardCashPoint"), arr.getJSONObject(j).getString("timeSeperator"), arr.getJSONObject(j).getString("timeCnt"), arr.getJSONObject(j).getString("pointGetUse"));
 
                         info = calculatorData;
                         setChartData();
                         setTextData();
                         setListData();
+
+                        payCardTextview.setText(calculatorData.getCardcash().get(0));
+                        paycashTextview.setText(calculatorData.getCardcash().get(1));
+
+                        tvPointget.setText(calculatorData.getPointGetUse().get(0));
+                        tvPointuse.setText(calculatorData.getPointGetUse().get(1));
+
 
                     } catch (Exception e) {
                         Log.d("YoonTag", "Json Error : " + e);
