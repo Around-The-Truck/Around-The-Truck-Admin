@@ -28,6 +28,8 @@ import java.io.File;
 
 import kr.co.aroundthetruck.admin.R;
 import kr.co.aroundthetruck.admin.YSUtility;
+import kr.co.aroundthetruck.admin.activity.MainActivity;
+import kr.co.aroundthetruck.admin.dto.YSNetwork;
 import kr.co.aroundthetruck.admin.util.RoundedTransformation;
 
 
@@ -57,6 +59,8 @@ public class PosPointFragment extends Fragment {
     private ImageButton pointboxImageButton;
 
     private int payPrice;
+
+    private String menuArr;
 
     public PosPointFragment() {
         // Required empty public constructor
@@ -128,13 +132,13 @@ public class PosPointFragment extends Fragment {
         String price = getArguments().getString("totalPay");
         payPrice = Integer.parseInt(price);
         payPriceTextView = (TextView) view.findViewById(R.id.fragment_pos_point_pay_cash_textview);
-//        payPriceTextView.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "Multicolore.otf"));
+        payPriceTextView.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "Multicolore.otf"));
         payPriceTextView.setText(price + " 원");
         chagePointTextView = (TextView) view.findViewById(R.id.fragment_pos_point_charge_point_textview);
-//        chagePointTextView.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "Multicolore.otf"));
+        chagePointTextView.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "Multicolore.otf"));
         chagePointTextView.setText("" + (payPrice / 20) +" 포인트");
 
-
+        menuArr = getArguments().getString("menuArr");
 
         pointBoxLayout = (LinearLayout) view.findViewById(R.id.fragment_pos_point_point_box_layout);
 
@@ -145,6 +149,8 @@ public class PosPointFragment extends Fragment {
         pointboxImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                YSNetwork ysNetwork = new YSNetwork();
+                ysNetwork.setPayment(menuArr, ((MainActivity)getActivity()).truckIdx, phoneNumber);
                 getFragmentManager().popBackStackImmediate();
 
             }
@@ -175,7 +181,8 @@ public class PosPointFragment extends Fragment {
         Log.d("YoonTag", "서버 통신");
 
         try {
-            param.put("customerPhone", "01044550423");
+            param.put("customerPhone", phoneNumber);
+//            param.put("customerPhone", "01044550423");
 
         } catch (Exception e){
             e.printStackTrace();

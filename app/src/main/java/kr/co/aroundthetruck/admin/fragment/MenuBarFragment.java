@@ -246,26 +246,16 @@ public class MenuBarFragment extends Fragment {
 
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams param = new RequestParams();
-        param.put("truckIdx", ((MainActivity)getActivity()).truckIdx);
+        param.put("idx", ((MainActivity)getActivity()).truckIdx);
 
         try{
-            client.get("http://165.194.35.161:3000/getTruckInfo", param, new AsyncHttpResponseHandler() {
+            client.post("http://165.194.35.161:3000/truckEnd", param, new AsyncHttpResponseHandler() {
                 @Override
                 public void onSuccess(int i, Header[] headers, byte[] bytes) {
                     Log.d("YoonTag", new String(bytes));
                     try{
 //                        org.json.JSONArray arr = new org.json.JSONArray(new String(bytes));
                         JSONObject jsonObject = new JSONObject(new String(bytes));
-                        Log.d("YoonTag", "~~~~~~~!!!!!~~~~~~~"+jsonObject.getString("result"));
-                        JSONArray resultJsonObject = new JSONArray(new String(jsonObject.getString("result")));
-
-                        Log.d("YoonTag", "~~~~~~~!!!!!~~~~~~~"+resultJsonObject.getJSONObject(0).getString("name"));
-                        Log.d("YoonTag", "~~~~~~~!!!!!~~~~~~~"+resultJsonObject.getJSONObject(0).getString("photo_filename"));
-
-
-                        Picasso.with(getActivity()).load(YSUtility.addressImageStorage + URLEncoder.encode(resultJsonObject.getJSONObject(0).getString("photo_filename"), "UTF-8")).fit().transform(new RoundedTransformation(86)).into(truckImageView);
-                        largeBrandNameTextview.setText(resultJsonObject.getJSONObject(0).getString("name"));
-                        largeCategoryTextview.setText(resultJsonObject.getJSONObject(0).getString("cat_name_big") + " / " + resultJsonObject.getJSONObject(0).getString("cat_name_small"));
 
                     }catch(JSONException e){
 
@@ -285,29 +275,27 @@ public class MenuBarFragment extends Fragment {
 
     }
 
+    private double latSample[] = {37.5164693,37.5189551, 37.5097313, 37.5175011, 37.5070726, 37.5120673, 37.5121959, 37.5191053, 37.5089976, 37.5162734, 37.5148515, 37.5135527, 37.5159136, 37.5194311};
+    private double lngSample[] = {     127.1136096, 127.1140785, 127.1032415, 127.11453, 127.1055246, 127.1074787, 127.1162812, 127.1073195, 127.1109453, 127.1079845, 127.1099813, 127.1158213, 127.1227586, 127.1187741};
+
+
     private void truckOpen(){
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams param = new RequestParams();
-        param.put("truckIdx", ((MainActivity)getActivity()).truckIdx);
+        param.put("idx", ((MainActivity)getActivity()).truckIdx);
+        int n = (int) Math.random() %14;
+        param.put("lat", latSample[n]);
+        param.put("lng", lngSample[n]);
+//        param.put("lat", );
 
         try{
-            client.get("http://165.194.35.161:3000/getTruckInfo", param, new AsyncHttpResponseHandler() {
+            client.post("http://165.194.35.161:3000/truckStart", param, new AsyncHttpResponseHandler() {
                 @Override
                 public void onSuccess(int i, Header[] headers, byte[] bytes) {
                     Log.d("YoonTag", new String(bytes));
                     try{
 //                        org.json.JSONArray arr = new org.json.JSONArray(new String(bytes));
                         JSONObject jsonObject = new JSONObject(new String(bytes));
-                        Log.d("YoonTag", "~~~~~~~!!!!!~~~~~~~"+jsonObject.getString("result"));
-                        JSONArray resultJsonObject = new JSONArray(new String(jsonObject.getString("result")));
-
-                        Log.d("YoonTag", "~~~~~~~!!!!!~~~~~~~"+resultJsonObject.getJSONObject(0).getString("name"));
-                        Log.d("YoonTag", "~~~~~~~!!!!!~~~~~~~"+resultJsonObject.getJSONObject(0).getString("photo_filename"));
-
-
-                        Picasso.with(getActivity()).load(YSUtility.addressImageStorage + URLEncoder.encode(resultJsonObject.getJSONObject(0).getString("photo_filename"), "UTF-8")).fit().transform(new RoundedTransformation(86)).into(truckImageView);
-                        largeBrandNameTextview.setText(resultJsonObject.getJSONObject(0).getString("name"));
-                        largeCategoryTextview.setText(resultJsonObject.getJSONObject(0).getString("cat_name_big") + " / " + resultJsonObject.getJSONObject(0).getString("cat_name_small"));
 
                     }catch(JSONException e){
 

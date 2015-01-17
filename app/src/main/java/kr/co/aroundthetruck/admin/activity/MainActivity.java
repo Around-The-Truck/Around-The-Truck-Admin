@@ -30,7 +30,7 @@ public class MainActivity extends ATTActivity implements GoogleApiClient.Connect
     private Boolean mRequestingLocationUpdates;
 
     public String testString = "aaaaaaaaannnnnnn";
-    public static String  truckIdx = "14";
+    public static String  truckIdx = "5";
 
     /**
      * The desired interval for location updates. Inexact. Updates may be more or less frequent.

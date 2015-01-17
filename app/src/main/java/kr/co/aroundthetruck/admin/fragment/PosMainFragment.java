@@ -15,6 +15,7 @@ import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -32,6 +33,8 @@ import kr.co.aroundthetruck.admin.activity.MainActivity;
 import kr.co.aroundthetruck.admin.activity.pay.CardReaderActivity;
 import kr.co.aroundthetruck.admin.activity.register.RegisterAdminActivity;
 import kr.co.aroundthetruck.admin.dto.FoodMenuData;
+import kr.co.aroundthetruck.admin.dto.PayData;
+import kr.co.aroundthetruck.admin.dto.YSNetwork;
 import kr.co.aroundthetruck.admin.ui.ATTFragment;
 
 public class PosMainFragment extends ATTFragment {
@@ -155,6 +158,7 @@ public class PosMainFragment extends ATTFragment {
                         dialog.dismiss();
                         Bundle arguments = new Bundle();
                         arguments.putString("totalPay", "" + adapterCounter.getTotalPrice());
+                        arguments.putString("menuArr", getPayDataListJSON("1"));
 
                         PosPointFragment pointFragment = new PosPointFragment();
 
@@ -163,6 +167,7 @@ public class PosMainFragment extends ATTFragment {
                                 .replace(R.id.activity_main_container,  pointFragment)
                                 .addToBackStack(null)
                                 .commit();
+
                     }
                 });
 
@@ -172,6 +177,7 @@ public class PosMainFragment extends ATTFragment {
                         dialog.dismiss();
                         Bundle arguments = new Bundle();
                         arguments.putString("totalPay", "" + adapterCounter.getTotalPrice());
+                        arguments.putString("menuArr", getPayDataListJSON("0"));
 
                         PosPointFragment pointFragment = new PosPointFragment();
 
@@ -208,6 +214,16 @@ public class PosMainFragment extends ATTFragment {
         return fragment;
     }
 
+    private String getPayDataListJSON(String type){
+        List<FoodMenuData> data = adapterCounter.getFoodMenuList();
+        List<PayData> list = new ArrayList<>();
+        for (int i = 0; i<data.size(); i++){
+            list.add(new PayData(data.get(i).getmenuIdx(),""+ data.get(i).getMenuPrice(), type));
+        }
+        String json = new Gson().toJson(list);
+        return json;
+    }
+
     private void request(){
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams param = new RequestParams();
@@ -236,8 +252,10 @@ public class PosMainFragment extends ATTFragment {
 
                             FoodMenuData adata = new FoodMenuData(arr.getJSONObject(j).getString("name"),
                                     arr.getJSONObject(j).getInt("price"), arr.getJSONObject(j).getString("photo_filename"),
-                                    arr.getJSONObject(j).getString("description"));
+                                    arr.getJSONObject(j).getString("description"), arr.getJSONObject(j).getString("idx"));
                             menuList.add(adata);
+
+//                            Log.d("YoonTag", adata.getmenuIdx());
                         }
 
                         adapterSelect.setmItems(menuList);
@@ -342,6 +360,9 @@ public class PosMainFragment extends ATTFragment {
             this.inflater = inflater;
         }
 
+        public List<FoodMenuData> getFoodMenuList(){
+            return mItems;
+        }
         public void setremoveButtonListener(View.OnClickListener listener){
             removeButtonListener = listener;
         }

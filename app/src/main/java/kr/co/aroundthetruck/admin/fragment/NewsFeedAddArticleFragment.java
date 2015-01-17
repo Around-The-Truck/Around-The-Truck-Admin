@@ -27,6 +27,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -103,7 +104,8 @@ public class NewsFeedAddArticleFragment extends Fragment {
         registerImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                registerRequest();
+                getFragmentManager().popBackStackImmediate();
             }
         });
 
@@ -122,6 +124,55 @@ public class NewsFeedAddArticleFragment extends Fragment {
 
     }
 
+    private void registerRequest(){
+        Log.d("YoonTag", "서버 통신 시작");
+
+        AsyncHttpClient client = new AsyncHttpClient();
+
+        RequestParams param = new RequestParams();
+
+        Log.d("YoonTag", "서버 통신");
+
+        try {
+            param.put("writer", ((MainActivity)getActivity()).truckIdx);
+            param.put("writerType", "1");
+            param.put("contents", articleEditText.getText());
+            param.put("belongTo", ((MainActivity) getActivity()).truckIdx);
+
+            param.put("file", new File(fullPath));
+
+        } catch (Exception e){
+            e.printStackTrace();
+            Log.d("YoonTag", "Errorrorror");
+        }
+
+        try{
+            client.post("http://165.194.35.161:3000/writeArticle", param, new AsyncHttpResponseHandler() {
+                @Override
+                public void onSuccess(int i, Header[] headers, byte[] bytes) {
+                    Log.d("YoonTag", new String(bytes));
+                    try {
+//                        org.json.JSONArray arr = new org.json.JSONArray(new String(bytes));
+                        JSONObject jsonObject = new JSONObject(new String(bytes));
+
+                    } catch (JSONException e) {
+
+                    } catch (Exception e) {
+
+                    }
+
+                }
+
+                @Override
+                public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+                    Log.d("YoonTag", "서버 에러...ㅠㅠ");
+                }
+            });
+        } catch(Exception e){
+
+        }
+    }
+
     private void request(){
         Log.d("YoonTag", "서버 통신 시작");
 
@@ -132,7 +183,8 @@ public class NewsFeedAddArticleFragment extends Fragment {
         Log.d("YoonTag", "서버 통신");
 
         try {
-            param.put("truckIdx", ((MainActivity)getActivity()).truckIdx);
+//            param.put("truckIdx", ((MainActivity)getActivity()).truckIdx);
+            param.put("truckIdx", "5");
 
         } catch (Exception e){
             e.printStackTrace();
@@ -204,6 +256,7 @@ public class NewsFeedAddArticleFragment extends Fragment {
         public void onFragmentInteraction(Uri uri);
     }
 
+    private String fullPath;
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 // TODO Auto-generated method stub
@@ -221,6 +274,7 @@ public class NewsFeedAddArticleFragment extends Fragment {
 //                selectImageView.setImageBitmap(selPhoto);
 //                adapter.addImage(targetPosition, roundPhoto);
 //                imageView.setImageBitmap(roundPhoto);
+                fullPath = YSUtility.getRealPathFromURI(getActivity(), selPhotoUri);
             } catch (FileNotFoundException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();

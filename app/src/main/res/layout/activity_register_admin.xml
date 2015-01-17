@@ -27,7 +27,8 @@
                 android:layout_marginLeft="74dp"
                 android:layout_marginRight="74dp"
                 android:background="@drawable/register_brandimg"
-                android:layout_marginBottom="50dp" />
+                android:layout_marginBottom="50dp"
+                android:padding="5dp" />
 
             <LinearLayout
                 android:orientation="vertical"

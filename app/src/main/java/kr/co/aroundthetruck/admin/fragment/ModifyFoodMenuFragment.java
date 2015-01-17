@@ -119,7 +119,9 @@ public class ModifyFoodMenuFragment extends Fragment {
         Log.d("YoonTag", "서버 통신");
 
         try {
+            Log.d("YoonTag", "truckIdx = "+((MainActivity)getActivity()).truckIdx);
             param.put("truckIdx", ((MainActivity)getActivity()).truckIdx);
+//            param.put("truckIdx", "5");
 
         } catch (Exception e){
             e.printStackTrace();
@@ -141,7 +143,7 @@ public class ModifyFoodMenuFragment extends Fragment {
 
                             FoodMenuData adata = new FoodMenuData(arr.getJSONObject(j).getString("name"),
                                     arr.getJSONObject(j).getInt("price"), arr.getJSONObject(j).getString("photo_filename"),
-                                    arr.getJSONObject(j).getString("description"));
+                                    arr.getJSONObject(j).getString("description"), "!");
                             menuList.add(adata);
                         }
 
