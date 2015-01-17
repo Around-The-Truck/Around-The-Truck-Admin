@@ -6,12 +6,12 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="wrap_content"
-        android:layout_height="fill_parent">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="1182.5dp"
-            android:layout_height="fill_parent">
+            android:layout_height="match_parent">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -27,8 +27,8 @@
                 android:fillViewport="true">
 
                 <RelativeLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -39,12 +39,12 @@
                     <LinearLayout
                         android:orientation="horizontal"
                         android:layout_width="wrap_content"
-                        android:layout_height="fill_parent">
+                        android:layout_height="match_parent">
 
                         <LinearLayout
                             android:orientation="vertical"
                             android:layout_width="wrap_content"
-                            android:layout_height="fill_parent">
+                            android:layout_height="match_parent">
 
                             <TextView
                                 android:id="@+id/fragment_today_result_tv_date"
@@ -130,12 +130,12 @@
                         <LinearLayout
                             android:orientation="vertical"
                             android:layout_width="480dp"
-                            android:layout_height="fill_parent"
+                            android:layout_height="match_parent"
                             android:layout_marginLeft="50dp">
 
                             <LinearLayout
                                 android:orientation="horizontal"
-                                android:layout_width="fill_parent"
+                                android:layout_width="match_parent"
                                 android:layout_height="300dp">
 
                                 <ImageView
@@ -149,7 +149,7 @@
 
                             <LinearLayout
                                 android:orientation="horizontal"
-                                android:layout_width="fill_parent"
+                                android:layout_width="match_parent"
                                 android:layout_height="110dp"
                                 android:layout_marginTop="120dp">
 
@@ -178,7 +178,7 @@
 
                             <LinearLayout
                                 android:orientation="horizontal"
-                                android:layout_width="fill_parent"
+                                android:layout_width="match_parent"
                                 android:layout_height="200dp">
 
                                 <TextView
@@ -238,13 +238,13 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="fill_parent"></LinearLayout>
+            android:layout_height="match_parent"></LinearLayout>
     </LinearLayout>
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
+        android:layout_height="match_parent"
         android:layout_marginLeft="1075dp"
         android:layout_marginTop="100dp">
 
