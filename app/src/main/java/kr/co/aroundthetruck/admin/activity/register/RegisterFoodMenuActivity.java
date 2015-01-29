@@ -163,6 +163,7 @@ public class RegisterFoodMenuActivity extends Activity {
             String json = new Gson().toJson(foodmenuList);
             Log.d("YoonTag", json);
 
+            param.put("data", json);
 //            param.put("truckName", data.getBrandName());
 //            param.put("phone", data.getPhoneNumber());
 //            param.put("open_date", data.getOpenData());
@@ -187,28 +188,28 @@ public class RegisterFoodMenuActivity extends Activity {
         }
 
 
-//        client.post("http://165.194.35.161:3000/addMenuList", param, new AsyncHttpResponseHandler() {
-//            @Override
-//            public void onSuccess(int i, Header[] headers, byte[] bytes) {
-//                Log.d("YoonTag", bytes.toString());
-//                Log.d("YoonTag", new String(bytes));
-////                try {
-////                    org.json.JSONArray arr = new org.json.JSONArray(new String(bytes));
-////                    for (int i=0; i<arr.length(); i++) {
-////                        MainActivity.items.add(new CustomerItem(arr.getJSONObject(i).getString("image1_id"),arr.getJSONObject(i).getString("name"),arr.getJSONObject(i).getString("category"),arr.getJSONObject(i).getString("price")));
-////                    }
-////
-////                } catch (Exception e) {
-////                    e.printStackTrace();
-////                }
-//            }
+        client.post("http://165.194.35.161:3000/addMenuList", param, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int i, Header[] headers, byte[] bytes) {
+                Log.d("YoonTag", bytes.toString());
+                Log.d("YoonTag", new String(bytes));
+//                try {
+//                    org.json.JSONArray arr = new org.json.JSONArray(new String(bytes));
+//                    for (int i=0; i<arr.length(); i++) {
+//                        MainActivity.items.add(new CustomerItem(arr.getJSONObject(i).getString("image1_id"),arr.getJSONObject(i).getString("name"),arr.getJSONObject(i).getString("category"),arr.getJSONObject(i).getString("price")));
+//                    }
 //
-//            @Override
-//            public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
-//                Log.d("YoonTag", new String(bytes));
-//                Log.d("YoonTag", "에러러러러");
-//            }
-//        });
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+            }
+
+            @Override
+            public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+                Log.d("YoonTag", new String(bytes));
+                Log.d("YoonTag", "에러러러러");
+            }
+        });
     }
 
     @Override

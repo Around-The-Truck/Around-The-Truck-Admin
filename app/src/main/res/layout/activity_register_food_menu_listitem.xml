@@ -24,7 +24,8 @@
                 android:focusable="false"
                 android:background="@drawable/register_food_photo"
                 android:layout_marginTop="15.5dp"
-                android:layout_marginLeft="15.5dp" />
+                android:layout_marginLeft="15.5dp"
+                android:padding="10dp" />
         </LinearLayout>
 
         <LinearLayout

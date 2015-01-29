@@ -166,4 +166,18 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/fragment_main_imagebutton1"
+        android:layout_gravity="right|center_vertical"
+        android:src="@drawable/register_card_r" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/fragment_main_imagebutton2"
+        android:src="@drawable/register_group_r"
+        android:layout_gravity="right" />
 </FrameLayout>

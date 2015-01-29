@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +45,8 @@ public class MainFragment extends ATTFragment implements WeatherLoadCallback {
     private TextView tvTimeTitle;
 
     private CurrentWeatherModel currentWeatherModel;
+
+    private ImageButton imageButton1, imageButton2, imageButton3;
 
     public MainFragment() {
         // Required empty public constructor
@@ -109,6 +112,29 @@ public class MainFragment extends ATTFragment implements WeatherLoadCallback {
         tvCurrentRegion = (TextView) view.findViewById(R.id.fragment_main_tv_current_region);
 
         tvTimeTitle = (TextView) view.findViewById(R.id.fragment_main_tv_current_time_title);
+
+        imageButton1 = (ImageButton) view.findViewById(R.id.fragment_main_imagebutton1);
+        imageButton2 = (ImageButton) view.findViewById(R.id.fragment_main_imagebutton2);
+
+        imageButton1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.activity_main_container,  HistoryMapFragment.newInstance())
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
+        imageButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.activity_main_container,  TodayResultFragment.newInstance())
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
     }
 
     @Override

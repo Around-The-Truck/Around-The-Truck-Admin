@@ -101,6 +101,12 @@
         android:layout_marginTop="26.5dp" />
 
     <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/fragment_news_feed_item_reply_layout"></LinearLayout>
+
+    <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">

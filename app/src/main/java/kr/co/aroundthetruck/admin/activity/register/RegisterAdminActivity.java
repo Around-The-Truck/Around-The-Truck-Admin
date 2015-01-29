@@ -53,7 +53,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import kr.co.aroundthetruck.admin.R;
 import kr.co.aroundthetruck.admin.YSUtility;
@@ -69,8 +71,10 @@ public class RegisterAdminActivity extends ATTActivity {
     private Spinner spinnerCat;
     private Spinner spinnerSub;
 
-    private String[] categoryItems = {"한식 ", "중식", "일식", "양식", "한식 ", "중식", "일식", "양식"};
-    private String[] subCategoryItems = {"한식_서브", "중식_서브", "일식_서브", "양식_서브", "한식_서브", "중식_서브", "일식_서브", "양식_서브"};
+    private String[] categoryItems = {"카테고리를 선택해주세요", "양식 ", "중식", "한식", "양식", "한식 ", "일식", "분식", "퓨전", "이색"};
+    private String[][] subCategoryItems = {{"카테고리를 먼저 선택해주세요"}, {"파스타", "스테이크", "샐러드", "경양식", "디저트" },
+                                           {"양꼬치", "자장면", "짬뽕", "볶음밥", "기타류"}, {"구이", "밥류","찜류","탕류","족발"}, {"라멘", "회","초밥"},
+                                            {"떡볶이", "순대", "튀김"}, {"퓨전사찰", "김치퓨전"}, {"터키식", "지중해식"}};
 
     private ImageView imageView;
     private final int REQUEST_IMAGE = 002;
@@ -251,13 +255,30 @@ public class RegisterAdminActivity extends ATTActivity {
         adapter.setDropDownViewResource(
                 android.R.layout.simple_dropdown_item_1line);
 
+        spinnerSub.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                Log.d("YoonTag", subCategoryItems[position][0]);
+                ArrayList<String> arraylist = new ArrayList<String>();
+                for (int i = 0 ;i<subCategoryItems[position].length; i++){
+                    arraylist.add(subCategoryItems[position][i]);
+                    Log.d("YoonTag", subCategoryItems[position][i]);
+                }
+
+                ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_spinner_item, arraylist);
+                adapter2.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+                spinnerSub.setAdapter(adapter2);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         spinnerCat.setAdapter(adapter);
 
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(
-                this, android.R.layout.simple_spinner_item, subCategoryItems);
-        adapter2.setDropDownViewResource(
-                android.R.layout.simple_dropdown_item_1line);
-        spinnerSub.setAdapter(adapter2);
 
         // ImageView
         imageView = (ImageView) findViewById(R.id.activity_register_admin_imageView2);

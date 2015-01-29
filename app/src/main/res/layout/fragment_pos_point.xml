@@ -41,7 +41,8 @@
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:text="Large Text"
                         android:id="@+id/fragment_pos_point_pay_cash_textview"
-                        android:gravity="center_horizontal|bottom" />
+                        android:gravity="center_horizontal|bottom"
+                        android:textSize="50dp" />
 
                     <TextView
                         android:layout_width="fill_parent"
@@ -49,7 +50,8 @@
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:text="Large Text"
                         android:id="@+id/fragment_pos_point_charge_point_textview"
-                        android:gravity="center_horizontal|bottom" />
+                        android:gravity="center_horizontal|bottom"
+                        android:textSize="45dp" />
                 </LinearLayout>
 
                 <LinearLayout
