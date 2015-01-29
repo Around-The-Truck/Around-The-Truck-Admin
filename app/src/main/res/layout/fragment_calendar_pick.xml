@@ -1,0 +1,19 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="kr.co.aroundthetruck.admin.fragment.CalendarPickFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+
+        <CalendarView
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/fragment_calendar_pick_calendarView" />
+    </LinearLayout>
+
+</FrameLayout>

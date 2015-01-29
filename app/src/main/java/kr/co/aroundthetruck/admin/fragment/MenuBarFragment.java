@@ -40,6 +40,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.util.Calendar;
 
 import kr.co.aroundthetruck.admin.Dialog.MenubarStateChangeDialog;
 import kr.co.aroundthetruck.admin.Dialog.PosPaymentDialog;
@@ -219,7 +220,11 @@ public class MenuBarFragment extends Fragment {
 //                        .replace(R.id.activity_main_container, NewsFeedFragment.newInstance())
 //                        .addToBackStack(null)
 //                        .commit();
-                startActivity(new Intent(getActivity(), RegisterAdminActivity.class));
+//                startActivity(new Intent(getActivity(), RegisterAdminActivity.class));
+                  getFragmentManager().beginTransaction()
+                            .replace(R.id.activity_main_container, CalendarPickFragment.newInstance())
+                            .addToBackStack(null)
+                            .commit();
             }
         });
 
@@ -237,9 +242,9 @@ public class MenuBarFragment extends Fragment {
 
     }
 
-    private void setLayout(LayoutInflater inflater){
+    private void setLayout(LayoutInflater inflater)
+    {
         request();
-
     }
 
     private void truckClose(){

@@ -1,6 +1,7 @@
 package kr.co.aroundthetruck.admin.fragment;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,12 +20,15 @@ import android.widget.TextView;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.loopj.android.http.SyncHttpClient;
 import com.loopj.android.image.SmartImageView;
 import com.squareup.picasso.Picasso;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.URLEncoder;
@@ -61,6 +65,11 @@ public class NewsFeedFragment extends Fragment {
 
     private LinearLayout itemView;
 
+    private String truckName;
+    private String truckFileName;
+
+    private ProgressDialog progressDialog;
+
     public NewsFeedFragment() {
         // Required empty public constructor
     }
@@ -72,6 +81,9 @@ public class NewsFeedFragment extends Fragment {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_news_feed, container, false);
         this.inflater = inflater;
+
+        init();
+
         initialize(root);
 
         setLayout(inflater);
@@ -79,7 +91,18 @@ public class NewsFeedFragment extends Fragment {
         return root;
     }
 
+    private void init(){
+        getTruckShort();
+    }
+
     private void initialize(View view) {
+
+//        progressDialog = new ProgressDialog(getActivity());
+//        progressDialog.setTitle("로딩중입니다....");
+//        progressDialog.setProgress(ProgressDialog.STYLE_SPINNER);
+//        progressDialog.setCancelable(false);
+//        progressDialog.setIndeterminate(true);
+//        progressDialog.show();
 
         writeNewButton = (ImageButton) view.findViewById(R.id.fragment_news_feed_write_imageButton);
         writeNewButton.setOnClickListener(new View.OnClickListener() {
@@ -130,28 +153,51 @@ public class NewsFeedFragment extends Fragment {
         }
     }
 
+    private void getTruckShort(){
+        Log.d("YoonTag", "서버 통신 시작");
+        AsyncHttpClient client = new AsyncHttpClient();
+        RequestParams param = new RequestParams();
+        param.put("truckIdx", ((MainActivity)getActivity()).truckIdx);
+//            param.put("truckIdx", "5");
+
+        try{
+            client.post("http://165.194.35.161:3000/getTruckShort", param, new AsyncHttpResponseHandler() {
+                @Override
+                public void onSuccess(int i, Header[] headers, byte[] bytes) {
+                    Log.d("YoonTag", new String(bytes));
+                    try {
+                        JSONObject jsonObject = new JSONObject(new String(bytes));
+                        Log.d("YoonTag", "~~~~~~~!!!!!~~~~~~~" + jsonObject.getString("result"));
+                        JSONArray resultJsonObject = new JSONArray(new String(jsonObject.getString("result")));
+
+                        truckName = resultJsonObject.getJSONObject(0).getString("name");
+                        truckFileName = YSUtility.addressImageStorage + URLEncoder.encode(resultJsonObject.getJSONObject(0).getString("photo_filename"), "UTF-8");
+
+                    } catch (Exception e) { }
+
+                }
+
+                @Override
+                public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+                    Log.d("YoonTag", "서버 에러...ㅠㅠ");
+                }
+            });
+        } catch(Exception e){         }
+    }
+
     private void request(){
 
         Log.d("YoonTag", "서버 통신 시작");
         AsyncHttpClient client = new AsyncHttpClient();
 
         RequestParams param = new RequestParams();
-        Log.d("YoonTag", "서버 통신");
+
+        param.put("writer", ((MainActivity) getActivity()).truckIdx);
+        param.put("writer_type", 0);
 
         try {
-            param.put("truckIdx", ((MainActivity)getActivity()).truckIdx);
-
-        } catch (Exception e){
-            e.printStackTrace();
-            Log.d("YoonTag", "Errorrorror");
-        }
-
-        Log.d("YoonTag", "서버 통신");
-
-        try {
-
-
-            client.post("http://165.194.35.161:3000/getTimeline", param, new AsyncHttpResponseHandler() {
+            //getTimeLine
+            client.post("http://165.194.35.161:3000/getArticleList", param, new AsyncHttpResponseHandler() {
                 @Override
                 public void onSuccess(int i, Header[] headers, byte[] bytes) {
                     Log.d("YoonTag", bytes.toString());
@@ -162,15 +208,15 @@ public class NewsFeedFragment extends Fragment {
                         JSONArray arr = new JSONArray(new String(jsonObject.getString("result")));
                         for (int j=0; j<arr.length(); j++) {
                             List<ArticleReply> replyList = new ArrayList<ArticleReply>();
-                            JSONArray replyArr = new JSONArray(arr.getJSONObject(j).getString("reply"));
-                            for (int k = 0; k< replyArr.length(); k++){
-                                replyList.add(new ArticleReply(replyArr.getJSONObject(k).getString("r_idx"), replyArr.getJSONObject(k).getString("r_contents"),
-                                        replyArr.getJSONObject(k).getString("r_writer"), replyArr.getJSONObject(k).getString("r_writer_name"),
-                                        replyArr.getJSONObject(k).getString("r_writer_filename"), replyArr.getJSONObject(k).getString("r_article_idx"),
-                                        replyArr.getJSONObject(k).getString("r_reg_date")));
-                            }
+//                            JSONArray replyArr = new JSONArray(arr.getJSONObject(j).getString("reply"));
+//                            for (int k = 0; k< replyArr.length(); k++){
+//                                replyList.add(new ArticleReply(replyArr.getJSONObject(k).getString("r_idx"), replyArr.getJSONObject(k).getString("r_contents"),
+//                                        replyArr.getJSONObject(k).getString("r_writer"), replyArr.getJSONObject(k).getString("r_writer_name"),
+//                                        replyArr.getJSONObject(k).getString("r_writer_filename"), replyArr.getJSONObject(k).getString("r_article_idx"),
+//                                        replyArr.getJSONObject(k).getString("r_reg_date")));
+//                            }
                             ArticleData adata = new ArticleData(arr.getJSONObject(j).getString("idx"),
-                                    arr.getJSONObject(j).getString("filename"), arr.getJSONObject(j).getString("truck_filename"),
+                                    arr.getJSONObject(j).getString("filename"), arr.getJSONObject(j).getString("writer_filename"),
                                     arr.getJSONObject(j).getString("contents"), arr.getJSONObject(j).getString("like"),
                                     arr.getJSONObject(j).getString("reg_date"), replyList);
                             articleList.add(adata);
@@ -339,19 +385,24 @@ public class NewsFeedFragment extends Fragment {
                 holder.addReplyImageButton = (ImageButton) convertView.findViewById(R.id.fragment_news_feed_item_add_reply_imagebutton);
                 holder.addReplyImageButton.setOnClickListener(addReplyButtonListener);
 
+                holder.replyLayout = (LinearLayout) convertView.findViewById(R.id.fragment_news_feed_item_reply_layout);
+
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolderCounter) convertView.getTag();
             }
 
-//            Bitmap photo =
-//            holder.mainPhotoImageView.setImageBitmap();
             ArticleData data = mItems.get(position);
             holder.hertTextView.setText(data.like);
             holder.contentTextView.setText(data.contents);
 
 
-            holder.nameTextView.setText("position   "+position);
+
+
+            Picasso.with(getActivity()).load(truckFileName).fit().transform(new RoundedTransformation(86)).into(holder.profileImageView);
+            holder.nameTextView.setText(truckName);
+//
+//            holder.nameTextView.setText("position   "+position);
 //            String teststring = "";
 //            for(int i = 0; i < position; i++){
 //                teststring += "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
@@ -385,10 +436,6 @@ public class NewsFeedFragment extends Fragment {
     }
 
     private static class ViewHolderCounter{
-        public TextView menuNameTextView;
-        public TextView priceTextView;
-        public Button removeButton;
-
         public ImageView profileImageView;
         public TextView nameTextView;
         public TextView timeTextView;
@@ -399,5 +446,7 @@ public class NewsFeedFragment extends Fragment {
 
         public EditText replyEditTextView;
         public ImageButton addReplyImageButton;
+
+        public LinearLayout replyLayout;
     }
 }

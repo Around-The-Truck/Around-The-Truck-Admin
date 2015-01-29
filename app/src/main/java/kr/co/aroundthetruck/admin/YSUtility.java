@@ -7,6 +7,10 @@ import android.graphics.Canvas;
 import android.graphics.Path;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.util.Log;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  * Created by 윤석 on 2014-12-20.
@@ -47,5 +51,18 @@ public class YSUtility {
                 cursor.close();
             }
         }
+    }
+
+    public static String getResults(String jsonString)
+    {
+        String result = "";
+        try {
+            JSONObject jsonObject = new JSONObject(jsonString);
+            result = jsonObject.getString("result");
+        }
+        catch (Exception e){
+            Log.d("YoonTag", "YSUtil, getResults Error");
+        }
+        return result;
     }
 }

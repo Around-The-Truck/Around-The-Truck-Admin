@@ -28,7 +28,7 @@ public class MainActivity extends ATTActivity implements GoogleApiClient.Connect
     private Boolean mRequestingLocationUpdates;
 
     public String testString = "aaaaaaaaannnnnnn";
-    public static String truckIdx = "14";
+    public static String truckIdx = "5";
 
     /**
      * The desired interval for location updates. Inexact. Updates may be more or less frequent.
@@ -184,7 +184,11 @@ public class MainActivity extends ATTActivity implements GoogleApiClient.Connect
 
         // The final argument to {@code requestLocationUpdates()} is a LocationListener
         // (http://developer.android.com/reference/com/google/android/gms/location/LocationListener.html).
-        LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
+        try {
+            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
+        }catch (Exception e){
+            Log.d("YoonTag", "MainActivity Resume Error");
+        }
     }
 
     @Override

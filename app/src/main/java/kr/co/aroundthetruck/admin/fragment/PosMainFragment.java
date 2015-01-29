@@ -264,7 +264,6 @@ public class PosMainFragment extends ATTFragment {
                         Log.d("YoonTag", "Json Error : " + e);
                         e.printStackTrace();
                     }
-
                 }
 
                 @Override
