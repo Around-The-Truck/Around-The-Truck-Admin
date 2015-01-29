@@ -20,5 +20,4 @@
         android:layout_height="wrap_content"
         android:background="@drawable/splash_button"
         android:layout_marginTop="100dp" />
-
 </LinearLayout>

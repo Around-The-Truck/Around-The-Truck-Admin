@@ -1,6 +1,7 @@
 package kr.co.aroundthetruck.admin;
 
 import android.app.Application;
+import android.content.Context;
 import android.graphics.Typeface;
 
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
@@ -12,12 +13,14 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
+import java.lang.reflect.Field;
+
 /**
  * Created by sehonoh on 14. 11. 30..
  */
 public class AroundTheTruckApplication extends Application {
     private static final String TAG = AroundTheTruckApplication.class.getSimpleName();
-    public static Typeface nanumGothicULT, nanumGothicLight, nanumGothic, nanumGothicBold;
+    public static Typeface multicolore, nanumGothicLight, nanumGothic, nanumGothicBold;
 
     @Override
     public void onCreate() {
@@ -47,9 +50,31 @@ public class AroundTheTruckApplication extends Application {
 
         ImageLoader.getInstance().init(config);
 
-//        nanumGothicULT = Typeface.createFromAsset(getAssets(), "NanumBarunGothicUltraLight.otf");
+        multicolore = Typeface.createFromAsset(getAssets(), "Multicolore.otf");
         nanumGothicLight = Typeface.createFromAsset(getAssets(), "NanumBarunGothicLight.otf");
         nanumGothic = Typeface.createFromAsset(getAssets(), "NanumBarunGothic.otf");
         nanumGothicBold = Typeface.createFromAsset(getAssets(), "NanumBarunGothicBold.otf");
+
+
+        setDefaultFont(this, "DEFAULT", "NanumBarunGothic.otf");
+        setDefaultFont(this, "SANS_SERIF", "NanumBarunGothic.otf");
+        setDefaultFont(this, "SERIF", "NanumBarunGothic.otf");
+    }
+
+    public static void setDefaultFont(Context ctx, String staticTypefaceFieldName, String fontAssetName) {
+        final Typeface regular = Typeface.createFromAsset(ctx.getAssets(), fontAssetName);
+        replaceFont(staticTypefaceFieldName, regular);
+    }
+
+    protected static void replaceFont(String staticTypefaceFieldName, final Typeface newTypeface) {
+        try {
+            final Field StaticField = Typeface.class.getDeclaredField(staticTypefaceFieldName);
+            StaticField.setAccessible(true);
+            StaticField.set(null, newTypeface);
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
 }

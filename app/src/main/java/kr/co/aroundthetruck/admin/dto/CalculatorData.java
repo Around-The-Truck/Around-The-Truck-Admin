@@ -4,7 +4,6 @@ import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -30,8 +29,9 @@ public class CalculatorData {
 
     List<String> timeSperator;
     List<Integer> timeCount;
+    List<Integer> pointGetUse;
 
-    public CalculatorData(String startData, String endDate, int todoys_sum, int salesPerPerson, String age, String gender, String menu, String cardcash, String timeSeperator, String timeCount) throws JSONException {
+    public CalculatorData(String startData, String endDate, int todoys_sum, int salesPerPerson, String age, String gender, String menu, String cardcash, String timeSeperator, String timeCount, String pointGetUse) throws JSONException {
 
         this.startDate = startData;
         this.endDate = endDate;
@@ -43,13 +43,27 @@ public class CalculatorData {
         this.cardcash = getArrayItem(cardcash);
         this.timeSperator = getStringArrayItem(timeSeperator);
         this.timeCount = getArrayItem(timeCount);
+        this.pointGetUse = getArrayItem(pointGetUse);
 
     }
 
-    public int getWomen() { return history_gender.get(1); }
-    public int getMen() {return history_gender.get(0);}
+    public List<Integer> getCardcash(){
+        return cardcash;
+    }
 
-    public int getHistoryAge(int gen ) {
+    public List<Integer> getPointGetUse(){
+        return pointGetUse;
+    }
+
+    public int getWomen() {
+        return history_gender.get(1);
+    }
+
+    public int getMen() {
+        return history_gender.get(0);
+    }
+
+    public int getHistoryAge(int gen) {
 
         switch (gen) {
             case 0:
@@ -68,28 +82,34 @@ public class CalculatorData {
 
     public String getWorkingTime() throws ParseException {
 
-        return transFormatDate(startDate,"a h") + "-" + transFormatDate(endDate,"a h");
+        return transFormatDate(startDate, "a h") + "-" + transFormatDate(endDate, "a h");
 
     }
 
-    public String[] getLankingMenu(){
+    public String[] getLankingMenu() {
 
         String[] stockArr = new String[ranking_menu.size()];
 
         stockArr = ranking_menu.toArray(stockArr);
-        Log.d("배열 갯수",Integer.toString(stockArr.length));
+        Log.d("배열 갯수", Integer.toString(stockArr.length));
 
         return stockArr;
     }
 
 
-    public int getTodoys_sum(){ return todoys_sum;  }
-    public int getSalesPerPerson(){return salesPerPerson;}
-    public int getTotalCustomerCount(){
+    public int getTodoys_sum() {
+        return todoys_sum;
+    }
+
+    public int getSalesPerPerson() {
+        return salesPerPerson;
+    }
+
+    public int getTotalCustomerCount() {
 
         int totalCount = 0;
 
-        for(int i = 0 ; i < 10 ; i++){
+        for (int i = 0; i < 10; i++) {
             totalCount += history_age.get(i);
         }
 
@@ -100,13 +120,16 @@ public class CalculatorData {
 
         List<String> seperator = new ArrayList<>();
 
-        for(int i = 0 ; i < 5 ; i++){
+        for (int i = 0; i < 5; i++) {
             seperator.add(transFormatDate(timeSperator.get(i), "k"));
         }
 
         return seperator;
     }
-    public List<Integer>getTimeCount(){return timeCount;}
+
+    public List<Integer> getTimeCount() {
+        return timeCount;
+    }
 
 
     public List<Integer> getArrayItem(String bytes) throws JSONException {
@@ -114,7 +137,7 @@ public class CalculatorData {
         JSONArray arr = new JSONArray(new String(bytes));
         List<Integer> arryItem = new ArrayList<>();
 
-        for (int j=0; j<arr.length(); j++) {
+        for (int j = 0; j < arr.length(); j++) {
 
             arryItem.add(arr.getInt(j));
         }
@@ -127,7 +150,7 @@ public class CalculatorData {
         JSONArray arr = new JSONArray(new String(bytes));
         List<String> arryItem = new ArrayList<>();
 
-        for (int j=0; j<arr.length(); j++) {
+        for (int j = 0; j < arr.length(); j++) {
 
             arryItem.add(arr.getString(j));
         }
@@ -143,8 +166,4 @@ public class CalculatorData {
 
         return transFormat.format(to);
     }
-
-
-
-
 }

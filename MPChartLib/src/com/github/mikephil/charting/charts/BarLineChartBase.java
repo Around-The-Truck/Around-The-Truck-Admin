@@ -217,7 +217,7 @@ public abstract class BarLineChartBase<T extends BarLineScatterCandleData<? exte
 
         drawValues();
 
-        drawLegend();
+//        drawLegend();
 
         drawBorder();
 

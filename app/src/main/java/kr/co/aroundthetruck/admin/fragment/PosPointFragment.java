@@ -1,5 +1,6 @@
 package kr.co.aroundthetruck.admin.fragment;
 
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -22,6 +23,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
+
+import java.io.File;
 
 import kr.co.aroundthetruck.admin.R;
 import kr.co.aroundthetruck.admin.YSUtility;
@@ -125,8 +128,10 @@ public class PosPointFragment extends Fragment {
         String price = getArguments().getString("totalPay");
         payPrice = Integer.parseInt(price);
         payPriceTextView = (TextView) view.findViewById(R.id.fragment_pos_point_pay_cash_textview);
+//        payPriceTextView.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "Multicolore.otf"));
         payPriceTextView.setText(price + " 원");
         chagePointTextView = (TextView) view.findViewById(R.id.fragment_pos_point_charge_point_textview);
+//        chagePointTextView.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "Multicolore.otf"));
         chagePointTextView.setText("" + (payPrice / 20) +" 포인트");
 
 
@@ -134,8 +139,16 @@ public class PosPointFragment extends Fragment {
         pointBoxLayout = (LinearLayout) view.findViewById(R.id.fragment_pos_point_point_box_layout);
 
         pointboxTextview = (TextView) view.findViewById(R.id.fragment_pos_point_mypoint_textview);
+        pointboxTextview.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "Multicolore.otf"));
 
         pointboxImageButton = (ImageButton) view.findViewById(R.id.fragment_pos_point_ok_imagebutton);
+        pointboxImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentManager().popBackStackImmediate();
+
+            }
+        });
 
         pointBoxLayout.setVisibility(View.INVISIBLE);
 //        ((LinearLayout)smallMenuLayout.getParent()).removeView(smallMenuLayout);
@@ -204,6 +217,64 @@ public class PosPointFragment extends Fragment {
         }
 
     }
+
+//    private void uploadArticle(){
+//        AsyncHttpClient client = new AsyncHttpClient();
+//
+//        RequestParams param = new RequestParams();
+//        // 이렇게 인자를 넘겨야 될 때
+//        // 이름을 정해주고 추가하면 됨!
+//        //param.put("id", "rlaace423");
+//        //param.put("file", new File(fullPath));
+//
+//        try {
+//            param.put("truckName", data.getBrandName());
+//            param.put("phone", data.getPhoneNumber());
+//            param.put("open_date", data.getOpenData());
+//            param.put("category_big", 1);
+//            param.put("category_small", 1);
+//
+//            param.put("takeout_yn", data.optionClicked[3]);
+//            param.put("cansit_yn", data.optionClicked[1]);
+//            param.put("card_yn", data.optionClicked[0]);
+//            param.put("reserve_yn", data.optionClicked[5]);
+//            param.put("group_order_yn", data.optionClicked[4]);
+//            param.put("always_open_yn", data.optionClicked[2]);
+//            param.put("idx", "6");
+//
+//            Log.d("YoonTag", data.getSelectPhotoUri().toString());
+//            Uri selectPhotoUri = Uri.parse((String) data.getSelectPhotoUri());
+//            param.put("file", new File(fullPath));
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            Log.d("YoonTag", "Errorrorror");
+//        }
+//
+//
+//        client.post("http://165.194.35.161:3000/truckJoin", param, new AsyncHttpResponseHandler() {
+//            @Override
+//            public void onSuccess(int i, Header[] headers, byte[] bytes) {
+//                Log.d("YoonTag", bytes.toString());
+//                Log.d("YoonTag", new String(bytes));
+////                try {
+////                    org.json.JSONArray arr = new org.json.JSONArray(new String(bytes));
+////                    for (int i=0; i<arr.length(); i++) {
+////                        MainActivity.items.add(new CustomerItem(arr.getJSONObject(i).getString("image1_id"),arr.getJSONObject(i).getString("name"),arr.getJSONObject(i).getString("category"),arr.getJSONObject(i).getString("price")));
+////                    }
+////
+////                } catch (Exception e) {
+////                    e.printStackTrace();
+////                }
+//            }
+//
+//            @Override
+//            public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+//                Log.d("YoonTag", new String(bytes));
+//                Log.d("YoonTag", "에러러러러");
+//            }
+//        });
+//    }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

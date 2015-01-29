@@ -54,7 +54,8 @@
                 android:text="Large Text"
                 android:id="@+id/fragment_menu_bar_large_brandname_textview"
                 android:gravity="center_horizontal"
-                android:layout_marginBottom="17.5dp" />
+                android:layout_marginBottom="17.5dp"
+                android:textColor="@color/main_white" />
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -78,7 +79,8 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Medium Text"
                     android:id="@+id/fragment_menu_bar_large_category_textview"
-                    android:layout_gravity="center_vertical" />
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/main_white" />
             </LinearLayout>
 
             <LinearLayout

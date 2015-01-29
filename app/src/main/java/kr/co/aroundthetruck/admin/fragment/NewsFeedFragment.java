@@ -32,6 +32,7 @@ import java.util.List;
 
 import kr.co.aroundthetruck.admin.R;
 import kr.co.aroundthetruck.admin.YSUtility;
+import kr.co.aroundthetruck.admin.activity.MainActivity;
 import kr.co.aroundthetruck.admin.dto.ArticleData;
 import kr.co.aroundthetruck.admin.dto.ArticleReply;
 import kr.co.aroundthetruck.admin.dto.YSNetwork;
@@ -137,7 +138,7 @@ public class NewsFeedFragment extends Fragment {
         Log.d("YoonTag", "서버 통신");
 
         try {
-            param.put("writer", 2);
+            param.put("writer", ((MainActivity)getActivity()).truckIdx);
             param.put("writer_type", 1);
 
         } catch (Exception e){

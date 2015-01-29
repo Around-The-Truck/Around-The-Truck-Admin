@@ -33,7 +33,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/pos_point_point"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="60dp">
+                    android:layout_marginTop="20dp">
 
                     <TextView
                         android:layout_width="fill_parent"
@@ -63,11 +63,13 @@
 
                     <TextView
                         android:layout_width="283dp"
-                        android:layout_height="210dp"
+                        android:layout_height="230dp"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:text="10000"
                         android:id="@+id/fragment_pos_point_mypoint_textview"
-                        android:gravity="bottom|right" />
+                        android:gravity="bottom|right"
+                        android:textColor="@color/main_color"
+                        android:textSize="30dp" />
 
                     <ImageButton
                         android:layout_width="wrap_content"
@@ -76,7 +78,7 @@
                         android:layout_gravity="center"
                         android:src="@drawable/point_ok"
                         android:background="#00ffffff"
-                        android:layout_marginTop="20dp" />
+                        android:layout_marginTop="40dp" />
                 </LinearLayout>
             </LinearLayout>
 

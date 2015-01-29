@@ -12,7 +12,8 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="747.5dp"
-            android:layout_height="fill_parent">
+            android:layout_height="fill_parent"
+            android:background="#fff1f0f0">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -32,7 +33,7 @@
             android:orientation="vertical"
             android:layout_width="446.5dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/pos_posback"
+            android:background="@drawable/pos_main_posbackcopy"
             android:weightSum="1">
 
             <ListView

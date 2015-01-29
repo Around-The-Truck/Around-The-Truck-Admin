@@ -1,6 +1,8 @@
 package kr.co.aroundthetruck.admin.fragment;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,6 +29,8 @@ import java.util.List;
 import kr.co.aroundthetruck.admin.Dialog.PosPaymentDialog;
 import kr.co.aroundthetruck.admin.R;
 import kr.co.aroundthetruck.admin.activity.MainActivity;
+import kr.co.aroundthetruck.admin.activity.pay.CardReaderActivity;
+import kr.co.aroundthetruck.admin.activity.register.RegisterAdminActivity;
 import kr.co.aroundthetruck.admin.dto.FoodMenuData;
 import kr.co.aroundthetruck.admin.ui.ATTFragment;
 
@@ -74,6 +78,7 @@ public class PosMainFragment extends ATTFragment {
         menuResultListView = (ListView) view.findViewById(R.id.fragment_pos_main_count_Listview);
 
         counterTextView = (TextView) view.findViewById(R.id.fragment_pos_main_count_textview);
+        counterTextView.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "Multicolore.otf"));
         changeCounterPrice(0);
 
         countCancelButton = (Button) view.findViewById(R.id.fragment_pos_main_cancel_button);
@@ -146,7 +151,7 @@ public class PosMainFragment extends ATTFragment {
                 dialog.setOnclickListenr1(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        startActivity(new Intent(getActivity(), CardReaderActivity.class));
                         dialog.dismiss();
                         Bundle arguments = new Bundle();
                         arguments.putString("totalPay", "" + adapterCounter.getTotalPrice());
@@ -160,6 +165,24 @@ public class PosMainFragment extends ATTFragment {
                                 .commit();
                     }
                 });
+
+                dialog.setOnclickListener2(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                        Bundle arguments = new Bundle();
+                        arguments.putString("totalPay", "" + adapterCounter.getTotalPrice());
+
+                        PosPointFragment pointFragment = new PosPointFragment();
+
+                        pointFragment.setArguments(arguments);
+                        getFragmentManager().beginTransaction()
+                                .replace(R.id.activity_main_container,  pointFragment)
+                                .addToBackStack(null)
+                                .commit();
+                    }
+                });
+
 
             }
         });
@@ -191,7 +214,7 @@ public class PosMainFragment extends ATTFragment {
         Log.d("YoonTag", "서버 통신");
 
         try {
-            param.put("truckIdx", "1");
+            param.put("truckIdx", ((MainActivity)getActivity()).truckIdx);
 
         } catch (Exception e){
             e.printStackTrace();
@@ -273,6 +296,7 @@ public class PosMainFragment extends ATTFragment {
                 holder = new ViewHolder();
                 holder.menuNameTextView = (TextView) convertView.findViewById(R.id.fragment_pos_main_gridview_textview_menuName);
                 holder.priceTextView = (TextView) convertView.findViewById(R.id.fragment_pos_main_gridview_textview_price);
+                holder.priceTextView.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "Multicolore.otf"));
 
                 convertView.setTag(holder);
             } else {
@@ -358,6 +382,7 @@ public class PosMainFragment extends ATTFragment {
                 holder.menuNameTextView = (TextView) convertView.findViewById(R.id.fragment_pos_main_list_textview_menuname);
                 holder.priceTextView = (TextView) convertView.findViewById(R.id.fragment_pos_main_list_textview_price);
                 holder.removeButton = (Button) convertView.findViewById(R.id.fragment_pos_main_list_button_remove);
+                holder.priceTextView.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "Multicolore.otf"));
 
 
                 holder.removeButton.setOnClickListener(removeButtonListener);

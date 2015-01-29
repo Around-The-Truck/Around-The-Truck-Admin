@@ -354,28 +354,28 @@ public class RegisterAdminActivity extends ATTActivity {
         }
 
 
-        client.post("http://165.194.35.161:3000/truckJoin", param, new AsyncHttpResponseHandler() {
-            @Override
-            public void onSuccess(int i, Header[] headers, byte[] bytes) {
-                Log.d("YoonTag", bytes.toString());
-                Log.d("YoonTag", new String(bytes));
-//                try {
-//                    org.json.JSONArray arr = new org.json.JSONArray(new String(bytes));
-//                    for (int i=0; i<arr.length(); i++) {
-//                        MainActivity.items.add(new CustomerItem(arr.getJSONObject(i).getString("image1_id"),arr.getJSONObject(i).getString("name"),arr.getJSONObject(i).getString("category"),arr.getJSONObject(i).getString("price")));
-//                    }
+//        client.post("http://165.194.35.161:3000/truckJoin", param, new AsyncHttpResponseHandler() {
+//            @Override
+//            public void onSuccess(int i, Header[] headers, byte[] bytes) {
+//                Log.d("YoonTag", bytes.toString());
+//                Log.d("YoonTag", new String(bytes));
+////                try {
+////                    org.json.JSONArray arr = new org.json.JSONArray(new String(bytes));
+////                    for (int i=0; i<arr.length(); i++) {
+////                        MainActivity.items.add(new CustomerItem(arr.getJSONObject(i).getString("image1_id"),arr.getJSONObject(i).getString("name"),arr.getJSONObject(i).getString("category"),arr.getJSONObject(i).getString("price")));
+////                    }
+////
+////                } catch (Exception e) {
+////                    e.printStackTrace();
+////                }
+//            }
 //
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-            }
-
-            @Override
-            public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
-                Log.d("YoonTag", new String(bytes));
-                Log.d("YoonTag", "에러러러러");
-            }
-        });
+//            @Override
+//            public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+//                Log.d("YoonTag", new String(bytes));
+//                Log.d("YoonTag", "에러러러러");
+//            }
+//        });
     }
 
     private String fullPath;

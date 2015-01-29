@@ -144,6 +144,8 @@ public class MenuBarFragment extends Fragment {
                 final MenubarStateChangeDialog dialog = new MenubarStateChangeDialog(getActivity(), truckstate);
 
                 if (truckstate == 0){
+//                    Log.d("YoonTag", "latitude : "+((MainActivity)getActivity()).getLocation().getLatitude() + ", longitude : "+((MainActivity)getActivity()).getLocation().getLongitude() );
+
                     dialog.setBackgroundImageview(getResources().getDrawable(R.drawable.dialog_open));
                 } else if(truckstate == 1){
                     dialog.setBackgroundImageview(getResources().getDrawable(R.drawable.dialog_closed));
@@ -240,12 +242,98 @@ public class MenuBarFragment extends Fragment {
 
     }
 
+    private void truckClose(){
+
+        AsyncHttpClient client = new AsyncHttpClient();
+        RequestParams param = new RequestParams();
+        param.put("truckIdx", ((MainActivity)getActivity()).truckIdx);
+
+        try{
+            client.get("http://165.194.35.161:3000/getTruckInfo", param, new AsyncHttpResponseHandler() {
+                @Override
+                public void onSuccess(int i, Header[] headers, byte[] bytes) {
+                    Log.d("YoonTag", new String(bytes));
+                    try{
+//                        org.json.JSONArray arr = new org.json.JSONArray(new String(bytes));
+                        JSONObject jsonObject = new JSONObject(new String(bytes));
+                        Log.d("YoonTag", "~~~~~~~!!!!!~~~~~~~"+jsonObject.getString("result"));
+                        JSONArray resultJsonObject = new JSONArray(new String(jsonObject.getString("result")));
+
+                        Log.d("YoonTag", "~~~~~~~!!!!!~~~~~~~"+resultJsonObject.getJSONObject(0).getString("name"));
+                        Log.d("YoonTag", "~~~~~~~!!!!!~~~~~~~"+resultJsonObject.getJSONObject(0).getString("photo_filename"));
+
+
+                        Picasso.with(getActivity()).load(YSUtility.addressImageStorage + URLEncoder.encode(resultJsonObject.getJSONObject(0).getString("photo_filename"), "UTF-8")).fit().transform(new RoundedTransformation(86)).into(truckImageView);
+                        largeBrandNameTextview.setText(resultJsonObject.getJSONObject(0).getString("name"));
+                        largeCategoryTextview.setText(resultJsonObject.getJSONObject(0).getString("cat_name_big") + " / " + resultJsonObject.getJSONObject(0).getString("cat_name_small"));
+
+                    }catch(JSONException e){
+
+                    }catch(Exception e){
+
+                    }
+                }
+
+                @Override
+                public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+                    Log.d("YoonTag", "서버 에러...ㅠㅠ");
+                }
+            });
+        } catch(Exception e){
+
+        }
+
+    }
+
+    private void truckOpen(){
+        AsyncHttpClient client = new AsyncHttpClient();
+        RequestParams param = new RequestParams();
+        param.put("truckIdx", ((MainActivity)getActivity()).truckIdx);
+
+        try{
+            client.get("http://165.194.35.161:3000/getTruckInfo", param, new AsyncHttpResponseHandler() {
+                @Override
+                public void onSuccess(int i, Header[] headers, byte[] bytes) {
+                    Log.d("YoonTag", new String(bytes));
+                    try{
+//                        org.json.JSONArray arr = new org.json.JSONArray(new String(bytes));
+                        JSONObject jsonObject = new JSONObject(new String(bytes));
+                        Log.d("YoonTag", "~~~~~~~!!!!!~~~~~~~"+jsonObject.getString("result"));
+                        JSONArray resultJsonObject = new JSONArray(new String(jsonObject.getString("result")));
+
+                        Log.d("YoonTag", "~~~~~~~!!!!!~~~~~~~"+resultJsonObject.getJSONObject(0).getString("name"));
+                        Log.d("YoonTag", "~~~~~~~!!!!!~~~~~~~"+resultJsonObject.getJSONObject(0).getString("photo_filename"));
+
+
+                        Picasso.with(getActivity()).load(YSUtility.addressImageStorage + URLEncoder.encode(resultJsonObject.getJSONObject(0).getString("photo_filename"), "UTF-8")).fit().transform(new RoundedTransformation(86)).into(truckImageView);
+                        largeBrandNameTextview.setText(resultJsonObject.getJSONObject(0).getString("name"));
+                        largeCategoryTextview.setText(resultJsonObject.getJSONObject(0).getString("cat_name_big") + " / " + resultJsonObject.getJSONObject(0).getString("cat_name_small"));
+
+                    }catch(JSONException e){
+
+                    }catch(Exception e){
+
+                    }
+                }
+
+                @Override
+                public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+                    Log.d("YoonTag", "서버 에러...ㅠㅠ");
+                }
+            });
+        } catch(Exception e){
+
+        }
+    }
+
     private void changeTruckState(){
 
         if (truckstate == 0){ // 클로즈 상태
+            truckOpen();
             truckStateImageButton.setImageDrawable(getResources().getDrawable(R.drawable.menubar_large_open) );
             truckstate = 1;
         }else if (truckstate == 1){ // 오픈 상태
+            truckClose();
             truckStateImageButton.setImageDrawable(getResources().getDrawable(R.drawable.menubar_large_closed) );
             truckstate = 0;
         }

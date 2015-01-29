@@ -44,7 +44,8 @@
                     android:layout_width="500dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/activity_register_food_menu_listitem_editText"
-                    android:hint="메뉴를 입력해 주세요" />
+                    android:hint="메뉴를 입력해 주세요"
+                    android:focusable="true" />
             </LinearLayout>
 
             <ImageView
@@ -65,7 +66,8 @@
                     android:inputType="numberSigned"
                     android:ems="10"
                     android:id="@+id/activity_register_food_menu_listitem_editText2"
-                    android:hint="가격을 입력해주세요" />
+                    android:hint="가격을 입력해주세요"
+                    android:focusable="true" />
 
                 <TextView
                     android:layout_width="wrap_content"

@@ -51,12 +51,12 @@ public class PieChart extends PieRadarChartBase<PieData> {
      * indicates the size of the hole in the center of the piechart, default:
      * radius / 2
      */
-    private float mHoleRadiusPercent = 50f;
+    private float mHoleRadiusPercent = 70f;
 
     /**
      * the radius of the transparent circle next to the chart-hole in the center
      */
-    private float mTransparentCircleRadius = 55f;
+    private float mTransparentCircleRadius = 70f;
 
     /** if enabled, centertext is drawn */
     private boolean mDrawCenterText = true;
@@ -137,7 +137,7 @@ public class PieChart extends PieRadarChartBase<PieData> {
 
         drawValues();
 
-        drawLegend();
+        //drawLegend();
 
         drawDescription();
 
@@ -336,6 +336,8 @@ public class PieChart extends PieRadarChartBase<PieData> {
             float radius = getRadius();
 
             PointF c = getCenterCircleBox();
+
+
 
             int color = mHolePaint.getColor();
 
