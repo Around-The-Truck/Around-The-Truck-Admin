@@ -11,9 +11,15 @@
 
 
         <CalendarView
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
+            android:layout_width="1dp"
+            android:layout_height="1dp"
             android:id="@+id/fragment_calendar_pick_calendarView" />
+
+        <com.disegnator.robotocalendar.RobotoCalendarView
+            android:id="@+id/robotoCalendarPicker"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
+        </com.disegnator.robotocalendar.RobotoCalendarView>
     </LinearLayout>
 
 </FrameLayout>

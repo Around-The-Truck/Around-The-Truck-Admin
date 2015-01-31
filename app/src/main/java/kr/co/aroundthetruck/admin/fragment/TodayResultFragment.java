@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -90,6 +91,8 @@ public class TodayResultFragment extends ATTFragment {
 
     private CalculatorData info;
 
+    private ImageButton calendarImageButton, mapImageButton, otherImageButton;
+
     private Callback<CurrentWeatherModel> cbCurrentWeatherModel = new Callback<CurrentWeatherModel>() {
         @Override
         public void success(CurrentWeatherModel currentWeatherModel, Response response) {
@@ -128,7 +131,6 @@ public class TodayResultFragment extends ATTFragment {
         getServerInfo();
         setTypeface();
 
-
     }
 
     @Override
@@ -161,6 +163,33 @@ public class TodayResultFragment extends ATTFragment {
 
 //        tcTime = (TextClock) view.findViewById(R.id.fragment_today_result_tc_time);
 //        tvRegion = (TextView) view.findViewById(R.id.fragment_today_result_tv_region);
+
+        calendarImageButton = (ImageButton) view.findViewById(R.id.fragment_calendar_pick_calendarView);
+        calendarImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.activity_main_container,  CalendarPickFragment.newInstance())
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
+        mapImageButton = (ImageButton) view.findViewById(R.id.fragment_today_result_map_imagebutton);
+        mapImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        otherImageButton = (ImageButton) view.findViewById(R.id.fragment_today_result_other_imagebutton);
+        otherImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     @Override

@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/Around-The-Truck-Admin.iml" filepath="$PROJECT_DIR$/Around-The-Truck-Admin.iml" />
       <module fileurl="file://$PROJECT_DIR$/MPChartLib/MPChartLib.iml" filepath="$PROJECT_DIR$/MPChartLib/MPChartLib.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/robotoCalendarLibrary/robotoCalendarLibrary.iml" filepath="$PROJECT_DIR$/robotoCalendarLibrary/robotoCalendarLibrary.iml" />
     </modules>
   </component>
 </project>

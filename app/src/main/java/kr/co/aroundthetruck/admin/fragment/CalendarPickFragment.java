@@ -10,6 +10,13 @@ import android.view.ViewGroup;
 import android.widget.CalendarView;
 import android.widget.Toast;
 
+
+import com.disegnator.robotocalendar.RobotoCalendarView;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 import kr.co.aroundthetruck.admin.R;
 
 /**
@@ -18,11 +25,15 @@ import kr.co.aroundthetruck.admin.R;
  * {@link CalendarPickFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
  */
-public class CalendarPickFragment extends Fragment {
+public class CalendarPickFragment extends Fragment implements RobotoCalendarView.RobotoCalendarListener {
 
     private OnFragmentInteractionListener mListener;
 
     private CalendarView calendar;
+
+    private RobotoCalendarView robotoCalendarView;
+    private Calendar currentCalendar;
+    private int currentMonthIndex;
 
     public CalendarPickFragment() {
         // Required empty public constructor
@@ -79,6 +90,20 @@ public class CalendarPickFragment extends Fragment {
 
         });
 
+        // Gets the calendar from the view
+        robotoCalendarView = (RobotoCalendarView) root.findViewById(R.id.robotoCalendarPicker);
+
+        // Set listener, in this case, the same activity
+        robotoCalendarView.setRobotoCalendarListener(this);
+
+        // Initialize the RobotoCalendarPicker with the current index and date
+        currentMonthIndex = 0;
+        currentCalendar = Calendar.getInstance(Locale.getDefault());
+        robotoCalendarView.initializeCalendar(currentCalendar);
+
+        // Mark current day
+        robotoCalendarView.markDayAsCurrentDay(currentCalendar.getTime());
+
         return root;
     }
 
@@ -96,6 +121,33 @@ public class CalendarPickFragment extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void onDateSelected(Date date) {
+
+        // Mark calendar day
+        robotoCalendarView.markDayAsSelectedDay(date);
+
+        // Do your own stuff
+        // ...
+    }
+
+    @Override
+    public void onRightButtonClick() {
+        currentMonthIndex++;
+        updateCalendar();
+    }
+
+    @Override
+    public void onLeftButtonClick() {
+        currentMonthIndex--;
+        updateCalendar();
+    }
+
+    private void updateCalendar() {
+        currentCalendar = Calendar.getInstance(Locale.getDefault());
+        currentCalendar.add(Calendar.MONTH, currentMonthIndex);
+        robotoCalendarView.initializeCalendar(currentCalendar);
+    }
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated

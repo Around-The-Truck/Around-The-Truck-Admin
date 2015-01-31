@@ -120,7 +120,7 @@ public class MainFragment extends ATTFragment implements WeatherLoadCallback {
             @Override
             public void onClick(View v) {
                 getFragmentManager().beginTransaction()
-                        .replace(R.id.activity_main_container,  HistoryMapFragment.newInstance())
+                        .replace(R.id.activity_main_container,  TodayResultFragment.newInstance())
                         .addToBackStack(null)
                         .commit();
             }
@@ -130,7 +130,7 @@ public class MainFragment extends ATTFragment implements WeatherLoadCallback {
             @Override
             public void onClick(View v) {
                 getFragmentManager().beginTransaction()
-                        .replace(R.id.activity_main_container,  TodayResultFragment.newInstance())
+                        .replace(R.id.activity_main_container,  PosMainFragment.newInstance())
                         .addToBackStack(null)
                         .commit();
             }

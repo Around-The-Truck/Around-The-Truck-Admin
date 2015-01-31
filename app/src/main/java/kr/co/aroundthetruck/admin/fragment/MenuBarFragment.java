@@ -206,7 +206,7 @@ public class MenuBarFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 getFragmentManager().beginTransaction()
-                        .replace(R.id.activity_main_container,  PosMainFragment.newInstance())
+                        .replace(R.id.activity_main_container,  MainFragment.newInstance())
                         .addToBackStack(null)
                         .commit();
             }
