@@ -41,23 +41,7 @@ public class ColorTemplate {
             Color.rgb(140, 234, 255), Color.rgb(255, 140, 157)
     };
 
-    static String red1 = "f27070";
-    static String red2 = "ef453e";
-    static String red3 = "d62b2b";
-    static String red4 = "b72323";
 
-
-
-    public static ArrayList<Integer> getRedColor() {
-
-        ArrayList<Integer> colors = new ArrayList<>();
-        colors.add(Color.parseColor(red1));
-        colors.add(Color.parseColor(red2));
-        colors.add(Color.parseColor(red3));
-        colors.add(Color.parseColor(red4));
-
-     return  colors;
-    }
 
     // public static final int[] FRESH_COLORS = {
     // R.color.fresh_1, R.color.fresh_2, R.color.fresh_3, R.color.fresh_4,

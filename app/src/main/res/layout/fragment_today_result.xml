@@ -13,6 +13,54 @@
             android:layout_width="1182.5dp"
             android:layout_height="match_parent">
 
+<<<<<<< HEAD
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/fragment_today_result_tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="오늘의 판매정보"
+                    style="?android:attr/textAppearanceLarge" />
+
+                <TextView
+                    android:id="@+id/fragment_today_result_tv_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="?android:attr/textAppearanceLarge"
+                    tools:text="2014/01/01 수요일" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/fragment_today_result_tv_working_time_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="영업시간"
+                    style="?android:attr/textAppearanceLarge" />
+
+                <TextView
+                    android:id="@+id/fragment_today_result_tv_working_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="?android:attr/textAppearanceLarge"
+                    android:text="오전 10:30 - 오후 7:30" />
+            </LinearLayout>
+
+
+            <LinearLayout
+=======
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="77dp"
@@ -21,6 +69,7 @@
                 android:scaleType="fitEnd" />
 
             <ScrollView
+>>>>>>> 1a79480872b64ef58ef93736ce3211fef5b777bd
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/scrollView"
@@ -256,6 +305,15 @@
             android:background="#00ffffff"
             android:layout_marginBottom="10dp" />
 
+<<<<<<< HEAD
+                <ListView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/fragment_today_lank_listview" />
+
+            </LinearLayout>
+        </LinearLayout>
+=======
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -263,6 +321,7 @@
             android:src="@drawable/calculate_map"
             android:background="#00ffffff"
             android:layout_marginBottom="10dp" />
+>>>>>>> 1a79480872b64ef58ef93736ce3211fef5b777bd
 
         <ImageButton
             android:layout_width="wrap_content"

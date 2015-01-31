@@ -1,6 +1,4 @@
 package kr.co.aroundthetruck.admin.fragment;
-
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -20,10 +18,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-
 import java.util.ArrayList;
-
-import kr.co.aroundthetruck.admin.R;
 import kr.co.aroundthetruck.admin.callback.TruckListLoadCallback;
 import kr.co.aroundthetruck.admin.common.URL;
 import kr.co.aroundthetruck.admin.common.UserSession;

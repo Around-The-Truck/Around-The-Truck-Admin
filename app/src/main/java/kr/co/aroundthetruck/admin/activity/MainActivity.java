@@ -1,21 +1,15 @@
 package kr.co.aroundthetruck.admin.activity;
 
-import android.content.Intent;
+
 import android.location.Location;
+import android.location.LocationListener;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
-import kr.co.aroundthetruck.admin.R;
-import kr.co.aroundthetruck.admin.common.UserSession;
-import kr.co.aroundthetruck.admin.constant.BroadcastReceiverConstants;
-import kr.co.aroundthetruck.admin.fragment.MainFragment;
 import kr.co.aroundthetruck.admin.ui.ATTActivity;
 
 public class MainActivity extends ATTActivity implements GoogleApiClient.ConnectionCallbacks,
@@ -197,6 +191,11 @@ public class MainActivity extends ATTActivity implements GoogleApiClient.Connect
     }
 
     @Override
+    public void onConnected(Bundle bundle) {
+
+    }
+
+    @Override
     public void onConnectionSuspended(int cause) {
         // The connection to Google Play services was lost for some reason. We call connect() to
         // attempt to re-establish the connection.
@@ -209,6 +208,11 @@ public class MainActivity extends ATTActivity implements GoogleApiClient.Connect
         // Refer to the javadoc for ConnectionResult to see what error codes might be returned in
         // onConnectionFailed.
         Log.i(TAG, "Connection failed: ConnectionResult.getErrorCode() = " + result.getErrorCode());
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+
     }
 
 //    @Override
